@@ -16,7 +16,7 @@ class TodoApp extends Component {
     return (
       <div className="TodoApp">
         <Router>
-          <>
+          <React.Fragment>
             <HeaderComponent />
             <Switch>
               <Route path="/" exact component={ProductComponent} />
@@ -34,8 +34,8 @@ class TodoApp extends Component {
 
               <Route component={ErrorComponent} />
             </Switch>
-            {/*<FooterComponent/>*/}
-          </>
+            <FooterComponent />
+          </React.Fragment>
         </Router>
         {/*<LoginComponent/>
                 <WelcomeComponent/>*/}
