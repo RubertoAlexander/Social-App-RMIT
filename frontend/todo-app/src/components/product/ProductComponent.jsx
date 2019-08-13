@@ -137,7 +137,11 @@ export default function ProductComponent() {
                     <Typography>Placeholder product here</Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button
+                      variant="outlined"
+                      href="/product/2"
+                      className={classes.button}
+                    >
                       View
                     </Button>
                     <Button size="small" color="primary">
@@ -150,20 +154,6 @@ export default function ProductComponent() {
           </Grid>
         </Container>
       </main>
-
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Some footer
-        </Typography>
-      </footer>
     </React.Fragment>
   );
 }
