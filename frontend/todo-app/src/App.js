@@ -11,24 +11,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/*<Counter/>*/}
         <TodoApp />
       </div>
     );
   }
 }
-
-// class LearningComponents extends Component {
-//   render() {
-//     return (
-//       <div className="LearningComponents">
-//          My Hello World
-//          <FirstComponent></FirstComponent>
-//          <SecondComponent></SecondComponent>
-//          <ThirdComponent></ThirdComponent>
-//       </div>
-//     );
-//   }
-// }
 
 export default App;
