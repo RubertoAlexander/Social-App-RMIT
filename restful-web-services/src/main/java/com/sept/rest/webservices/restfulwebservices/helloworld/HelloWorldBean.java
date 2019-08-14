@@ -5,7 +5,7 @@ public class HelloWorldBean {
 	private String message;
 
 	public HelloWorldBean(String message) {
-		this.message = message;
+		this.message = message + 1;
 	}
 
 	public String getMessage() {
