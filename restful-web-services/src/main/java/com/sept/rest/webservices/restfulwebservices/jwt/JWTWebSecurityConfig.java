@@ -69,6 +69,14 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .headers()
             .frameOptions().sameOrigin()  //H2 Console Needs this setting
             .cacheControl(); //disable caching
+        httpSecurity
+        .csrf().disable().authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/sign-up").permitAll()
+        .anyRequest().authenticated();
+        httpSecurity
+        .csrf().disable().authorizeRequests()
+        .antMatchers(HttpMethod.GET, "/sign-up").permitAll()
+        .anyRequest().authenticated();
     }
 
     @Override
@@ -90,6 +98,12 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .ignoring()
             .antMatchers("/h2-console/**/**");//Should not be in Production!
+        webSecurity
+        .ignoring()
+        .antMatchers(
+            HttpMethod.POST,
+            "/sign-up"
+        );
     }
 }
 
