@@ -6,7 +6,8 @@
   background-color: #222222;
 }
 
-.App {
+.App, .TodoApp{
+  min-height: 100vh;
   text-align: center;
 }
 
