@@ -1,4 +1,4 @@
-package com.sept.rest.webservices.resfulwebservices.products;
+package com.sept.rest.webservices.restfulwebservices.products;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
