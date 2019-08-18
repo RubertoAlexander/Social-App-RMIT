@@ -134,14 +134,12 @@ class ProductComponent extends React.Component {
   }
 
   sortProduct = cards => {
-    if (cards[0].id < cards[1].id) {
-      const newCards = lodash.orderBy(cards, ["id"], ["desc"]);
-
-      this.setState({ cards: newCards });
-    } else {
-      const newCards = lodash.orderBy(cards, ["id"], ["asc"]);
-      this.setState({ cards: newCards });
-    }
+    const newCards =
+      cards[0].id < cards[1].id
+        ? lodash.orderBy(cards, ["id"], ["desc"])
+        : lodash.orderBy(cards, ["id"], ["asc"]);
+    this.setState({ cards: newCards });
+    return newCards;
   };
 
   render() {
@@ -167,7 +165,14 @@ class ProductComponent extends React.Component {
             </Grid>
             <Grid container spacing={4}>
               {this.state.cards.map(card => (
-                <Grid item key={card.id} xs={12} sm={6} md={4}>
+                <Grid
+                  className="product"
+                  item
+                  key={card.id}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                >
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
