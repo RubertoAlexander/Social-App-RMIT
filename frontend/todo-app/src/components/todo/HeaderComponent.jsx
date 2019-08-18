@@ -134,9 +134,14 @@ function PrimarySearchAppBar() {
         <Button color="inherit">
           {!isUserLoggedIn ? (
             <li>
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
+              <React.Fragment>
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+                <Link className="" to="/sign-up">
+                  Sign Up
+                </Link>
+              </React.Fragment>
             </li>
           ) : (
             ""
@@ -193,9 +198,14 @@ function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>
             <Button color="inherit">
               {!isUserLoggedIn ? (
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
+                <React.Fragment>
+                  <Link className="nav-link" to="/login">
+                    Login
+                  </Link>
+                  <Link className="" to="/sign-up">
+                    Sign Up
+                  </Link>
+                </React.Fragment>
               ) : (
                 ""
               )}

@@ -17,6 +17,13 @@ class AuthenticationService {
     });
   }
 
+  executeSignUpNewUser(username, password, firstName, lastName) {
+    return axios.post(`${API_URL}/sign-up`, {
+      username,
+      password
+    });
+  }
+
   createBasicAuthToken(username, password) {
     return "Basic " + window.btoa(username + ":" + password);
   }

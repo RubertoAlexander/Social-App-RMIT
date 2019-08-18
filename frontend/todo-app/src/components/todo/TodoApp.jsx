@@ -11,6 +11,7 @@ import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
+import { SignUpComponent } from "../account/SignUpComponent";
 
 class TodoApp extends Component {
   render() {
@@ -33,6 +34,7 @@ class TodoApp extends Component {
                 path="/todos"
                 component={ListTodosComponent}
               />
+              <Route path="/sign-up" component={SignUpComponent} />
               <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
               <Route component={ErrorComponent} />
