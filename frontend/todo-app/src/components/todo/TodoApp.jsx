@@ -11,6 +11,7 @@ import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
+import MapComponent from "../map/MapComponent";
 
 class TodoApp extends Component {
   render() {
@@ -31,6 +32,7 @@ class TodoApp extends Component {
                 path="/todos"
                 component={ListTodosComponent}
               />
+              <AuthenticatedRoute path="/map" component={MapComponent} />
               <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
               <Route path="/product/:id" component={ProductDetailComponent} />
