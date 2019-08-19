@@ -1,12 +1,11 @@
 .footer {
-  position: absolute;
-  bottom: 0;
+  display: flex;
+  justify-content: center;
   width: 100%;
-  height: 40px;
-  background-color: #222222;
 }
 
-.App, .TodoApp{
+.App,
+.TodoApp {
   min-height: 100vh;
   text-align: center;
 }
