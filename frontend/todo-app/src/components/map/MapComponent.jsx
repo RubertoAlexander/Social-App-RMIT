@@ -7,7 +7,7 @@ export class MapComponent extends React.Component {
   render() {
     return (
       <div id="map-component">
-        <h1>This is a map</h1>
+        <h1>RMIT Map</h1>
         <div id="map">
           <Map
             google={this.props.google}
