@@ -55,13 +55,32 @@ describe("ProductComponent", () => {
     shallow(<ProductComponent />);
   });
 
-  it("sorts products", () => {
+  it("sorts products ascending", () => {
     const wrapper = shallow(<ProductComponent />);
     const newCards = wrapper
       .dive()
       .instance()
       .sortProduct(mockCards);
     expect(newCards[0].id).toEqual(9);
+    expect(newCards[0].name).toEqual("AP Computer Science A");
+  });
+
+  it("sorts products descending", () => {
+    const wrapper = shallow(<ProductComponent />);
+    //first sorts the products ascending
+    const newCards = wrapper
+      .dive()
+      .instance()
+      .sortProduct(mockCards);
+    //another call will sort the products descending
+    const newCardsDesc = wrapper
+      .dive()
+      .instance()
+      .sortProduct(newCards);
+    expect(newCardsDesc[0].id).toEqual(8);
+    expect(newCardsDesc[0].name).toEqual(
+      "Structure and Interpretation of Computer Programs"
+    );
   });
 
   it("contains 9 products", () => {
