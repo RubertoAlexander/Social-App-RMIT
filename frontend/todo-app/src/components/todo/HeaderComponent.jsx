@@ -13,6 +13,7 @@ import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -200,10 +201,20 @@ function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>
             <Button color="inherit">
               {isUserLoggedIn && (
+                <Link className="nav-link" to="/cart">
+                  <ShoppingCartIcon color="default" />
+                </Link>
+              )}
+            </Button>
+
+            <Button color="inherit">
+              {isUserLoggedIn && (
                 <Link className="nav-link" to="/map">
                   Map
                 </Link>
               )}
+            </Button>
+            <Button color="inherit">
               {!isUserLoggedIn ? (
                 <Link className="nav-link" to="/login">
                   Login
