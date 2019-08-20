@@ -1,4 +1,5 @@
 import React from "react";
+
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,6 +10,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Sort from "@material-ui/icons/Sort";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+
 import product1 from "../../img/product (1).jpg";
 import product2 from "../../img/product (2).jpg";
 import product3 from "../../img/product (3).jpg";
@@ -22,9 +28,7 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
-import Sort from "@material-ui/icons/Sort";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+
 import * as lodash from "lodash";
 
 const styles = theme => ({
@@ -196,6 +200,14 @@ class ProductComponent extends React.Component {
                       <Button size="small" color="primary">
                         Edit
                       </Button>
+
+                      <IconButton
+                        color="primary"
+                        className={classes.button}
+                        aria-label="add to shopping cart"
+                      >
+                        <AddShoppingCartIcon />
+                      </IconButton>
                     </CardActions>
                   </Card>
                 </Grid>
