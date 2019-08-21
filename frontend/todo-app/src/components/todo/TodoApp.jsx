@@ -11,7 +11,8 @@ import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
-import MapComponent from "../map/MapComponent";
+import MapComponent from "../map/MapComponent.jsx";
+import CartComponent from "../cart/CartComponent.jsx";
 
 class TodoApp extends Component {
   constructor(props) {
@@ -94,6 +95,8 @@ class TodoApp extends Component {
               />
 
               <Route path="/login" component={LoginComponent} />
+
+              <AuthenticatedRoute path="/cart" component={CartComponent} />
 
               <AuthenticatedRoute
                 path="/welcome/:name"
