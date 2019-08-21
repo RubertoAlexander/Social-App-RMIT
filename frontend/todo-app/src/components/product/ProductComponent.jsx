@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -86,55 +87,12 @@ function loadImage(index) {
 class ProductComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cards: [
-        {
-          id: 1,
-          name: "Programmer Guide",
-          description: "blablablablabla"
-        },
-        {
-          id: 2,
-          name: "Elephant Book",
-          description: "blablablablabla"
-        },
-        {
-          id: 3,
-          name: "Self taught programmer",
-          description: "blablablablabla"
-        },
-        {
-          id: 4,
-          name: "Computer Science Book",
-          description: "blablablablabla"
-        },
-        {
-          id: 5,
-          name: "Beginning Programming Reference for dummies",
-          description: "blablablablabla"
-        },
-        {
-          id: 6,
-          name: "Computer Science Distilled",
-          description: "blablablablabla"
-        },
-        {
-          id: 7,
-          name: "Computer science principles",
-          description: "blablablablabla"
-        },
-        {
-          id: 8,
-          name: "Structure and Interpretation of Computer Programs",
-          description: "blablablablabla"
-        },
-        {
-          id: 9,
-          name: "AP Computer Science A",
-          description: "blablablablabla"
-        }
-      ]
-    };
+
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+  }
+
+  handleAddToCart(card) {
+    this.props.handleAddToCart(card);
   }
 
   sortProduct = cards => {
@@ -160,7 +118,7 @@ class ProductComponent extends React.Component {
                   className={classes.button}
                   aria-label="sort"
                   onClick={() => {
-                    this.sortProduct(this.state.cards);
+                    this.sortProduct(this.props.cards);
                   }}
                 >
                   <Sort />
@@ -168,7 +126,7 @@ class ProductComponent extends React.Component {
               </Tooltip>
             </Grid>
             <Grid container spacing={4}>
-              {this.state.cards.map(card => (
+              {this.props.cards.map(card => (
                 <Grid
                   className="product"
                   item
@@ -202,6 +160,7 @@ class ProductComponent extends React.Component {
                       </Button>
 
                       <IconButton
+                        onClick={this.handleAddToCart.bind(this, card)}
                         color="primary"
                         className={classes.button}
                         aria-label="add to shopping cart"

@@ -4,7 +4,6 @@ import AuthenticationService from "./AuthenticationService.js";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
-
 import { fade, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
@@ -13,7 +12,8 @@ import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+
+import { CartIconComponent } from "../cart/CartIconComponent.jsx";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -77,7 +77,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function PrimarySearchAppBar() {
+function PrimarySearchAppBar({ cartTotal }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -202,7 +202,7 @@ function PrimarySearchAppBar() {
             <Button color="inherit">
               {isUserLoggedIn && (
                 <Link className="nav-link" to="/cart">
-                  <ShoppingCartIcon color="default" />
+                  <CartIconComponent cartTotal={cartTotal} />
                 </Link>
               )}
             </Button>
@@ -259,7 +259,7 @@ export default class HeaderComponent extends Component {
     return (
       <React.Fragment>
         <header>
-          <PrimarySearchAppBar />
+          <PrimarySearchAppBar cartTotal={this.props.cart.length} />
         </header>
       </React.Fragment>
     );
