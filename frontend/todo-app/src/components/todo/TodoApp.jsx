@@ -14,6 +14,20 @@ import { ProductDetailComponent } from "../product/ProductDetailComponent";
 import MapComponent from "../map/MapComponent.jsx";
 import CartComponent from "../cart/CartComponent.jsx";
 
+import product1 from "../../img/product (1).jpg";
+import product2 from "../../img/product (2).jpg";
+import product3 from "../../img/product (3).jpg";
+import product4 from "../../img/product (4).jpg";
+import product5 from "../../img/product (5).jpg";
+import product6 from "../../img/product (6).jpg";
+import product7 from "../../img/product (7).jpg";
+import product8 from "../../img/product (8).jpg";
+import product9 from "../../img/product (9).jpg";
+import product10 from "../../img/product (10).jpg";
+import product11 from "../../img/product (11).jpg";
+import product12 from "../../img/product (12).jpg";
+import product13 from "../../img/product (13).jpg";
+
 class TodoApp extends Component {
   constructor(props) {
     super(props);
@@ -22,47 +36,56 @@ class TodoApp extends Component {
         {
           id: 1,
           name: "Programmer Guide",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product1
         },
         {
           id: 2,
           name: "Elephant Book",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product2
         },
         {
           id: 3,
           name: "Self taught programmer",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product3
         },
         {
           id: 4,
           name: "Computer Science Book",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product4
         },
         {
           id: 5,
           name: "Beginning Programming Reference for dummies",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product5
         },
         {
           id: 6,
           name: "Computer Science Distilled",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product6
         },
         {
           id: 7,
           name: "Computer science principles",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product7
         },
         {
           id: 8,
           name: "Structure and Interpretation of Computer Programs",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product8
         },
         {
           id: 9,
           name: "AP Computer Science A",
-          description: "blablablablabla"
+          description: "blablablablabla",
+          imageUrl: product9
         }
       ],
       cart: []
@@ -96,7 +119,10 @@ class TodoApp extends Component {
 
               <Route path="/login" component={LoginComponent} />
 
-              <AuthenticatedRoute path="/cart" component={CartComponent} />
+              <AuthenticatedRoute
+                path="/cart"
+                render={props => <CartComponent cart={this.state.cart} />}
+              />
 
               <AuthenticatedRoute
                 path="/welcome/:name"
