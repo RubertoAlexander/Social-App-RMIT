@@ -132,6 +132,13 @@ function PrimarySearchAppBar() {
     >
       <MenuItem>
         <Button color="inherit">
+          {isUserLoggedIn && (
+            <li>
+              <Link className="nav-link" to="/map">
+                Map
+              </Link>
+            </li>
+          )}
           {!isUserLoggedIn ? (
             <li>
               <React.Fragment>
@@ -197,6 +204,11 @@ function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button color="inherit">
+              {isUserLoggedIn && (
+                <Link className="nav-link" to="/map">
+                  Map
+                </Link>
+              )}
               {!isUserLoggedIn ? (
                 <React.Fragment>
                   <Link className="nav-link" to="/login">

@@ -7,7 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import product1 from "../../img/product (1).jpg";
 import product2 from "../../img/product (2).jpg";
@@ -22,8 +22,12 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
+import Sort from "@material-ui/icons/Sort";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import * as lodash from "lodash";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   icon: {
     marginRight: theme.spacing(2)
   },
@@ -53,9 +57,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
   }
-}));
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+});
 
 function loadImage(index) {
   const images = [
@@ -77,83 +79,146 @@ function loadImage(index) {
   return images[index];
 }
 
-export default function ProductComponent() {
-  const classes = useStyles();
+class ProductComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cards: [
+        {
+          id: 1,
+          name: "Programmer Guide",
+          description: "blablablablabla"
+        },
+        {
+          id: 2,
+          name: "Elephant Book",
+          description: "blablablablabla"
+        },
+        {
+          id: 3,
+          name: "Self taught programmer",
+          description: "blablablablabla"
+        },
+        {
+          id: 4,
+          name: "Computer Science Book",
+          description: "blablablablabla"
+        },
+        {
+          id: 5,
+          name: "Beginning Programming Reference for dummies",
+          description: "blablablablabla"
+        },
+        {
+          id: 6,
+          name: "Computer Science Distilled",
+          description: "blablablablabla"
+        },
+        {
+          id: 7,
+          name: "Computer science principles",
+          description: "blablablablabla"
+        },
+        {
+          id: 8,
+          name: "Structure and Interpretation of Computer Programs",
+          description: "blablablablabla"
+        },
+        {
+          id: 9,
+          name: "AP Computer Science A",
+          description: "blablablablabla"
+        }
+      ]
+    };
+  }
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
+  sortProduct = cards => {
+    const nameOfProducts = cards.map(card => {
+      return card.name;
+    });
+    let arraySortedDesc = false;
+    for (let i = 0; i < nameOfProducts.length; i++) {
+      if (i + 1 === nameOfProducts.length) {
+        break;
+      }
+      if (nameOfProducts[i] < nameOfProducts[i + 1]) {
+        continue;
+      }
+      arraySortedDesc = true;
+    }
 
-      <main>
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              View Products
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
-              Browse all products here
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  {/*<Button variant="contained" color="primary">*/}
-                  {/*  Main call to action*/}
-                  {/*</Button>*/}
+    const newCards = arraySortedDesc
+      ? lodash.orderBy(cards, ["name"], ["asc"])
+      : lodash.orderBy(cards, ["name"], ["desc"]);
+    this.setState({ cards: newCards });
+    return newCards;
+  };
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+
+        <main>
+          <Container className={classes.cardGrid} maxWidth="md">
+            <Grid container justify="flex-end">
+              <Tooltip title="Sort by name">
+                <IconButton
+                  className={classes.button}
+                  aria-label="sort"
+                  onClick={() => {
+                    this.sortProduct(this.state.cards);
+                  }}
+                >
+                  <Sort />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+            <Grid container spacing={4}>
+              {this.state.cards.map(card => (
+                <Grid
+                  className="product"
+                  item
+                  key={card.id}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                >
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={loadImage(card.id)}
+                      title="Image title"
+                    />
+                    <CardContent className={classes.cardContent}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {card.name}
+                      </Typography>
+                      <Typography>{card.description}</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        variant="outlined"
+                        href="/product/2"
+                        className={classes.button}
+                      >
+                        View
+                      </Button>
+                      <Button size="small" color="primary">
+                        Edit
+                      </Button>
+                    </CardActions>
+                  </Card>
                 </Grid>
-                <Grid item>
-                  {/*<Button variant="outlined" color="primary">*/}
-                  {/*  Secondary action*/}
-                  {/*</Button>*/}
-                </Grid>
-              </Grid>
-            </div>
+              ))}
+            </Grid>
           </Container>
-        </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={4}>
-            {cards.map((card, index) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={loadImage(index)}
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Education Book
-                    </Typography>
-                    <Typography>Placeholder product here</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      variant="outlined"
-                      href="/product/2"
-                      className={classes.button}
-                    >
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-    </React.Fragment>
-  );
+        </main>
+      </React.Fragment>
+    );
+  }
 }
+
+export default withStyles(styles)(ProductComponent);
