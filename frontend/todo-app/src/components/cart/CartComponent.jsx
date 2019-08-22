@@ -7,32 +7,45 @@ import {
   Avatar,
   Divider,
   Container,
-  Paper
+  Paper,
+  withStyles,
+  Button
 } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 
-export default class CartComponent extends React.Component {
+const styles = theme => ({
+  cartBox: {
+    marginTop: theme.spacing(8)
+  },
+  title: {
+    paddingTop: theme.spacing(4)
+  }
+});
+
+class CartComponent extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <React.Fragment>
-        <Paper max-width="sm">
-          <Container>
-            <Typography variant="h5" gutterBottom>
+        <Container maxWidth="md" className={classes.cartBox}>
+          <Paper>
+            <Typography variant="h3" gutterBottom className={classes.title}>
               Cart
             </Typography>
-            <List disablePadding>
+
+            <List>
               {this.props.cart.map(product => (
                 <React.Fragment>
                   <ListItem>
                     <ListItemAvatar>
                       <Avatar alt={product.name} src={product.imageUrl} />
                     </ListItemAvatar>
+
                     <ListItemText
-                      key={product.id}
                       primary={product.name}
                       secondary={product.description}
                     ></ListItemText>
@@ -41,9 +54,14 @@ export default class CartComponent extends React.Component {
                 </React.Fragment>
               ))}
             </List>
-          </Container>
-        </Paper>
+            <Button variant="contained" color="primary">
+              Complete Order
+            </Button>
+          </Paper>
+        </Container>
       </React.Fragment>
     );
   }
 }
+
+export default withStyles(styles)(CartComponent);
