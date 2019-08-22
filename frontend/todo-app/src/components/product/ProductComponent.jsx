@@ -87,6 +87,9 @@ function loadImage(index) {
 class ProductComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      cards: this.props.cards
+    };
 
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
@@ -95,7 +98,7 @@ class ProductComponent extends React.Component {
     this.props.handleAddToCart(card);
   }
 
-  sortProduct = cards => {
+  sortProduct(cards) {
     const nameOfProducts = cards.map(card => {
       return card.name;
     });
@@ -115,7 +118,7 @@ class ProductComponent extends React.Component {
       : lodash.orderBy(cards, ["name"], ["desc"]);
     this.setState({ cards: newCards });
     return newCards;
-  };
+  }
 
   render() {
     const { classes } = this.props;
@@ -131,7 +134,7 @@ class ProductComponent extends React.Component {
                   className={classes.button}
                   aria-label="sort"
                   onClick={() => {
-                    this.sortProduct(this.props.cards);
+                    this.sortProduct(this.state.cards);
                   }}
                 >
                   <Sort />
@@ -139,7 +142,7 @@ class ProductComponent extends React.Component {
               </Tooltip>
             </Grid>
             <Grid container spacing={4}>
-              {this.props.cards.map(card => (
+              {this.state.cards.map(card => (
                 <Grid
                   className="product"
                   item
