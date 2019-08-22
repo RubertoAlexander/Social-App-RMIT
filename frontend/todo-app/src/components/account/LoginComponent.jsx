@@ -1,39 +1,36 @@
 import React, { Component } from "react";
-import AuthenticationService from "./AuthenticationService.js";
+import AuthenticationService from "../todo/AuthenticationService.js";
+import Grid from "@material-ui/core/Grid";
 
 class LoginComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      username: "sept",
+      username: "",
       password: "",
       hasLoginFailed: false,
       showSuccessMessage: false
     };
-    //this.handleUsernameChange = this.handleUsernameChange.bind(this)
-    //this.handlePasswordChange = this.handlePasswordChange.bind(this)
-    this.handleChange = this.handleChange.bind(this);
-    this.loginClicked = this.loginClicked.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
-  }
+  };
 
-  handleUsernameChange(event) {
+  handleUsernameChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
-  }
+  };
 
-  handlePasswordChange(event) {
+  handlePasswordChange = event => {
     this.setState({ password: event.target.value });
-  }
+  };
 
-  loginClicked() {
+  loginClicked = () => {
     AuthenticationService.executeJwtAuthenticationService(
       this.state.username,
       this.state.password
@@ -49,13 +46,15 @@ class LoginComponent extends Component {
         this.setState({ showSuccessMessage: false });
         this.setState({ hasLoginFailed: true });
       });
-  }
+  };
 
   render() {
     return (
-      <div>
-        <h1>Login</h1>
-        <div className="container">
+      <Grid container alignItems="center" justify="middle">
+        <Grid style={{ textAlign: "center" }} item xs={12}>
+          <h1>Login</h1>
+        </Grid>
+        <Grid style={{ textAlign: "center" }} item xs={12}>
           {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
           {this.state.hasLoginFailed && (
             <div className="alert alert-warning">
@@ -81,8 +80,8 @@ class LoginComponent extends Component {
           <button className="btn btn-success" onClick={this.loginClicked}>
             Login
           </button>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }

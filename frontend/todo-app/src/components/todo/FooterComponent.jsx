@@ -8,7 +8,7 @@ class FooterComponent extends Component {
       <footer>
         <Grid container justify="center" alignItems="center">
           <Grid item xs={12}>
-            <Typography variant="subtitle2">
+            <Typography style={{ textAlign: "center" }} variant="subtitle2">
               All Rights Reserved 2019 @RMIT SEPT - JavaBinks
             </Typography>
           </Grid>

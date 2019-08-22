@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function PrimarySearchAppBar() {
+function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -103,8 +103,6 @@ function PrimarySearchAppBar() {
   function handleMobileMenuOpen(event) {
     setMobileMoreAnchorEl(event.currentTarget);
   }
-
-  const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -135,14 +133,14 @@ function PrimarySearchAppBar() {
     >
       <MenuItem>
         <Button color="inherit">
-          {isUserLoggedIn && (
+          {props.isUserLoggedIn && (
             <li>
               <Link className="nav-link" to="/map">
                 Map
               </Link>
             </li>
           )}
-          {!isUserLoggedIn ? (
+          {!props.isUserLoggedIn ? (
             <li>
               <React.Fragment>
                 <Link className="nav-link" to="/login">
@@ -156,7 +154,7 @@ function PrimarySearchAppBar() {
           ) : (
             ""
           )}
-          {isUserLoggedIn ? (
+          {props.isUserLoggedIn ? (
             <li>
               <Link
                 className="nav-link"
@@ -207,12 +205,12 @@ function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button color="inherit">
-              {isUserLoggedIn && (
+              {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/map">
                   Map
                 </Link>
               )}
-              {!isUserLoggedIn ? (
+              {!props.isUserLoggedIn ? (
                 <React.Fragment>
                   <Link className="nav-link" to="/login">
                     Login
@@ -224,7 +222,7 @@ function PrimarySearchAppBar() {
               ) : (
                 ""
               )}
-              {isUserLoggedIn ? (
+              {props.isUserLoggedIn ? (
                 <Link
                   className="nav-link"
                   to="/logout"
@@ -257,11 +255,15 @@ function PrimarySearchAppBar() {
 }
 
 export default class HeaderComponent extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <React.Fragment>
         <header>
-          <PrimarySearchAppBar />
+          <PrimarySearchAppBar {...this.props} />
         </header>
       </React.Fragment>
     );

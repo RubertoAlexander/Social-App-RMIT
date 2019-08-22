@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute.jsx";
-import LoginComponent from "./LoginComponent.jsx";
+import LoginComponent from "../account/LoginComponent.jsx";
 import ListTodosComponent from "./ListTodosComponent.jsx";
 import ErrorComponent from "./ErrorComponent.jsx";
 import HeaderComponent from "./HeaderComponent.jsx";
@@ -13,14 +13,35 @@ import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
 import { SignUpComponent } from "../account/SignUpComponent";
 import MapComponent from "../map/MapComponent";
+import AuthenticationService from "./AuthenticationService";
+import Grid from "@material-ui/core/Grid";
 
 class TodoApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isUserLoggedIn: AuthenticationService.isUserLoggedIn()
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.checkIfUserLoggedIn();
+    }
+  }
+
+  checkIfUserLoggedIn = () => {
+    this.setState({ isUserLoggedIn: AuthenticationService.isUserLoggedIn() });
+  };
+
   render() {
     return (
-      <div className="TodoApp">
-        <Router>
-          <React.Fragment>
-            <HeaderComponent />
+      <React.Fragment>
+        <Grid container>
+          <Grid xs={12}>
+            <HeaderComponent isUserLoggedIn={this.state.isUserLoggedIn} />
+          </Grid>
+          <Grid xs={12}>
             <Switch>
               <Route path="/" exact component={ProductComponent} />
               <Route path="/product/:id" component={ProductDetailComponent} />
@@ -46,14 +67,14 @@ class TodoApp extends Component {
 
               <Route component={ErrorComponent} />
             </Switch>
+          </Grid>
+          <Grid xs={12}>
             <FooterComponent />
-          </React.Fragment>
-        </Router>
-        {/*<LoginComponent/>
-                <WelcomeComponent/>*/}
-      </div>
+          </Grid>
+        </Grid>
+      </React.Fragment>
     );
   }
 }
 
-export default TodoApp;
+export default withRouter(TodoApp);
