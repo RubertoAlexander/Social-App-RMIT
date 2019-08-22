@@ -17,7 +17,7 @@ class AuthenticationService {
     });
   }
 
-  executeSignUpNewUser(username, password, firstName, lastName) {
+  async executeSignUpNewUser(username, password, firstName, lastName) {
     return axios.post(`${API_URL}/sign-up`, {
       username,
       password

@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2)
   },
+  logo: {
+    color: "white"
+  },
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
@@ -183,7 +186,7 @@ function PrimarySearchAppBar() {
           {/*>*/}
           {/*  <MenuIcon />*/}
           {/*</IconButton>*/}
-          <Link to="/">
+          <Link className={classes.logo} to="/" color="secondary">
             <Typography className={classes.title} variant="h6" noWrap>
               Java Binks
             </Typography>

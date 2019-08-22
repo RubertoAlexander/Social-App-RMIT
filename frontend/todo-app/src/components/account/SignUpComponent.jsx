@@ -37,14 +37,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function SignUpComponent() {
+export function SignUpComponent(props) {
   const classes = useStyles();
 
-  function createAccount(values) {
-    AuthenticationService.executeSignUpNewUser(
-      values.username,
-      values.password
-    );
+  async function createAccount(values) {
+    try {
+      const result = await AuthenticationService.executeSignUpNewUser(
+        values.username,
+        values.password
+      );
+      props.history.push("/login");
+    } catch (e) {
+      return e;
+    }
   }
 
   return (
@@ -63,8 +68,8 @@ export function SignUpComponent() {
             password: ""
           }}
           validate={values => {}}
-          onSubmit={(values, { setSubmitting }) => {
-            createAccount(values);
+          onSubmit={async (values, { setSubmitting }) => {
+            await createAccount(values);
           }}
         >
           {({

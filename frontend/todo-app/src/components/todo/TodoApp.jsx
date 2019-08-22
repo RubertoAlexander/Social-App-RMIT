@@ -35,7 +35,10 @@ class TodoApp extends Component {
                 path="/todos"
                 component={ListTodosComponent}
               />
-              <Route path="/sign-up" component={SignUpComponent} />
+              <Route
+                path="/sign-up"
+                render={props => <SignUpComponent {...props} />}
+              />
               <AuthenticatedRoute path="/map" component={MapComponent} />
               <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
