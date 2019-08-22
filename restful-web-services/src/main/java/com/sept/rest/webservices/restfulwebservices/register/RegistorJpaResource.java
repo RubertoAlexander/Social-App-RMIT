@@ -47,6 +47,7 @@ public class RegistorJpaResource {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
     
+    // write test
     @PostMapping("/sign-up")
     public String signUp(@RequestBody NewUser user) {
     	System.out.println("here");
