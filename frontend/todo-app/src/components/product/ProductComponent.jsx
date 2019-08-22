@@ -96,10 +96,23 @@ class ProductComponent extends React.Component {
   }
 
   sortProduct = cards => {
-    const newCards =
-      cards[0].id < cards[1].id
-        ? lodash.orderBy(cards, ["id"], ["desc"])
-        : lodash.orderBy(cards, ["id"], ["asc"]);
+    const nameOfProducts = cards.map(card => {
+      return card.name;
+    });
+    let arraySortedDesc = false;
+    for (let i = 0; i < nameOfProducts.length; i++) {
+      if (i + 1 === nameOfProducts.length) {
+        break;
+      }
+      if (nameOfProducts[i] < nameOfProducts[i + 1]) {
+        continue;
+      }
+      arraySortedDesc = true;
+    }
+
+    const newCards = arraySortedDesc
+      ? lodash.orderBy(cards, ["name"], ["asc"])
+      : lodash.orderBy(cards, ["name"], ["desc"]);
     this.setState({ cards: newCards });
     return newCards;
   };
