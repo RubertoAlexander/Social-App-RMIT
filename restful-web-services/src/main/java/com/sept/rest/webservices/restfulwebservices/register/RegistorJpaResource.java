@@ -50,7 +50,6 @@ public class RegistorJpaResource {
     // write test
     @PostMapping("/sign-up")
     public String signUp(@RequestBody NewUser user) {
-    	System.out.println("here");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setId(count++);
         UserJpaRepository.save(user);
