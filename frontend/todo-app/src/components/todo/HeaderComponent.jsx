@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2)
   },
+  logo: {
+    color: "white"
+  },
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
@@ -77,7 +80,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function PrimarySearchAppBar({ cartTotal }) {
+function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -101,8 +104,6 @@ function PrimarySearchAppBar({ cartTotal }) {
   function handleMobileMenuOpen(event) {
     setMobileMoreAnchorEl(event.currentTarget);
   }
-
-  const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -133,23 +134,28 @@ function PrimarySearchAppBar({ cartTotal }) {
     >
       <MenuItem>
         <Button color="inherit">
-          {isUserLoggedIn && (
+          {props.isUserLoggedIn && (
             <li>
               <Link className="nav-link" to="/map">
                 Map
               </Link>
             </li>
           )}
-          {!isUserLoggedIn ? (
+          {!props.isUserLoggedIn ? (
             <li>
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
+              <React.Fragment>
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+                <Link className="" to="/sign-up">
+                  Sign Up
+                </Link>
+              </React.Fragment>
             </li>
           ) : (
             ""
           )}
-          {isUserLoggedIn ? (
+          {props.isUserLoggedIn ? (
             <li>
               <Link
                 className="nav-link"
@@ -179,7 +185,7 @@ function PrimarySearchAppBar({ cartTotal }) {
           {/*>*/}
           {/*  <MenuIcon />*/}
           {/*</IconButton>*/}
-          <Link to="/">
+          <Link className={classes.logo} to="/" color="secondary">
             <Typography className={classes.title} variant="h6" noWrap>
               Java Binks
             </Typography>
@@ -200,29 +206,32 @@ function PrimarySearchAppBar({ cartTotal }) {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button color="inherit">
-              {isUserLoggedIn && (
+              {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/cart">
-                  <CartIconComponent cartTotal={cartTotal} />
+                  <CartIconComponent cartTotal={props.cartTotal} />
                 </Link>
               )}
             </Button>
 
             <Button color="inherit">
-              {isUserLoggedIn && (
+              {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/map">
                   Map
                 </Link>
               )}
-            </Button>
-            <Button color="inherit">
-              {!isUserLoggedIn ? (
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
+              {!props.isUserLoggedIn ? (
+                <React.Fragment>
+                  <Link className="nav-link" to="/login">
+                    Login
+                  </Link>
+                  <Link className="" to="/sign-up">
+                    Sign Up
+                  </Link>
+                </React.Fragment>
               ) : (
                 ""
               )}
-              {isUserLoggedIn ? (
+              {props.isUserLoggedIn ? (
                 <Link
                   className="nav-link"
                   to="/logout"
@@ -255,11 +264,15 @@ function PrimarySearchAppBar({ cartTotal }) {
 }
 
 export default class HeaderComponent extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <React.Fragment>
         <header>
-          <PrimarySearchAppBar cartTotal={this.props.cart.length} />
+          <PrimarySearchAppBar {...this.props} />
         </header>
       </React.Fragment>
     );

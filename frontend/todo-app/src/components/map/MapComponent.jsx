@@ -1,22 +1,25 @@
 import React from "react";
-import { Map, GoogleApiWrapper } from "google-maps-react";
+import { GoogleApiWrapper, Map } from "google-maps-react";
 
 import "./Map.css";
+import Grid from "@material-ui/core/Grid";
 
 export class MapComponent extends React.Component {
   render() {
     return (
-      <div id="map-component">
-        <h1>RMIT Map</h1>
-        <div id="map">
+      <Grid container id="map-component">
+        <Grid xs={2}>
+          <h1>RMIT Map</h1>
+        </Grid>
+        <Grid item xs={10} id="map">
           <Map
             google={this.props.google}
             zoom={16}
             //style={mapStyles}
             initialCenter={{ lat: -37.808, lng: 144.9645 }}
           />
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
