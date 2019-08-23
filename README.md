@@ -413,7 +413,7 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 }
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="http://localhost:3000")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")
@@ -597,7 +597,7 @@ npm install
 #### Common Headers
 
 ```
-Origin - http://localhost:4200
+Origin - http://localhost:3000
 Content-Type - application/json
 Authorization 
 - Bearer *** or
@@ -882,7 +882,7 @@ Forms[label=<Forms and Validation>]
   - Go to the Debug view (⇧⌘D or Ctrl+Shift+D)
   - Click on gear button to create launch.json
   - Choose Chrome from the Select Environment dropdown
-  - Set URL to "url": "http://localhost:4200"
+  - Set URL to "url": "http://localhost:3000"
 - Running Examples
   - Download the zip or clone the Git repository.
   - Unzip the zip file (if you downloaded one)

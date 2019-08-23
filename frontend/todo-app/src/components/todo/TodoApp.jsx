@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute.jsx";
-import LoginComponent from "./LoginComponent.jsx";
+import LoginComponent from "../account/LoginComponent.jsx";
 import ListTodosComponent from "./ListTodosComponent.jsx";
 import ErrorComponent from "./ErrorComponent.jsx";
 import HeaderComponent from "./HeaderComponent.jsx";
@@ -27,11 +27,16 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
+import { SignUpComponent } from "../account/SignUpComponent";
+import MapComponent from "../map/MapComponent";
+import AuthenticationService from "./AuthenticationService";
+import Grid from "@material-ui/core/Grid";
 
 class TodoApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isUserLoggedIn: AuthenticationService.isUserLoggedIn(),
       cards: [
         {
           id: 1,
@@ -90,25 +95,38 @@ class TodoApp extends Component {
       ],
       cart: []
     };
-
-    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.checkIfUserLoggedIn();
+    }
+  }
+
+  checkIfUserLoggedIn = () => {
+    this.setState({ isUserLoggedIn: AuthenticationService.isUserLoggedIn() });
+  };
 
   //Add product to cart array, set from child ProductComponent's prop handler
-  handleAddToCart(product) {
+  handleAddToCart = product => {
     this.setState({ cart: [...this.state.cart, product] });
-  }
+  };
 
   render() {
     return (
-      <div className="TodoApp">
-        <Router>
-          <React.Fragment>
-            <HeaderComponent cart={this.state.cart} />
+      <React.Fragment>
+        <Grid container>
+          <Grid xs={12}>
+            <HeaderComponent
+              cart={this.state.cart}
+              isUserLoggedIn={this.state.isUserLoggedIn}
+            />
+          </Grid>
+          <Grid xs={12}>
             <Switch>
               <Route
-                exact
                 path="/"
+                exact
                 render={props => (
                   <ProductComponent
                     cards={this.state.cards}
@@ -116,6 +134,7 @@ class TodoApp extends Component {
                   />
                 )}
               />
+              <Route path="/product/:id" component={ProductDetailComponent} />
 
               <Route path="/login" component={LoginComponent} />
 
@@ -128,30 +147,30 @@ class TodoApp extends Component {
                 path="/welcome/:name"
                 component={WelcomeComponent}
               />
-
               <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
-
               <AuthenticatedRoute
                 path="/todos"
                 component={ListTodosComponent}
               />
-
+              <Route
+                path="/sign-up"
+                render={props => <SignUpComponent {...props} />}
+              />
               <AuthenticatedRoute path="/map" component={MapComponent} />
-
               <AuthenticatedRoute path="/logout" component={LogoutComponent} />
 
               <Route path="/product/:id" component={ProductDetailComponent} />
 
               <Route component={ErrorComponent} />
             </Switch>
+          </Grid>
+          <Grid xs={12}>
             <FooterComponent />
-          </React.Fragment>
-        </Router>
-        {/*<LoginComponent/>
-                <WelcomeComponent/>*/}
-      </div>
+          </Grid>
+        </Grid>
+      </React.Fragment>
     );
   }
 }
 
-export default TodoApp;
+export default withRouter(TodoApp);
