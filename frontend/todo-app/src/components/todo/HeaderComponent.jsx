@@ -206,9 +206,9 @@ function PrimarySearchAppBar(props) {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button color="inherit">
-              {isUserLoggedIn && (
+              {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/cart">
-                  <CartIconComponent cartTotal={cartTotal} />
+                  <CartIconComponent cartTotal={props.cartTotal} />
                 </Link>
               )}
             </Button>

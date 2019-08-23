@@ -11,7 +11,7 @@ import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
-import MapComponent from "../map/MapComponent.jsx";
+
 import CartComponent from "../cart/CartComponent.jsx";
 
 import product1 from "../../img/product (1).jpg";
@@ -23,10 +23,6 @@ import product6 from "../../img/product (6).jpg";
 import product7 from "../../img/product (7).jpg";
 import product8 from "../../img/product (8).jpg";
 import product9 from "../../img/product (9).jpg";
-import product10 from "../../img/product (10).jpg";
-import product11 from "../../img/product (11).jpg";
-import product12 from "../../img/product (12).jpg";
-import product13 from "../../img/product (13).jpg";
 import { SignUpComponent } from "../account/SignUpComponent";
 import MapComponent from "../map/MapComponent";
 import AuthenticationService from "./AuthenticationService";
