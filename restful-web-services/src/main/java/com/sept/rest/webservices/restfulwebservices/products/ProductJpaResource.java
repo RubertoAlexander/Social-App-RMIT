@@ -20,9 +20,9 @@ public class ProductJpaResource {
 		return productJpaRepository.findAll();
 	}
 
-	@GetMapping("/jpa/products/{productname}")
-	public Product getProduct(@PathVariable String productname){
-		return productJpaRepository.findByProductname(productname);
+	@GetMapping("/jpa/products/{productName}")
+	public List<Product> getProduct(@PathVariable String productName){
+		return productJpaRepository.findByProductName(productName);
 	}
 	
 }
