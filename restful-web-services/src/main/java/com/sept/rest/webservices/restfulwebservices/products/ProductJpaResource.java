@@ -13,21 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductJpaResource {
 	
 	@Autowired
-	private ProductHardcodedService productService;
-	
-	@Autowired
 	private ProductJpaRepository productJpaRepository;
 
 	@GetMapping("/jpa/products/all")
 	public List<Product> getAllProducts(){
 		return productJpaRepository.findAll();
-		//return productService.findAll();
 	}
 
-	@GetMapping("/jpa/products/{productname}")
-	public Product getProduct(@PathVariable String productname){
-		return productJpaRepository.findByProductname(productname);
-		//return productService.findById(id);
+	@GetMapping("/jpa/products/{productName}")
+	public List<Product> getProduct(@PathVariable String productName){
+		return productJpaRepository.findByProductName(productName);
 	}
 	
 }

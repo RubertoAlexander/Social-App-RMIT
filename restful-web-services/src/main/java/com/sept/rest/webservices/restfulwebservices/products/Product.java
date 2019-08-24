@@ -1,28 +1,70 @@
 package com.sept.rest.webservices.restfulwebservices.products;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
+@Table(name = "Product")
 public class Product {
 	
 	@Id
-    @GeneratedValue
+	@GeneratedValue
+    @Column(name = "Id", nullable = false)
     private Long id;
-    private String productname;
+	
+	@NotBlank(message = "Name may not be blank")
+	@Column(name = "ProductName", nullable = false)
+    private String productName;
+	
+	@DecimalMin("0.00")
+	@Column(name = "Price", nullable = false)
     private Double price;
+	
+	@Column(name = "Description", nullable = false)
     private String description;
     
     public Product() {
     	
     }
     
-    public Product(long id, String productname, double price, String description) {
+    public Product(String productName, double price, String description) {
 		super();
-		this.id = id;
-		this.productname = productname;
+		this.productName = productName;
 		this.price = price;
+		this.description = description;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -32,8 +74,8 @@ public class Product {
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((productname == null) ? 0 : productname.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		return result;
 	}
 
@@ -56,49 +98,17 @@ public class Product {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (productname == null) {
-			if (other.productname != null)
-				return false;
-		} else if (!productname.equals(other.productname))
-			return false;
 		if (price == null) {
 			if (other.price != null)
 				return false;
 		} else if (!price.equals(other.price))
 			return false;
+		if (productName == null) {
+			if (other.productName != null)
+				return false;
+		} else if (!productName.equals(other.productName))
+			return false;
 		return true;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return productname;
-	}
-
-	public void setName(String name) {
-		this.productname = name;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	
