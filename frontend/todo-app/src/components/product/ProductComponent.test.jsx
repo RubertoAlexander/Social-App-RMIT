@@ -51,12 +51,17 @@ describe("ProductComponent", () => {
     }
   ];
 
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallow(<ProductComponent cards={mockCards} />);
+  });
+
   it("renders without crashing", () => {
     shallow(<ProductComponent />);
   });
 
   it("sorts products ascending", () => {
-    const wrapper = shallow(<ProductComponent />);
     const newCards = wrapper
       .dive()
       .instance()
@@ -66,7 +71,6 @@ describe("ProductComponent", () => {
   });
 
   it("sorts products descending", () => {
-    const wrapper = shallow(<ProductComponent />);
     //first sorts the products ascending
     const newCards = wrapper
       .dive()
@@ -83,9 +87,30 @@ describe("ProductComponent", () => {
     );
   });
 
+  it("handles null products", () => {
+    const invalidCards = wrapper
+      .dive()
+      .instance()
+      .sortProduct(null);
+    expect(invalidCards).toEqual(undefined);
+  });
+
+  it("handles invalid products with no name", () => {
+    const invalidProduct = [
+      {
+        id: 1
+      }
+    ];
+    const invalidProducts = wrapper
+      .dive()
+      .instance()
+      .sortProduct(invalidProduct);
+    expect(invalidProducts).toEqual(undefined);
+  });
+
   it("contains 9 products", () => {
     const NUMBER_OF_PRODUCTS = 9;
-    const wrapper = shallow(<ProductComponent />);
+
     expect(wrapper.dive().find(".product").length).toEqual(NUMBER_OF_PRODUCTS);
   });
 });

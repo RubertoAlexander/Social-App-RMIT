@@ -134,6 +134,14 @@ class ProductComponent extends React.Component {
   }
 
   sortProduct = cards => {
+    if (!cards) {
+      return undefined;
+    }
+    for (const card of cards) {
+      if (!card.name) {
+        return undefined;
+      }
+    }
     const nameOfProducts = cards.map(card => {
       return card.name;
     });
