@@ -38,10 +38,10 @@ class TodoApp extends Component {
     return (
       <React.Fragment>
         <Grid container>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <HeaderComponent isUserLoggedIn={this.state.isUserLoggedIn} />
           </Grid>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <Switch>
               <Route path="/" exact component={ProductComponent} />
               <Route path="/product/:id" component={ProductDetailComponent} />
@@ -68,7 +68,7 @@ class TodoApp extends Component {
               <Route component={ErrorComponent} />
             </Switch>
           </Grid>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <FooterComponent />
           </Grid>
         </Grid>
