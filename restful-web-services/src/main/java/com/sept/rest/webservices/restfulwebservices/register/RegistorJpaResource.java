@@ -50,10 +50,16 @@ public class RegistorJpaResource {
     // write test
     @PostMapping("/sign-up")
     public String signUp(@RequestBody NewUser user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setId(count++);
-        UserJpaRepository.save(user);
-        return "user created";
+    	NewUser exists = UserJpaRepository.findByUsername(user.getUsername());
+    	if(exists != null) {
+    		return "user already exists";
+    	} else {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setId(count++);
+            UserJpaRepository.save(user);
+            return "user created";
+    	}
+
         
     }
 	
