@@ -46,8 +46,7 @@ public class RegistorJpaResource {
         this.UserJpaRepository = UserJpaRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-    
-    // write test
+
     @PostMapping("/sign-up")
     public String signUp(@RequestBody NewUser user) {
     	NewUser exists = UserJpaRepository.findByUsername(user.getUsername());
