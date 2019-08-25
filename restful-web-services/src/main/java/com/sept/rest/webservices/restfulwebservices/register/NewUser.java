@@ -20,7 +20,7 @@ public class NewUser {
 	@Column(name="Password", length=64, nullable=false)
 	private String password;
 	
-	@Column(name="cashBalance", length=64, nullable=false)
+	@Column(name="cashBalance", length=64, nullable=true)
 	private String cashBalance;
 	
 	public String getCashBalance() {
