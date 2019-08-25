@@ -9,10 +9,10 @@ import com.sept.rest.webservices.restfulwebservices.todo.Todo;
 
 @Service
 public class UserService {
-	
+
 	private static List<NewUser> users = new ArrayList<>();
 	private static long idCounter = 0;
-	
+
 	public boolean addUser(long id, String username, String password) {
 		try {
 			NewUser user = new NewUser(username,password);
@@ -24,7 +24,7 @@ public class UserService {
 		}
 
 	}
-	
-	
+
+
 
 }
