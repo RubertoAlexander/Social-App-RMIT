@@ -50,7 +50,7 @@ class LoginComponent extends Component {
 
   render() {
     return (
-      <Grid container alignItems="center" justify="middle">
+      <Grid container alignItems="center" justify="center">
         <Grid style={{ textAlign: "center" }} item xs={12}>
           <h1>Login</h1>
         </Grid>

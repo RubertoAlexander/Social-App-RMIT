@@ -8,7 +8,7 @@ export class MapComponent extends React.Component {
   render() {
     return (
       <Grid container id="map-component">
-        <Grid xs={2}>
+        <Grid item xs={2}>
           <h1>RMIT Map</h1>
         </Grid>
         <Grid item xs={10} id="map">

@@ -20,7 +20,7 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "set PORT=3000 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:staged": "cross-env CI=true react-scripts test --env=jsdom",

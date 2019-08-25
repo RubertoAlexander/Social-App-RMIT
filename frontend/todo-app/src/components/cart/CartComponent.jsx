@@ -1,15 +1,15 @@
 import React from "react";
 import {
+  Avatar,
+  Container,
+  Divider,
   List,
   ListItem,
-  ListItemText,
   ListItemAvatar,
-  Avatar,
-  Divider,
-  Container,
-  Paper
+  ListItemText,
+  Paper,
+  Typography
 } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
 
 export default class CartComponent extends React.Component {
   constructor(props) {
@@ -25,8 +25,8 @@ export default class CartComponent extends React.Component {
               Cart
             </Typography>
             <List disablePadding>
-              {this.props.cart.map(product => (
-                <React.Fragment>
+              {this.props.cart.map((product, index) => (
+                <React.Fragment key={index}>
                   <ListItem>
                     <ListItemAvatar>
                       <Avatar alt={product.name} src={product.imageUrl} />
