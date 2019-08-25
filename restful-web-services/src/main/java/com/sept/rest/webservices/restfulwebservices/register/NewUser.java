@@ -1,17 +1,36 @@
 package com.sept.rest.webservices.restfulwebservices.register;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="USER")
 public class NewUser {
 	@Id
 	@GeneratedValue
+	@Column(name="Id", nullable = false)
 	private Long id;
+	
+	@Column(name="Username", length=64, nullable=false)
 	private String username;
+	
+	@Column(name="Password", length=64, nullable=false)
 	private String password;
 	
+	@Column(name="cashBalance", length=64, nullable=true)
+	private String cashBalance;
+	
+	public String getCashBalance() {
+		return cashBalance;
+	}
+
+	public void setCashBalance(String cashBalance) {
+		this.cashBalance = cashBalance;
+	}
+
 	public NewUser() {
 		
 	}
