@@ -4,7 +4,6 @@ import AuthenticationService from "./AuthenticationService.js";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
-
 import { fade, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
@@ -13,6 +12,8 @@ import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
+
+import { CartIconComponent } from "../cart/CartIconComponent.jsx";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -204,6 +205,14 @@ function PrimarySearchAppBar(props) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <Button color="inherit">
+              {props.isUserLoggedIn && (
+                <Link className="nav-link" to="/cart">
+                  <CartIconComponent cartTotal={props.cartTotal} />
+                </Link>
+              )}
+            </Button>
+
             <Button color="inherit">
               {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/map">

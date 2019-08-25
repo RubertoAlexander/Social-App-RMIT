@@ -1,4 +1,6 @@
 import React from "react";
+import ReactDOM from "react-dom";
+
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,6 +11,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Sort from "@material-ui/icons/Sort";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+
 import product1 from "../../img/product (1).jpg";
 import product2 from "../../img/product (2).jpg";
 import product3 from "../../img/product (3).jpg";
@@ -22,9 +29,7 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
-import Sort from "@material-ui/icons/Sort";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+
 import * as lodash from "lodash";
 
 const styles = theme => ({
@@ -83,57 +88,17 @@ class ProductComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [
-        {
-          id: 1,
-          name: "Programmer Guide",
-          description: "blablablablabla"
-        },
-        {
-          id: 2,
-          name: "Elephant Book",
-          description: "blablablablabla"
-        },
-        {
-          id: 3,
-          name: "Self taught programmer",
-          description: "blablablablabla"
-        },
-        {
-          id: 4,
-          name: "Computer Science Book",
-          description: "blablablablabla"
-        },
-        {
-          id: 5,
-          name: "Beginning Programming Reference for dummies",
-          description: "blablablablabla"
-        },
-        {
-          id: 6,
-          name: "Computer Science Distilled",
-          description: "blablablablabla"
-        },
-        {
-          id: 7,
-          name: "Computer science principles",
-          description: "blablablablabla"
-        },
-        {
-          id: 8,
-          name: "Structure and Interpretation of Computer Programs",
-          description: "blablablablabla"
-        },
-        {
-          id: 9,
-          name: "AP Computer Science A",
-          description: "blablablablabla"
-        }
-      ]
+      cards: this.props.cards
     };
+
+    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
-  sortProduct = cards => {
+  handleAddToCart(card) {
+    this.props.handleAddToCart(card);
+  }
+
+  sortProduct(cards) {
     if (!cards) {
       return undefined;
     }
@@ -161,7 +126,7 @@ class ProductComponent extends React.Component {
       : lodash.orderBy(cards, ["name"], ["desc"]);
     this.setState({ cards: newCards });
     return newCards;
-  };
+  }
 
   render() {
     const { classes } = this.props;
@@ -221,6 +186,15 @@ class ProductComponent extends React.Component {
                       >
                         Edit
                       </Button>
+
+                      <IconButton
+                        onClick={this.handleAddToCart.bind(this, card)}
+                        color="primary"
+                        className={classes.button}
+                        aria-label="add to shopping cart"
+                      >
+                        <AddShoppingCartIcon />
+                      </IconButton>
                     </CardActions>
                   </Card>
                 </Grid>
