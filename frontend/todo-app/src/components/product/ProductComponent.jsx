@@ -134,6 +134,14 @@ class ProductComponent extends React.Component {
   }
 
   sortProduct = cards => {
+    if (!cards) {
+      return undefined;
+    }
+    for (const card of cards) {
+      if (!card.name) {
+        return undefined;
+      }
+    }
     const nameOfProducts = cards.map(card => {
       return card.name;
     });
@@ -166,7 +174,7 @@ class ProductComponent extends React.Component {
             <Grid container justify="flex-end">
               <Tooltip title="Sort by name">
                 <IconButton
-                  className={classes.button}
+                  className="sort-button"
                   aria-label="sort"
                   onClick={() => {
                     this.sortProduct(this.state.cards);
@@ -201,12 +209,16 @@ class ProductComponent extends React.Component {
                     <CardActions>
                       <Button
                         variant="outlined"
-                        href="/product/2"
-                        className={classes.button}
+                        href={/product/ + card.id}
+                        className="view-button"
                       >
                         View
                       </Button>
-                      <Button size="small" color="primary">
+                      <Button
+                        size="small"
+                        color="primary"
+                        className="edit-button"
+                      >
                         Edit
                       </Button>
                     </CardActions>
