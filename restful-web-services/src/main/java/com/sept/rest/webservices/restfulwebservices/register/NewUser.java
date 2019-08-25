@@ -20,6 +20,17 @@ public class NewUser {
 	@Column(name="Password", length=64, nullable=false)
 	private String password;
 	
+	@Column(name="cashBalance", length=64, nullable=false)
+	private String cashBalance;
+	
+	public String getCashBalance() {
+		return cashBalance;
+	}
+
+	public void setCashBalance(String cashBalance) {
+		this.cashBalance = cashBalance;
+	}
+
 	public NewUser() {
 		
 	}
