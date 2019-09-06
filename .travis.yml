@@ -1,0 +1,34 @@
+sudo: false
+language: nodejs
+#add language, etc. here
+
+cache:
+  directories:
+    - $HOME/gcloud/
+env:
+  - PATH=$PATH:$HOME/gcloud/google-cloud-sdk/bin GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/client_secrets.json #Other environment variables on same line
+
+before_install:
+  - if [ ! -d $HOME/gcloud/google-cloud-sdk ]; then
+    mkdir -p $HOME/gcloud &&
+    wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz --directory-prefix=$HOME/gcloud &&
+    cd $HOME/gcloud &&
+    tar xzf google-cloud-sdk.tar.gz &&
+    printf '\ny\n\ny\ny\n' | ./google-cloud-sdk/install.sh &&
+    cd $TRAVIS_BUILD_DIR;
+    fi
+  - gcloud -q components update
+  - if [ -a client_secrets.json ]; then
+    gcloud -q auth activate-service-account --key-file client_secrets.json;
+    fi
+
+install:
+#Add app specific setup here
+#Use '-q' to disable interactive prompts
+  - cd frontend/todo-app
+  - npm install
+
+script:
+#Test and/or deploy your app with gcloud commands here!
+  - cd frontend/todo-app
+  - npm run test
