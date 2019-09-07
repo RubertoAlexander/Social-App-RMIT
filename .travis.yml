@@ -27,17 +27,18 @@ before_install:
   # Here we use the decrypted service account credentials to authenticate the command line tool
   - gcloud auth activate-service-account --key-file client-secret.json
 # [END auth]
-branches:
-  only:
-    - master
-    - develop/*
 install:
   # Set the correct project to deploy to
   - gcloud config set project sept-assignment-251710
   - cd frontend/todo-app && npm install
   - CI=false npm run build
-script:
-  # Run the unit tests
-  - npm run test
-  # Deploy the app
-  - gcloud -q app deploy app.yaml --promote
+stages:
+  - test
+  - name: deploy
+    if: branch = master
+jobs:
+  include:
+    - stage: test
+      script: npm run test
+    - stage: deploy
+      script: gcloud -q app deploy app.yaml --promote
