@@ -42,5 +42,5 @@ jobs:
       script: npm run test
     - stage: deploy
       script:
-      - gcloud -q app deploy app.yaml --promote
-      - mvn appengine:deploy
+      - gcloud -q app deploy -v PRODUCTION app.yaml --promote
+#      - mvn appengine:deploy
