@@ -35,10 +35,13 @@ install:
 stages:
   - test
   - name: deploy
-    if: branch = master
+    #if: branch = master
 jobs:
   include:
     - stage: test
       script: npm run test
     - stage: deploy
-      script: gcloud -q app deploy app.yaml --promote
+      script:
+      - gcloud -q app deploy app.yaml --promote
+      - cd .. && cd restful-web-services/src
+      - mvn appengine:deploy
