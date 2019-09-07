@@ -1,4 +1,4 @@
-env: flex
+env: standard
 runtime: nodejs
 instance_class: F1
 automatic_scaling:
