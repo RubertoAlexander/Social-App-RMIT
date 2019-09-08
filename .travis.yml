@@ -47,5 +47,4 @@ jobs:
         - ls
         - cd ..
         - ls
-        - cd restful-web-services
-        - ./mvnw appengine:deploy
+        - mvn appengine:deploy
