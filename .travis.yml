@@ -47,4 +47,4 @@ jobs:
         - cd ../..
         - cd restful-web-services
         - chmod 700 ./mvnw
-        - ./mvnw appengine:deploy
+        - ./mvnw clean package appengine:deploy
