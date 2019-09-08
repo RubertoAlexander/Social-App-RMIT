@@ -1,3 +1,6 @@
+# Build Status
+[![Build Status](https://travis-ci.com/RMIT-SEPT/JavaBinks.svg?token=pm9eaEqWsiEJzGztmVkj&branch=master)](https://travis-ci.com/RMIT-SEPT/JavaBinks)
+
 # Your First Full Stack Application with React and Spring Boot
 
 
