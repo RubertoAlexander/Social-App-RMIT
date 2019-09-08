@@ -44,7 +44,6 @@ jobs:
     - stage: deploy
       script:
         - gcloud -q app deploy -v production app.yaml --promote
-        - ls
-        - cd ..
-        - ls
-        - mvn appengine:deploy
+        - cd ../..
+        - cd restful-web-services
+        - ./mvn appengine:deploy
