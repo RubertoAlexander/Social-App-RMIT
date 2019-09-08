@@ -34,7 +34,7 @@ install:
   - cd frontend/todo-app && npm install
   - CI=false npm run build
 stages:
-  - test
+#  - test
   - name: deploy
     #if: branch = master
 jobs:
@@ -44,4 +44,6 @@ jobs:
     - stage: deploy
       script:
         - gcloud -q app deploy -v production app.yaml --promote
+        - cd ..
+        - cd restful-web-services
         - ./mvnw appengine:deploy
