@@ -43,4 +43,4 @@ jobs:
     - stage: deploy
       script:
       - gcloud -q app deploy -v production app.yaml --promote
-#      - mvn appengine:deploy
+      - mvn appengine:deploy
