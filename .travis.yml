@@ -46,4 +46,5 @@ jobs:
         - gcloud -q app deploy -v production app.yaml --promote
         - cd ../..
         - cd restful-web-services
-        - ./mvn appengine:deploy
+        - ls
+        - ./mvnw appengine:deploy
