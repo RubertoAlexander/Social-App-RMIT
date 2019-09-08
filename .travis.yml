@@ -25,7 +25,6 @@ before_install:
   - tar -xzf credentials.tar.gz
   - mkdir -p lib
   # Here we use the decrypted service account credentials to authenticate the command line tool
-  - gcloud auth activate-service-account --key-file sept-assignment-backend-1fad5bfd50a5.json
   - gcloud auth activate-service-account --key-file sept-assignment-251710-2c44ac833d3e.json
 # [END auth]
 install:
@@ -45,6 +44,7 @@ jobs:
       script:
         - gcloud -q app deploy -v production app.yaml --promote
         - cd ../..
+        - gcloud auth activate-service-account --key-file sept-assignment-backend-1fad5bfd50a5.json
         - cd restful-web-services
         - chmod 700 ./mvnw
         - ./mvnw clean package appengine:deploy
