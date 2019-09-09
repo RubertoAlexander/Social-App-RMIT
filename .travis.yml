@@ -50,7 +50,7 @@ jobs:
       script:
         - cd frontend/todo-app
         - npm ci
-        - npm run build
+        - CI=false npm run build
         - gcloud -q app deploy -v production app.yaml --promote
         - cd ../..
         - gcloud auth activate-service-account --key-file sept-assignment-backend-0e6d9587e6d9.json
