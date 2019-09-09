@@ -30,22 +30,33 @@ before_install:
 install:
   # Set the correct project to deploy to
   - gcloud config set project sept-assignment-251710
-  - cd frontend/todo-app && npm install
-  - CI=false npm run build
 stages:
+  - build
   - test
   - name: deploy
-    #if: branch = master
+    if: branch = master
 jobs:
   include:
+    - stage: build
+      script:
+        - cd frontend/todo-app && npm install
+        - cd ../..
+        - cd restful-web-services
+        - chmod 700 ./mvnw
+        - ./mvnw clean package
+        - cd ..
     - stage: test
-      script: npm run test
+      script:
+        - cd frontend/todo-app
+        - npm run test
+        - cd ../..
     - stage: deploy
       script:
+        - cd frontend/todo-app
         - gcloud -q app deploy -v production app.yaml --promote
         - cd ../..
         - gcloud auth activate-service-account --key-file sept-assignment-backend-0e6d9587e6d9.json
         - gcloud config set project sept-assignment-backend
         - cd restful-web-services
-        - chmod 700 ./mvnw
-        - ./mvnw clean package appengine:deploy
+        - ./mvnw appengine:deploy
+
