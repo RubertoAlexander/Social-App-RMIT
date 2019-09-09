@@ -56,5 +56,6 @@ jobs:
         - gcloud auth activate-service-account --key-file sept-assignment-backend-0e6d9587e6d9.json
         - gcloud config set project sept-assignment-backend
         - cd restful-web-services
+        - chmod 700 ./mvnw
         - ./mvnw clean package appengine:deploy
 
