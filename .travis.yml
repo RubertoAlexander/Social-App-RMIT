@@ -34,7 +34,7 @@ stages:
   - build
   - test
   - name: deploy
-    if: branch = master
+    #if: branch = master
 jobs:
   include:
     - stage: build
