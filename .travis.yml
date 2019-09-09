@@ -33,7 +33,7 @@ install:
 stages:
   - test
   - name: deploy
-    #if: branch = master
+    if: branch = master
 jobs:
   include:
     - stage: test
