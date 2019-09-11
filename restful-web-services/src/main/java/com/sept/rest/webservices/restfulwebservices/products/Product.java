@@ -8,32 +8,34 @@ import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
-
 @Entity
 @Table(name = "Product")
 public class Product {
-	
+
 	@Id
 	@GeneratedValue
-    @Column(name = "Id", nullable = false)
-    private Long id;
-	
+	@Column(name = "Id", nullable = false)
+	private Long id;
+
 	@NotBlank(message = "Name may not be blank")
 	@Column(name = "ProductName", nullable = false)
-    private String productName;
-	
+	private String productName;
+
 	@DecimalMin("0.00")
 	@Column(name = "Price", nullable = false)
-    private Double price;
-	
+	private Double price;
+
 	@Column(name = "Description", nullable = false)
-    private String description;
-    
-    public Product() {
-    	
-    }
-    
-    public Product(String productName, double price, String description) {
+	private String description;
+
+	@Column(name = "Status", nullable = false)
+	private boolean status = true;
+
+	public Product() {
+
+	}
+
+	public Product(String productName, double price, String description) {
 		super();
 		this.productName = productName;
 		this.price = price;
@@ -68,6 +70,14 @@ public class Product {
 		this.description = description;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,6 +86,7 @@ public class Product {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
+		result = prime * result + (status ? 1231 : 1237);
 		return result;
 	}
 
@@ -108,8 +119,11 @@ public class Product {
 				return false;
 		} else if (!productName.equals(other.productName))
 			return false;
+		if (status != other.status)
+			return false;
 		return true;
 	}
 
 	
+
 }

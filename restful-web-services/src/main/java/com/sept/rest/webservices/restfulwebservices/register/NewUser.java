@@ -21,13 +21,13 @@ public class NewUser {
 	private String password;
 	
 	@Column(name="cashBalance", length=64, nullable=true)
-	private String cashBalance;
+	private double cashBalance;
 	
-	public String getCashBalance() {
+	public double getCashBalance() {
 		return cashBalance;
 	}
 
-	public void setCashBalance(String cashBalance) {
+	public void setCashBalance(double cashBalance) {
 		this.cashBalance = cashBalance;
 	}
 
