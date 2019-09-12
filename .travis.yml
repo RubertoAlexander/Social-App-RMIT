@@ -33,7 +33,7 @@ install:
 stages:
   - test
   - name: deploy
-    if: branch = ^develop[\/].+$
+    if: branch =~ ^develop[\/].+$
 jobs:
   include:
     - stage: test
