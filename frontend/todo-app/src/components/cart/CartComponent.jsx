@@ -8,7 +8,8 @@ import {
   ListItemAvatar,
   ListItemText,
   Paper,
-  Typography
+  Typography,
+  Button
 } from "@material-ui/core";
 
 export default class CartComponent extends React.Component {
@@ -41,6 +42,13 @@ export default class CartComponent extends React.Component {
                 </React.Fragment>
               ))}
             </List>
+            <Button
+              type="reset"
+              variant="contained"
+              onClick={this.props.handleClearCart}
+            >
+              Clear Cart
+            </Button>
           </Container>
         </Paper>
       </React.Fragment>

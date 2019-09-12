@@ -108,6 +108,10 @@ class TodoApp extends Component {
     this.setState({ cart: [...this.state.cart, product] });
   };
 
+  handleClearCart = () => {
+    this.setState({ cart: [] });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -136,7 +140,12 @@ class TodoApp extends Component {
 
               <AuthenticatedRoute
                 path="/cart"
-                render={props => <CartComponent cart={this.state.cart} />}
+                render={props => (
+                  <CartComponent
+                    cart={this.state.cart}
+                    handleClearCart={this.handleClearCart}
+                  />
+                )}
               />
 
               <AuthenticatedRoute
