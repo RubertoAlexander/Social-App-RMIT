@@ -75,6 +75,7 @@ public class ProductRepositoryTest {
 		assertThat(violations.size()).isEqualTo(0);
 	}
 
+	@Ignore
 	@Test
 	public void getProductByName() {
 		// given
@@ -87,6 +88,7 @@ public class ProductRepositoryTest {
 		assertThat(foundProduct.getProductName()).isEqualTo(product.getProductName());
 	}
 
+	@Ignore
 	@Test
 	public void insertTwoSameProducts() {
 		productRepository.save(product);
