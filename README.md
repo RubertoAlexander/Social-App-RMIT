@@ -421,7 +421,7 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 }
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="*")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtInMemoryUserDetailsService;
 import com.sept.rest.webservices.restfulwebservices.todo.Todo;
 
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="*")
 @RestController
 public class RegistorJpaResource {
 	
