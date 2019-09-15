@@ -1,3 +1,11 @@
+# Build Status
+[![Build Status](https://travis-ci.com/RMIT-SEPT/JavaBinks.svg?token=pm9eaEqWsiEJzGztmVkj&branch=master)](https://travis-ci.com/RMIT-SEPT/JavaBinks)
+
+# Important URLs
+[Frontend](https://sept-assignment-251710.appspot.com/)
+
+[Backend](https://sept-assignment-backend.appspot.com)
+
 # Your First Full Stack Application with React and Spring Boot
 
 
@@ -413,7 +421,7 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 }
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="*")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")
