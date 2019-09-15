@@ -23,24 +23,25 @@ import com.sept.rest.webservices.restfulwebservices.register.NewUser;
 @Entity
 @Table(name = "orders")
 public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @JsonFormat(pattern="dd/MM/yyyy")
-    private LocalDate date;
-    @OneToOne
-    @JoinColumn(name="Id")
-    private NewUser user;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate date;
+	@OneToOne
+	@JoinColumn(name = "Id")
+	private NewUser user;
 	private boolean paid = false;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<Product> products = new ArrayList<>();
-    
-    protected Order() {}
-    
-    @Transient
-    public double getTotalPrice() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	List<Product> products = new ArrayList<>();
+
+	protected Order() {
+	}
+
+	@Transient
+	public double getTotalPrice() {
 		double total = 0;
-		for (Product product: products) {
+		for (Product product : products) {
 			total += product.getPrice();
 		}
 		return total;
@@ -69,7 +70,7 @@ public class Order {
 	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
-	
+
 	public NewUser getUser() {
 		return user;
 	}
@@ -86,5 +87,47 @@ public class Order {
 		this.products = products;
 	}
 
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (paid ? 1231 : 1237);
+		result = prime * result + ((products == null) ? 0 : products.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (id != other.id)
+			return false;
+		if (paid != other.paid)
+			return false;
+		if (products == null) {
+			if (other.products != null)
+				return false;
+		} else if (!products.equals(other.products))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
 }
