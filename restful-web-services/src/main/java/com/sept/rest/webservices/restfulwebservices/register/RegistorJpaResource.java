@@ -14,7 +14,7 @@ import com.sept.rest.webservices.restfulwebservices.jwt.JwtInMemoryUserDetailsSe
 public class RegistorJpaResource {
 	
 	@Autowired
-	private UserService userSerivce;
+	private UserService userService;
 	
 	@Autowired
 	private JwtInMemoryUserDetailsService userDetailsService;
@@ -22,13 +22,18 @@ public class RegistorJpaResource {
 	@Autowired
 	private UserJpaRepository UserJpaRepository;
 	
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public RegistorJpaResource(UserJpaRepository UserJpaRepository,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.UserJpaRepository = UserJpaRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+
+  @Autowired
+  public RegistorJpaResource(
+      UserService userService, JwtInMemoryUserDetailsService userDetailsService,
+      UserJpaRepository UserJpaRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    this.userService = userService;
+    this.userDetailsService = userDetailsService;
+    this.UserJpaRepository = UserJpaRepository;
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+  }
 
     @PostMapping("/sign-up")
     public String signUp(@RequestBody NewUser user) {
