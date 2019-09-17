@@ -89,8 +89,11 @@ class TodoApp extends Component {
           imageUrl: product9
         }
       ],
-      cart: []
+      cart: [],
+      cartEmpty: true
     };
+
+    this.handleClearCart = this.handleClearCart.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -105,11 +108,11 @@ class TodoApp extends Component {
 
   //Add product to cart array, set from child ProductComponent's prop handler
   handleAddToCart = product => {
-    this.setState({ cart: [...this.state.cart, product] });
+    this.setState({ cart: [...this.state.cart, product], cartEmpty: false });
   };
 
   handleClearCart = () => {
-    this.setState({ cart: [] });
+    this.setState({ cart: [], cartEmpty: true });
   };
 
   render() {
@@ -144,6 +147,7 @@ class TodoApp extends Component {
                   <CartComponent
                     cart={this.state.cart}
                     handleClearCart={this.handleClearCart}
+                    empty={this.state.cartEmpty}
                   />
                 )}
               />
