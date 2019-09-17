@@ -16,8 +16,9 @@ describe("CartComponent", () => {
     ];
 
     wrapper = shallow(<CartComponent cart={cart} />);
-    const cartItem = wrapper.find(".cart-item");
-    const cartProp = wrapper.instance().props.cart;
+    console.log(wrapper.html());
+    const cartItem = wrapper.dive().find(".cartItem");
+    const cartProp = wrapper.dive().instance().props.cart;
 
     expect(cartItem.length).toEqual(cart.length);
     expect(cartProp.length).toEqual(1);
@@ -27,8 +28,8 @@ describe("CartComponent", () => {
     const cart = [];
 
     wrapper = shallow(<CartComponent cart={cart} empty={true} />);
-    const errorMessage = wrapper.find(".empty-msg");
-    const cartProp = wrapper.instance().props.cart;
+    const errorMessage = wrapper.dive().find(".emptyMsg");
+    const cartProp = wrapper.dive().instance().props.cart;
 
     expect(cartProp.length).toEqual(0);
     expect(errorMessage.length).toEqual(1);
