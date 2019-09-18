@@ -2,11 +2,12 @@ import axios from "axios";
 import { API_URL } from "../../Constants";
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = "authenticatedUser";
+export const SESSION_ATTRIBUTE_TOKEN = "userToken";
 
 class AuthenticationService {
   executeBasicAuthenticationService(username, password) {
     return axios.get(`${API_URL}/basicauth`, {
-      headers: { authorization: this.createBasicAuthToken(username, password) }
+      header: { authorization: this.createBasicAuthToken(username, password) }
     });
   }
 
@@ -41,6 +42,8 @@ class AuthenticationService {
   }
 
   createJWTToken(token) {
+    sessionStorage.setItem(SESSION_ATTRIBUTE_TOKEN, "Bearer " + token);
+    console.log(token);
     return "Bearer " + token;
   }
 

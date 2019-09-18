@@ -91,6 +91,8 @@ class ProductComponent extends React.Component {
     };
 
     this.handleAddToCart = this.handleAddToCart.bind(this);
+    console.log(this.state.cards);
+    console.log(this.props.cards);
   }
 
   handleAddToCart(card) {
@@ -161,7 +163,7 @@ class ProductComponent extends React.Component {
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image={loadImage(card.id)}
+                      image={loadImage(1)}
                       title="Image title"
                     />
                     <CardContent className={classes.cardContent}>

@@ -13,6 +13,7 @@ import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
 
 import CartComponent from "../cart/CartComponent.jsx";
+import ProductsService from "../product/ProductsService.js";
 
 import product1 from "../../img/product (1).jpg";
 import product2 from "../../img/product (2).jpg";
@@ -33,7 +34,7 @@ class TodoApp extends Component {
     super(props);
     this.state = {
       isUserLoggedIn: AuthenticationService.isUserLoggedIn(),
-      cards: [
+      /*cards: [
         {
           id: 1,
           name: "Programmer Guide",
@@ -88,12 +89,25 @@ class TodoApp extends Component {
           description: "blablablablabla",
           imageUrl: product9
         }
-      ],
+      ],*/
+      cards: [{}],
       cart: [],
       cartEmpty: true
     };
 
     this.handleClearCart = this.handleClearCart.bind(this);
+    this.getProducts = this.getProducts.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentDidMount() {
+    this.getProducts();
+  }
+
+  getProducts() {
+    ProductsService.retrieveProducts().then(response => {
+      this.setState({ cards: response.data });
+    });
   }
 
   componentDidUpdate(prevProps) {
