@@ -40,18 +40,16 @@ const styles = theme => ({
 class CartComponent extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { empty: this.props.empty };
   }
 
-  handleClearCart = () => {
+  /*handleClearCart = () => {
     this.setState({ empty: true });
     this.props.handleClearCart();
-  };
+  };*/
 
   items = () => {
     const { classes } = this.props;
-    if (this.state.empty) {
+    if (this.props.empty) {
       return (
         <Container className={classes.emptyMsg}>
           <Typography className="emptyMsg" variant="h3" align="center">
@@ -92,7 +90,7 @@ class CartComponent extends React.Component {
             className={classes.clearCartBut}
             type="reset"
             variant="contained"
-            onClick={this.handleClearCart}
+            onClick={this.props.handleClearCart}
           >
             Clear Cart
           </Button>

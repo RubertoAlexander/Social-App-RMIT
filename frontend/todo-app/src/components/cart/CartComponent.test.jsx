@@ -1,7 +1,6 @@
 import React from "react";
 import CartComponent from "./CartComponent";
 import { shallow } from "enzyme";
-import TodoApp from "../todo/TodoApp";
 
 describe("CartComponent", () => {
   let wrapper;
