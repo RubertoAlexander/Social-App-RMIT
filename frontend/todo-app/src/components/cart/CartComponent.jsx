@@ -12,7 +12,8 @@ import {
   Button,
   withStyles
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+
+import CartService from "../cart/CartService";
 
 const styles = theme => ({
   cartPaper: {
@@ -40,12 +41,13 @@ const styles = theme => ({
 class CartComponent extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handlePurchase = this.handlePurchase.bind(this);
   }
 
-  /*handleClearCart = () => {
-    this.setState({ empty: true });
-    this.props.handleClearCart();
-  };*/
+  handlePurchase() {
+    CartService.executeCartService(this.props.cart);
+  }
 
   items = () => {
     const { classes } = this.props;
@@ -93,6 +95,14 @@ class CartComponent extends React.Component {
             onClick={this.props.handleClearCart}
           >
             Clear Cart
+          </Button>
+          <Button
+            className={classes.clearCartBut}
+            type="submit"
+            variant="contained"
+            onClick={this.handlePurchase}
+          >
+            Purchase
           </Button>
         </Container>
       );
