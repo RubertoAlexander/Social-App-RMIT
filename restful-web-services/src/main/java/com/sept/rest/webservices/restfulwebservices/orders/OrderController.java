@@ -34,9 +34,7 @@ public class OrderController {
 			return new ResponseEntity<>(new OrderResponse(order, "User does not exist. Order creation failed."),
 					HttpStatus.NOT_ACCEPTABLE);
 		}
-
-		orderService.create(order);
-
+		
 		for (Long productID : productsID) {
 			if (orderService.getProducts(productID) != null && orderService.getProducts(productID).isStatus()) {
 				orderService.getProducts(productID).setStatus(false);
@@ -47,7 +45,7 @@ public class OrderController {
 		if (order.getUser().getCashBalance() >= order.getTotalPrice()) {
 			order.getUser().setCashBalance(order.getUser().getCashBalance() - order.getTotalPrice());
 			order.setPaid(true);
-			orderService.update(order);
+			orderService.create(order);
 			return new ResponseEntity<>(new OrderResponse(order, "Order Created and Paid"), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(new OrderResponse(order, "Insufficient Funds"), HttpStatus.NOT_ACCEPTABLE);

@@ -4,15 +4,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,17 +23,26 @@ import com.sept.rest.webservices.restfulwebservices.register.NewUser;
 @Entity
 @Table(name = "orders")
 public class Order {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "order_id")
 	private long id;
+	
 	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "local_date")
 	private LocalDate date;
-	@OneToOne
-	@JoinColumn(name = "Id")
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private NewUser user;
-	private boolean paid = false;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	
+	@OneToMany
+    @JoinColumn(name = "product_id")
 	List<Product> products = new ArrayList<>();
+	
+	@Column(name = "paid")
+	private boolean paid = false;
 
 	protected Order() {
 	}

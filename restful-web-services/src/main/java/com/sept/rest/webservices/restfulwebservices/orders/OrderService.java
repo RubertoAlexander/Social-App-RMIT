@@ -1,6 +1,7 @@
 package com.sept.rest.webservices.restfulwebservices.orders;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,19 +37,18 @@ public class OrderService {
 	}
 
 	public Product getProducts(Long id) {
-		for (Product product : productJpaRepository.findAll()) {
-			if (product.getId() == id) {
-				return product;
-			}
+		Optional<Product> optional = this.productJpaRepository.findById(id);
+		if (optional.isPresent()) {
+			System.out.println(id);
+			return optional.get();
 		}
 		return null;
 	}
 
-	public NewUser getUser(Long userID) {
-		for (NewUser user : userJpaRepository.findAll()) {
-			if (user.getId() == userID) {
-				return user;
-			}
+	public NewUser getUser(Long id) {
+		Optional<NewUser> optional = this.userJpaRepository.findById(id);
+		if (optional.isPresent()) {
+			return optional.get();
 		}
 		return null;
 	}
