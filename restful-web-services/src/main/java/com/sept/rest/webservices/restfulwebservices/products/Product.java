@@ -3,22 +3,23 @@ package com.sept.rest.webservices.restfulwebservices.products;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "Product")
+@Table(name="PRODUCT")
 public class Product {
 
 	@Id
-	@GeneratedValue
-	@Column(name = "Id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "product_id", nullable = false)
 	private Long id;
 
 	@NotBlank(message = "Name may not be blank")
-	@Column(name = "ProductName", nullable = false)
+	@Column(name = "product_name", nullable = false)
 	private String productName;
 
 	@DecimalMin("0.00")
@@ -29,7 +30,7 @@ public class Product {
 	private String description;
 
 	@Column(name = "Status", nullable = false)
-	private boolean status = true;
+	public boolean status = true;
 
 	public Product() {
 
@@ -45,7 +46,10 @@ public class Product {
 	public Long getId() {
 		return id;
 	}
-
+	
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getProductName() {
 		return productName;
 	}
