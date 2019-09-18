@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,50 +17,50 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sept.rest.webservices.restfulwebservices.products.Product;
+import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
 import com.sept.rest.webservices.restfulwebservices.register.NewUser;
 
 @Entity
 @Table(name = "orders")
 public class Order {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "order_id")
-	private long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "local_date")
 	private LocalDate date;
-	
+
+	private boolean paid = false;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private NewUser user;
-	
-	@OneToMany
-    @JoinColumn(name = "product_id")
-	List<Product> products = new ArrayList<>();
-	
-	@Column(name = "paid")
-	private boolean paid = false;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
+	List<LineItem> lineItems;
 
 	protected Order() {
+		super();
+		lineItems = new ArrayList<>();
 	}
 
 	@Transient
 	public double getTotalPrice() {
 		double total = 0;
-		for (Product product : products) {
-			total += product.getPrice();
+		for (LineItem item : lineItems) {
+			total += item.getProduct().getPrice();
 		}
 		return total;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -88,12 +88,12 @@ public class Order {
 		this.user = user;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<LineItem> getLineItems() {
+		return lineItems;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setLineItems(List<LineItem> lineItems) {
+		this.lineItems = lineItems;
 	}
 
 	@Override
@@ -101,9 +101,9 @@ public class Order {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lineItems == null) ? 0 : lineItems.hashCode());
 		result = prime * result + (paid ? 1231 : 1237);
-		result = prime * result + ((products == null) ? 0 : products.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -122,14 +122,17 @@ public class Order {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (lineItems == null) {
+			if (other.lineItems != null)
+				return false;
+		} else if (!lineItems.equals(other.lineItems))
 			return false;
 		if (paid != other.paid)
-			return false;
-		if (products == null) {
-			if (other.products != null)
-				return false;
-		} else if (!products.equals(other.products))
 			return false;
 		if (user == null) {
 			if (other.user != null)

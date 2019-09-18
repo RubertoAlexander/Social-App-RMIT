@@ -3,6 +3,7 @@ package com.sept.rest.webservices.restfulwebservices.register;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +44,17 @@ public class RegistorJpaResource {
 			UserJpaRepository.save(user);
 			return "user created";
 		}
-
+	}
+	
+	@PostMapping("user/{id}/cashBalance/add/{amount}")
+	public NewUser addCashBalance(@PathVariable double amount, @PathVariable Long id) {
+		NewUser user = null;
+		if (UserJpaRepository.existsById(id)) {
+			 user = UserJpaRepository.findById(id).get();
+			 user.setCashBalance(user.getCashBalance() + amount);
+		}
+		
+		return user;
 	}
 
 }
