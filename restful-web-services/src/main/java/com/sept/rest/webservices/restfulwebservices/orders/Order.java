@@ -32,7 +32,7 @@ public class Order {
     @JoinColumn(name="Id")
     private NewUser user;
 	private boolean paid = false;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     List<Product> products = new ArrayList<>();
     
     protected Order() {}
