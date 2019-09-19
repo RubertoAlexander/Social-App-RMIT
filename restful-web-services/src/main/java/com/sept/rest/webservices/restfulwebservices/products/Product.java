@@ -14,26 +14,22 @@ import javax.validation.constraints.NotBlank;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "product_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank(message = "Name may not be blank")
-	@Column(name = "product_name", nullable = false)
+	@Column(name = "product_name")
 	private String productName;
 
 	@DecimalMin("0.00")
-	@Column(name = "Price", nullable = false)
 	private Double price;
 
-	@Column(name = "Description", nullable = false)
 	private String description;
 
-	@Column(name = "Status", nullable = false)
-	public boolean status = true;
+	private boolean status = true;
 
 	public Product() {
-
+		super();
 	}
 
 	public Product(String productName, double price, String description) {
@@ -46,10 +42,11 @@ public class Product {
 	public Long getId() {
 		return id;
 	}
-	
-	public void setId(long id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -127,7 +124,5 @@ public class Product {
 			return false;
 		return true;
 	}
-
-	
 
 }

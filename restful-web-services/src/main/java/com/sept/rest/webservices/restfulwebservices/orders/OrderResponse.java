@@ -26,7 +26,7 @@ public class OrderResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
 
+	
+	
 }
