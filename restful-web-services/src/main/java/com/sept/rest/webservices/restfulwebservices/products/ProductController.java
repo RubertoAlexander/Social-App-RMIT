@@ -33,5 +33,16 @@ public class ProductController {
 		productJpaRepository.save(product);
 		return product;
 	}
-	
+
+
+	@GetMapping("/products/{id}")
+	public Product getProductByID(@PathVariable Integer id){
+		Product product = productJpaRepository.findById(id);
+		if(product != null) {
+			return product;
+		}
+		return null;
+	}
+
+
 }

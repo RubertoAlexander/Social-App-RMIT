@@ -10,7 +10,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "product")
+@Table(name="PRODUCT")
 public class Product {
 
 	@Id
@@ -23,11 +23,11 @@ public class Product {
 
 	@DecimalMin("0.00")
 	private Double price;
-	
+
 	private String description;
-	
+
 	private boolean status = true;
-	
+
 	public Product() {
 		super();
 	}

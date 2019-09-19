@@ -208,7 +208,7 @@ function PrimarySearchAppBar(props) {
             <Button color="inherit">
               {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/cart">
-                  <CartIconComponent cartTotal={props.cartTotal} />
+                  <CartIconComponent cartTotal={props.cart.length} />
                 </Link>
               )}
             </Button>

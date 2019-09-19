@@ -8,19 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sept.rest.webservices.restfulwebservices.jwt.JwtInMemoryUserDetailsService;
-
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 public class RegistorJpaResource {
 
-	@Autowired
+
 	private UserService userService;
 
-	@Autowired
 	private JwtInMemoryUserDetailsService userDetailsService;
 
-	@Autowired
 	private UserJpaRepository UserJpaRepository;
 
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -45,7 +41,7 @@ public class RegistorJpaResource {
 			return "user created";
 		}
 	}
-	
+
 	@PostMapping("user/{id}/cashBalance/add/{amount}")
 	public NewUser addCashBalance(@PathVariable double amount, @PathVariable Long id) {
 		NewUser user = null;
@@ -53,7 +49,7 @@ public class RegistorJpaResource {
 			 user = UserJpaRepository.findById(id).get();
 			 user.setCashBalance(user.getCashBalance() + amount);
 		}
-		
+
 		return user;
 	}
 
