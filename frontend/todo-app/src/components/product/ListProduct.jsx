@@ -3,40 +3,49 @@
  */
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Typography from "@material-ui/core/Typography";
-import {Formik} from "formik";
+import { Formik } from "formik";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
 import Container from "@material-ui/core/Container";
+import ProductService from "../../service/ProductService";
 
-class ListProduct extends React.Component {
+export class ListProduct extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  listNewProduct = async values => {
+    try {
+      const result = await ProductService.listNewProduct(
+        values,
+        values.imageUrl
+      );
+      console.log(result);
+    } catch (e) {
+      return e;
+    }
+  };
 
   render() {
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div>
-          <Avatar>
-            <LockOutlinedIcon />
-          </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            List new product
           </Typography>
           <Formik
             initialValues={{
-              username: "",
-              password: ""
+              productName: "",
+              price: 0,
+              description: "",
+              imageUrl: null
             }}
             validate={values => {}}
             onSubmit={async (values, { setSubmitting }) => {
-              await createAccount(values);
+              await this.listNewProduct(values);
             }}
           >
             {({
@@ -46,7 +55,8 @@ class ListProduct extends React.Component {
               handleChange,
               handleBlur,
               handleSubmit,
-              isSubmitting
+              isSubmitting,
+              setFieldValue
             }) => (
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
@@ -54,30 +64,65 @@ class ListProduct extends React.Component {
                     <TextField
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.username}
+                      value={values.name}
                       variant="outlined"
                       required
                       fullWidth
-                      id="username"
-                      label="Username"
-                      name="username"
-                      autoComplete="username"
+                      id="productName"
+                      label="productName"
+                      name="productName"
+                      type="text"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.password}
+                      value={values.price}
                       variant="outlined"
                       required
                       fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
+                      name="price"
+                      label="price"
+                      id="price"
+                      type="number"
                     />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.description}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="description"
+                      label="description"
+                      id="description"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <input
+                      accept="image/*"
+                      // className={classes.input}
+                      onBlur={handleBlur}
+                      required
+                      name="imageUrl"
+                      id="imageUrl"
+                      type="file"
+                      onChange={event => {
+                        setFieldValue("imageUrl", event.currentTarget.files[0]);
+                      }}
+                    />
+                    <label htmlFor="imageUrl">
+                      <Button
+                        component="span"
+                        // className={classes.button}
+                      >
+                        Upload Product Image
+                      </Button>
+                    </label>
                   </Grid>
                 </Grid>
                 <Button
@@ -87,15 +132,8 @@ class ListProduct extends React.Component {
                   color="primary"
                   disabled={isSubmitting}
                 >
-                  Sign Up
+                  List new product
                 </Button>
-                <Grid container justify="flex-end">
-                  <Grid item>
-                    <Link href="/login" variant="body2">
-                      Already have an account? Sign in
-                    </Link>
-                  </Grid>
-                </Grid>
               </form>
             )}
           </Formik>
