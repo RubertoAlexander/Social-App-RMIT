@@ -17,6 +17,7 @@ import com.sept.rest.webservices.restfulwebservices.lineitem.LineItemService;
 import com.sept.rest.webservices.restfulwebservices.products.Product;
 import com.sept.rest.webservices.restfulwebservices.products.ProductService;
 import com.sept.rest.webservices.restfulwebservices.register.NewUser;
+import com.sept.rest.webservices.restfulwebservices.register.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -31,6 +32,9 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private UserService userService;
+	
 	@PostMapping(value = "/api/orders/{user_id}")
 	@ResponseBody
 	public ResponseEntity<OrderResponse> create(@PathVariable long user_id, @RequestBody List<Long> products_id) {
@@ -38,9 +42,9 @@ public class OrderController {
 		Order order;
 		NewUser user;
 		
-		if (orderService.userExist(user_id)) {
+		if (userService.existsById(user_id)) {
 			order = new Order();
-			user = orderService.findUser(user_id);
+			user = userService.findById(user_id);
 			order.setUser(user);
 		} else {
 			return new ResponseEntity<>(new OrderResponse(null, "User does not exist. Order creation failed."),
@@ -53,7 +57,7 @@ public class OrderController {
 			Product product;
 			LineItem item;
 			if (productService.productExist(product_id)) {
-				product = productService.findProduct(product_id);
+				product = productService.findById(product_id);
 				if (product.isStatus()) {
 					product.setStatus(false);
 					item = new LineItem();

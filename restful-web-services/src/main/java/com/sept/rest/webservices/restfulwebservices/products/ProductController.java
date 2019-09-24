@@ -10,39 +10,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RestController
 public class ProductController {
-	
+
 	@Autowired
-	private ProductJpaRepository productJpaRepository;
+	private ProductService productService;
 
 	@GetMapping("/jpa/products/all")
-	public List<Product> getAllProducts(){
-		return productJpaRepository.findAll();
+	public List<Product> getAllProducts() {
+		return productService.findAll();
 	}
 
 	@GetMapping("/jpa/products/{productName}")
-	public List<Product> getProduct(@PathVariable String productName){
-		return productJpaRepository.findByProductName(productName);
+	public List<Product> getProduct(@PathVariable String productName) {
+		return productService.findByProductName(productName);
 	}
-	
+
 	@PostMapping(value = "/jpa/products/sell")
 	@ResponseBody
 	public Product sellProduct(@RequestBody Product product) {
-		productJpaRepository.save(product);
+		productService.saveProduct(product);
 		return product;
 	}
 
-
 	@GetMapping("/products/{id}")
-	public Product getProductByID(@PathVariable Integer id){
-		Product product = productJpaRepository.findById(id);
-		if(product != null) {
-			return product;
+	public Product getProductByID(@PathVariable Long id) {
+		if (productService.productExist(id)) {
+			return productService.findById(id);
 		}
 		return null;
 	}
-
 
 }

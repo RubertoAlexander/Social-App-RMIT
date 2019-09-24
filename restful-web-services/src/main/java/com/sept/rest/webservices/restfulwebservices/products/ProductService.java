@@ -12,14 +12,21 @@ public class ProductService {
 	@Autowired
 	private ProductJpaRepository productRepository;
 	
+	public void saveProduct(Product product) {
+		productRepository.save(product);
+	}
+	
 	public List<Product> findAll() {
 		return this.productRepository.findAll();
 	}
 	
-	public Product findProduct(Long id) {
+	public List<Product> findByProductName(String productName) {
+		return productRepository.findByProductName(productName);
+	}
+	
+	public Product findById(Long id) {
 		Optional<Product> optional = this.productRepository.findById(id);
 		if (optional.isPresent()) {
-			System.out.println(id);
 			return optional.get();
 		}
 		return null;

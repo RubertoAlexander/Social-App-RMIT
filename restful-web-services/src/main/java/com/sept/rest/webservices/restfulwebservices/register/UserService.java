@@ -1,30 +1,35 @@
 package com.sept.rest.webservices.restfulwebservices.register;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.sept.rest.webservices.restfulwebservices.todo.Todo;
 
 @Service
 public class UserService {
-
-	private static List<NewUser> users = new ArrayList<>();
-	private static long idCounter = 0;
-
-	public boolean addUser(long id, String username, String password) {
-		try {
-			NewUser user = new NewUser(username,password);
-			users.add(user);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-
+	
+	@Autowired
+	private UserJpaRepository userRepository;
+	
+	public NewUser create(NewUser user) {
+		return userRepository.save(user);
+	}
+	
+	public NewUser findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+	
+	public boolean existsById(Long id) {
+		return userRepository.existsById(id);
 	}
 
+	public NewUser findById(Long id) {
+		Optional<NewUser> optional = this.userRepository.findById(id);
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
 
 
 }
