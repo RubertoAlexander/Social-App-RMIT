@@ -30,6 +30,7 @@ import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
 
 import * as lodash from "lodash";
+import { ProductDetailComponent } from "./ProductDetailComponent";
 
 const styles = theme => ({
   icon: {
@@ -63,39 +64,19 @@ const styles = theme => ({
   }
 });
 
-function loadImage(index) {
-  const images = [
-    product1,
-    product2,
-    product3,
-    product4,
-    product5,
-    product6,
-    product7,
-    product8,
-    product9,
-    product10,
-    product11,
-    product12,
-    product13
-  ];
-
-  return images[index];
-}
-
 class ProductComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: this.props.cards
+      cards: this.props.cards,
+      viewProductDetail: {},
+      displayProductDetail: false
     };
-
-    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
-  handleAddToCart(card) {
+  handleAddToCart = card => {
     this.props.handleAddToCart(card);
-  }
+  };
 
   sortProduct(cards) {
     if (!cards) {
@@ -127,6 +108,34 @@ class ProductComponent extends React.Component {
     return newCards;
   }
 
+  loadImage = index => {
+    const images = [
+      product1,
+      product2,
+      product3,
+      product4,
+      product5,
+      product6,
+      product7,
+      product8,
+      product9,
+      product10,
+      product11,
+      product12,
+      product13
+    ];
+
+    return images[index];
+  };
+
+  setDisplayProductDetail = value => {
+    this.setState({ displayProductDetail: value });
+  };
+
+  toggleViewProductDetail = card => {
+    this.setState({ viewProductDetail: card, displayProductDetail: true });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -134,72 +143,88 @@ class ProductComponent extends React.Component {
         <CssBaseline />
 
         <main>
-          <Container className={classes.cardGrid} maxWidth="md">
-            <Grid container justify="flex-end">
-              <Tooltip title="Sort by name">
-                <IconButton
-                  className="sort-button"
-                  aria-label="sort"
-                  onClick={() => {
-                    this.sortProduct(this.state.cards);
-                  }}
-                >
-                  <Sort />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid container spacing={4}>
-              {this.state.cards.map(card => (
-                <Grid
-                  className="product"
-                  item
-                  key={card.id}
-                  xs={12}
-                  sm={6}
-                  md={4}
-                >
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={loadImage(card.id)}
-                      title="Image title"
-                    />
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {card.name}
-                      </Typography>
-                      <Typography>{card.description}</Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        variant="outlined"
-                        href={/product/ + card.id}
-                        className="view-button"
-                      >
-                        View
-                      </Button>
-                      <Button
-                        size="small"
-                        color="primary"
-                        className="edit-button"
-                      >
-                        Edit
-                      </Button>
+          {this.state.displayProductDetail ? (
+            <Container>
+              <ProductDetailComponent
+                setDisplayProductDetail={this.setDisplayProductDetail}
+                card={this.state.viewProductDetail}
+                loadImage={this.loadImage}
+                handleAddToCart={this.handleAddToCart}
+                classes={classes}
+              />
+            </Container>
+          ) : (
+            <Container className={classes.cardGrid} maxWidth="md">
+              <Grid container justify="flex-end">
+                <Tooltip title="Sort by name">
+                  <IconButton
+                    className="sort-button"
+                    aria-label="sort"
+                    onClick={() => {
+                      this.sortProduct(this.state.cards);
+                    }}
+                  >
+                    <Sort />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid container spacing={4}>
+                {this.state.cards.map(card => (
+                  <Grid
+                    className="product"
+                    item
+                    key={card.id}
+                    xs={12}
+                    sm={6}
+                    md={4}
+                  >
+                    <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={this.loadImage(card.id)}
+                        title="Image title"
+                      />
+                      <CardContent className={classes.cardContent}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {card.name}
+                        </Typography>
+                        <Typography>{card.description}</Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            this.toggleViewProductDetail(card);
+                          }}
+                          className="view-button"
+                        >
+                          View
+                        </Button>
+                        <Button
+                          size="small"
+                          color="primary"
+                          className="edit-button"
+                        >
+                          Edit
+                        </Button>
 
-                      <IconButton
-                        onClick={this.handleAddToCart.bind(this, card)}
-                        color="primary"
-                        className={classes.button}
-                        aria-label="add to shopping cart"
-                      >
-                        <AddShoppingCartIcon />
-                      </IconButton>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
+                        <IconButton
+                          onClick={() => {
+                            this.handleAddToCart(card);
+                          }}
+                          color="primary"
+                          className={classes.button}
+                          aria-label="add to shopping cart"
+                        >
+                          <AddShoppingCartIcon />
+                        </IconButton>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+          )}
         </main>
       </React.Fragment>
     );

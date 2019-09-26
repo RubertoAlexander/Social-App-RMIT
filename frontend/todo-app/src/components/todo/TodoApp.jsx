@@ -27,6 +27,7 @@ import { SignUpComponent } from "../account/SignUpComponent";
 import MapComponent from "../map/MapComponent";
 import AuthenticationService from "./AuthenticationService";
 import Grid from "@material-ui/core/Grid";
+import { ListProduct } from "../product/ListProduct";
 
 class TodoApp extends Component {
   constructor(props) {
@@ -164,6 +165,10 @@ class TodoApp extends Component {
               <Route
                 path="/sign-up"
                 render={props => <SignUpComponent {...props} />}
+              />
+              <AuthenticatedRoute
+                path="/list-product"
+                component={ListProduct}
               />
               <AuthenticatedRoute path="/map" component={MapComponent} />
               <AuthenticatedRoute path="/logout" component={LogoutComponent} />

@@ -1,5 +1,6 @@
 package com.sept.rest.webservices.restfulwebservices.products;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class Product {
 
 	@NotBlank(message = "Name may not be blank")
 	@Column(name = "product_name")
+	@JsonProperty("productName")
 	private String productName;
 
 	@DecimalMin("0.00")
