@@ -22,7 +22,6 @@ export class ListProduct extends React.Component {
         values,
         values.imageUrl
       );
-      console.log(result);
     } catch (e) {
       return e;
     }

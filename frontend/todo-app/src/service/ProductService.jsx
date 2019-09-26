@@ -16,7 +16,6 @@ class ProductService {
     const data = new FormData();
     data.append("document", blob);
     data.append("file", image);
-    debugger;
 
     return axios.post(`${API_URL}/jpa/products/sell`, data);
   }
