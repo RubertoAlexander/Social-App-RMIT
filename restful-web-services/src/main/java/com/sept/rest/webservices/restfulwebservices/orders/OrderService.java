@@ -34,16 +34,19 @@ public class OrderService {
 	
 	/* USER SERVICE METHODS */
 	
-	public NewUser findUser(Long id) {
-		Optional<NewUser> optional = this.userRepository.findById(id);
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-		return null;
+	public NewUser findUser(String user) {
+		NewUser optional = this.userRepository.findByUsername(user);
+
+		return optional;
 	}
 	
-	public boolean userExist(Long id) {
-		return this.userRepository.existsById(id);
+	public boolean userExist(String user) {
+		NewUser newuser = this.userRepository.findByUsername(user);
+		if(newuser != null) {
+			return true;
+		}
+		return false;
+
 	}
 
 }

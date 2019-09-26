@@ -18,7 +18,7 @@ import com.sept.rest.webservices.restfulwebservices.products.Product;
 import com.sept.rest.webservices.restfulwebservices.products.ProductService;
 import com.sept.rest.webservices.restfulwebservices.register.NewUser;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 public class OrderController {
 
@@ -31,16 +31,16 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 	
-	@PostMapping(value = "/api/orders/{user_id}")
+	@PostMapping(value = "/api/orders/{userName}")
 	@ResponseBody
-	public ResponseEntity<OrderResponse> create(@PathVariable long user_id, @RequestBody List<Long> products_id) {
+	public ResponseEntity<OrderResponse> create(@PathVariable String userName, @RequestBody Long[] products_id) {
 		
 		Order order;
 		NewUser user;
 		
-		if (orderService.userExist(user_id)) {
+		if (orderService.userExist(userName)) {
 			order = new Order();
-			user = orderService.findUser(user_id);
+			user = orderService.findUser(userName);
 			order.setUser(user);
 		} else {
 			return new ResponseEntity<>(new OrderResponse(null, "User does not exist. Order creation failed."),

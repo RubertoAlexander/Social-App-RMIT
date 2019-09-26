@@ -46,7 +46,7 @@ class CartComponent extends React.Component {
   }
 
   handlePurchase() {
-    CartService.executeCartService(this.props.cart);
+    CartService.executeCartService(this.props.cart).then(response => {});
   }
 
   items = () => {
