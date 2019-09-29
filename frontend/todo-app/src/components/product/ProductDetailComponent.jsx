@@ -49,19 +49,9 @@ export class ProductDetailComponent extends React.Component {
               <Typography>{this.props.card.description}</Typography>
             </CardContent>
             <CardActions>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  this.toggleViewProductDetail(this.props.card);
-                }}
-                className="view-button"
-              >
-                View
-              </Button>
               <Button size="small" color="primary" className="edit-button">
                 Edit
               </Button>
-
               <IconButton
                 onClick={() => {
                   this.props.handleAddToCart(this.props.card);
