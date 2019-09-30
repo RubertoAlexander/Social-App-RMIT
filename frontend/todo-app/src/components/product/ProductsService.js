@@ -5,9 +5,7 @@ import { API_URL } from "../../Constants";
 class ProductsService {
   retrieveProducts() {
     console.log(sessionStorage.getItem("userToken"));
-    return axios.get(`${API_URL}/jpa/products/all`, {
-      headers: { authorization: sessionStorage.getItem("userToken") }
-    });
+    return axios.get(`${API_URL}/jpa/products/all`, {});
   }
 }
 
