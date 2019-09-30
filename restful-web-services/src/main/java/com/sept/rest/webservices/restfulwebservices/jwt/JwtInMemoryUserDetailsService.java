@@ -2,20 +2,14 @@ package com.sept.rest.webservices.restfulwebservices.jwt;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.userdetails.User;
 
-
-import static java.util.Collections.emptyList;
-
-import com.sept.rest.webservices.restfulwebservices.register.NewUser;
-import com.sept.rest.webservices.restfulwebservices.register.UserJpaRepository;
+import com.sept.rest.webservices.restfulwebservices.user.User;
+import com.sept.rest.webservices.restfulwebservices.user.UserJpaRepository;
 
 @Service
 public class JwtInMemoryUserDetailsService implements UserDetailsService {
@@ -35,7 +29,7 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        NewUser newUser = userJpaRepository.findByUsername(username);
+        User newUser = userJpaRepository.findByUsername(username);
         if (newUser == null) {
             throw new UsernameNotFoundException(username);
         }

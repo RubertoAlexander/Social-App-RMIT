@@ -1,14 +1,18 @@
 package com.sept.rest.webservices.restfulwebservices.products;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sept.rest.webservices.restfulwebservices.user.User;
 
 @Entity
 @Table(name="PRODUCT")
@@ -17,28 +21,34 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotBlank(message = "Name may not be blank")
-	@Column(name = "product_name")
-	@JsonProperty("productName")
+  
+	@NotBlank
+	@Column(name = "PRODUCT_NAME")
 	private String productName;
-
+	
 	@DecimalMin("0.00")
 	private Double price;
 
 	private String description;
 
 	private boolean status = true;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="OWNER_ID", nullable=false)
+	private User user;
 
 	public Product() {
-		super();
+		
 	}
 
-	public Product(String productName, double price, String description) {
+	public Product(Long id, String productName, Double price, String description, User user) {
 		super();
+		this.id = id;
 		this.productName = productName;
 		this.price = price;
 		this.description = description;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -81,6 +91,14 @@ public class Product {
 		this.status = status;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -90,6 +108,7 @@ public class Product {
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -124,7 +143,14 @@ public class Product {
 			return false;
 		if (status != other.status)
 			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
 		return true;
 	}
+
+	
 
 }
