@@ -1,5 +1,6 @@
 package com.sept.rest.webservices.restfulwebservices.products;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,10 +22,9 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+  
 	@NotBlank
 	@Column(name = "PRODUCT_NAME")
-	private String productName;
 
 	@DecimalMin("0.00")
 	private Double price;
