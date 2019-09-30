@@ -13,7 +13,7 @@ import com.sept.rest.webservices.restfulwebservices.orders.Order;
 import com.sept.rest.webservices.restfulwebservices.products.Product;
 
 @Entity
-@Table(name = "line_item")
+@Table(name = "LINE_ITEM")
 public class LineItem {
 	
 	@Id
@@ -21,12 +21,12 @@ public class LineItem {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name="PRODUCT_ID")
 	private Product product;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="order_id", nullable=false)
+	@JoinColumn(name="ORDER_ID", nullable=false)
 	private Order order;
 	
 	public LineItem() {
