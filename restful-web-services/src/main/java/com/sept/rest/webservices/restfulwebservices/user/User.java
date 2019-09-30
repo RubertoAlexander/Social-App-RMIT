@@ -1,4 +1,4 @@
-package com.sept.rest.webservices.restfulwebservices.register;
+package com.sept.rest.webservices.restfulwebservices.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +32,11 @@ public class User {
 	private double cashBalance;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "USERS", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Product> products;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "USERS", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> orders;
 
 	public User() {

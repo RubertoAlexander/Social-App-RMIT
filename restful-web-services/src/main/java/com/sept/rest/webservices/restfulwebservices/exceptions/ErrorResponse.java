@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @XmlRootElement
-public class ApiResponse {
+public class ErrorResponse {
 	
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime timestamp;
@@ -18,11 +18,11 @@ public class ApiResponse {
 	private String message;
 	private String path;
 	
-	public ApiResponse() {
+	public ErrorResponse() {
 		
 	}
 	
-	public ApiResponse(int status, HttpStatus error, String message, String path) {
+	public ErrorResponse(int status, HttpStatus error, String message, String path) {
 		super();
 		this.timestamp = LocalDateTime.now();
 		this.status = status;

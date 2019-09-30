@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
 import com.sept.rest.webservices.restfulwebservices.products.Product;
 import com.sept.rest.webservices.restfulwebservices.products.ProductService;
-import com.sept.rest.webservices.restfulwebservices.register.User;
-import com.sept.rest.webservices.restfulwebservices.register.UserService;
+import com.sept.rest.webservices.restfulwebservices.user.User;
+import com.sept.rest.webservices.restfulwebservices.user.UserService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 public class OrderController {
 
@@ -39,6 +39,7 @@ public class OrderController {
 		Order order = new Order();
 		User user = userService.findById(user_id);
 		user.getOrders().add(order);
+		order.setUser(user);
 		
 		for (Long product_id : products_id) {
 			Product product;
@@ -49,6 +50,7 @@ public class OrderController {
 				item = new LineItem();
 				item.setProduct(product);
 				order.getLineItems().add(item);
+				item.setOrder(order);
 			}
 		}
 		
@@ -63,9 +65,9 @@ public class OrderController {
 	}
 	
 	@DeleteMapping(value = "/api/orders/remove/{order_id}")
-	public String delete(@PathVariable Long order_id) {
+	public ResponseEntity<Object> delete(@PathVariable Long order_id) {
 		orderService.deleteById(order_id);
-		return "OK";
+		return new ResponseEntity<>("The order with id " + order_id + " has been successfully deleted.", HttpStatus.OK);
 	}
 
 }

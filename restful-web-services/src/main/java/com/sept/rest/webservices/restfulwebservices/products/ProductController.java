@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sept.rest.webservices.restfulwebservices.register.UserService;
+import com.sept.rest.webservices.restfulwebservices.user.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController

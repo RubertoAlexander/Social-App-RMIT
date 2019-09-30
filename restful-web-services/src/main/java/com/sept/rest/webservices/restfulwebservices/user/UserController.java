@@ -1,4 +1,4 @@
-package com.sept.rest.webservices.restfulwebservices.register;
+package com.sept.rest.webservices.restfulwebservices.user;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sept.rest.webservices.restfulwebservices.register.User;
+import com.sept.rest.webservices.restfulwebservices.user.User;
 
 @Entity
 @Table(name="PRODUCT")

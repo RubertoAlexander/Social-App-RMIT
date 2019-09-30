@@ -1,11 +1,11 @@
-package com.sept.rest.webservices.restfulwebservices.register;
+package com.sept.rest.webservices.restfulwebservices.user;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sept.rest.webservices.restfulwebservices.exceptions.ConflictException;
+import com.sept.rest.webservices.restfulwebservices.exceptions.InsufficientFundsException;
 import com.sept.rest.webservices.restfulwebservices.exceptions.DataDuplicationException;
 import com.sept.rest.webservices.restfulwebservices.exceptions.DataNotFoundException;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
@@ -54,7 +54,7 @@ public class UserService {
 	public void cashTransaction(Long id, Order order) {
 		User user = findById(id);
 		if (user.getCashBalance() < order.getTotalPrice()) {
-			throw new ConflictException("Insufficient funds.");
+			throw new InsufficientFundsException("Insufficient funds.");
 		} else {
 			user.setCashBalance(user.getCashBalance() - order.getTotalPrice());
 			for (LineItem item : order.getLineItems()) {

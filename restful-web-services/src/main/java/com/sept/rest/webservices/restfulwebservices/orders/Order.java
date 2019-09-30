@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
-import com.sept.rest.webservices.restfulwebservices.register.User;
+import com.sept.rest.webservices.restfulwebservices.user.User;
 
 @Entity
 @Table(name = "ORDERS")
@@ -36,7 +36,7 @@ public class Order {
 	@JoinColumn(name="USER_ID", nullable=false)
 	private User user;
 	
-	@OneToMany(mappedBy = "ORDER", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<LineItem> lineItems;
 
 	protected Order() {

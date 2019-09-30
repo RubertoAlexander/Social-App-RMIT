@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.sept.rest.webservices.restfulwebservices.register.User;
-import com.sept.rest.webservices.restfulwebservices.register.UserJpaRepository;
+import com.sept.rest.webservices.restfulwebservices.user.User;
+import com.sept.rest.webservices.restfulwebservices.user.UserJpaRepository;
 
 @Service
 public class JwtInMemoryUserDetailsService implements UserDetailsService {
