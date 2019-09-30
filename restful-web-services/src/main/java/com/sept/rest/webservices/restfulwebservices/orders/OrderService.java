@@ -7,8 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sept.rest.webservices.restfulwebservices.register.NewUser;
-import com.sept.rest.webservices.restfulwebservices.register.UserJpaRepository;
+import com.sept.rest.webservices.restfulwebservices.exceptions.DataNotFoundException;
 
 @Service
 public class OrderService {
@@ -16,11 +15,16 @@ public class OrderService {
 	@Autowired
 	private OrderJpaRepository orderRepository;
 
-	@Autowired
-	private UserJpaRepository userRepository;
-
 	public List<Order> findAll() {
 		return this.orderRepository.findAll();
+	}
+	
+	public Order findById(Long id) {
+		Optional<Order> optional = orderRepository.findById(id);
+		if (optional.isEmpty()) {
+			throw new DataNotFoundException("Order with id " + id + " is not found.");
+		}
+		return optional.get();
 	}
 
 	public Order create(Order order) {
@@ -29,21 +33,18 @@ public class OrderService {
 	}
 
 	public void update(Order order) {
-		this.orderRepository.save(order);
-	}
-	
-	/* USER SERVICE METHODS */
-	
-	public NewUser findUser(Long id) {
-		Optional<NewUser> optional = this.userRepository.findById(id);
-		if (optional.isPresent()) {
-			return optional.get();
+		if (orderRepository.existsById(order.getId())) {
+			this.orderRepository.save(order);
 		}
-		return null;
+		throw new DataNotFoundException("Order with id " + order.getId() + " can't be found.");
 	}
 	
-	public boolean userExist(Long id) {
-		return this.userRepository.existsById(id);
+	public void deleteById(Long id) {
+		if (orderRepository.existsById(id)) {
+			this.orderRepository.deleteById(id);
+			return;
+		}
+		throw new DataNotFoundException("Order with id " + id + " can't be found.");
 	}
 
 }
