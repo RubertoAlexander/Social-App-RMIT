@@ -26,7 +26,7 @@ public class ProductController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/products/all")
+	@GetMapping("/jpa/products/all")
 	public ResponseEntity<Object> getAllProducts() {
 		HttpStatus httpStatus;
 		List<Product> products = productService.findAll();
@@ -38,7 +38,7 @@ public class ProductController {
 		return new ResponseEntity<>(products, httpStatus);
 	}
 
-	@GetMapping("/products/name/{productName}")
+	@GetMapping("/jpa/products/name/{productName}")
 	public ResponseEntity<Object> getProductByName(@PathVariable String productName) {
 		HttpStatus httpStatus;
 		List<Product> products = productService.findByProductName(productName);
@@ -50,7 +50,7 @@ public class ProductController {
 		return new ResponseEntity<>(products, httpStatus);
 	}
 	
-	@GetMapping("/products/search/{keyword}")
+	@GetMapping("/jpa/products/search/{keyword}")
 	public ResponseEntity<Object> getProductByKeyword(@PathVariable String keyword) {
 		HttpStatus httpStatus = HttpStatus.NO_CONTENT;
 		List<Product> productsFound = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ProductController {
 		return new ResponseEntity<>(productsFound, httpStatus);
 	}
 
-	@PostMapping("/products/sell/{user_id}")
+	@PostMapping("/jpa/products/sell/{user_id}")
 	@ResponseBody
 	public ResponseEntity<Object> sellProduct(@PathVariable Long user_id, @RequestBody Product product) {
 		userService.findById(user_id).getProducts().add(product);
