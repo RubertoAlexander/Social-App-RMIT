@@ -1,45 +1,53 @@
 package com.sept.rest.webservices.restfulwebservices.register;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sept.rest.webservices.restfulwebservices.orders.Order;
+import com.sept.rest.webservices.restfulwebservices.products.Product;
 
 @Entity
-@Table(name="USER")
-public class NewUser {
+@Table(name="USERS")
+public class User {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name="Id", nullable = false)
 	private Long id;
 	
-	@Column(name="Username", length=64, nullable=false)
 	private String username;
 	
-	@Column(name="Password", length=64, nullable=false)
 	private String password;
 	
-	@Column(name="cashBalance", length=64, nullable=true)
+	@DecimalMin("0.00")
 	private double cashBalance;
 	
-	public double getCashBalance() {
-		return cashBalance;
-	}
+	@JsonIgnore
+	@OneToMany(mappedBy = "USERS", cascade = CascadeType.ALL)
+	private List<Product> products;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "USERS", cascade = CascadeType.ALL)
+	private List<Order> orders;
 
-	public void setCashBalance(double cashBalance) {
-		this.cashBalance = cashBalance;
-	}
-
-	public NewUser() {
+	public User() {
 		
 	}
 
-	public NewUser(String username, String password) {
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
-
+		products = new ArrayList<>();
+		orders = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -66,6 +74,32 @@ public class NewUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public double getCashBalance() {
+		return cashBalance;
+	}
+
+	public void setCashBalance(double cashBalance) {
+		this.cashBalance = cashBalance;
+	}
+	
+	
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -82,11 +116,9 @@ public class NewUser {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		NewUser other = (NewUser) obj;
+		User other = (User) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
-
-	
 }

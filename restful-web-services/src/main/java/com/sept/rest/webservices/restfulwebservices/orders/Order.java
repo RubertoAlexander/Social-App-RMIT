@@ -18,10 +18,10 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
-import com.sept.rest.webservices.restfulwebservices.register.NewUser;
+import com.sept.rest.webservices.restfulwebservices.register.User;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "ORDERS")
 public class Order {
 
 	@Id
@@ -29,18 +29,15 @@ public class Order {
 	private Long id;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "local_date")
+	@Column(name = "LOCAL_DATE")
 	private LocalDate date;
-
-	private boolean paid = false;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private NewUser user;
-
-	@OneToMany(cascade = CascadeType.ALL)
-	@Transient
-	List<LineItem> lineItems;
+	@JoinColumn(name="USER_ID", nullable=false)
+	private User user;
+	
+	@OneToMany(mappedBy = "ORDER", cascade = CascadeType.ALL)
+	private List<LineItem> lineItems;
 
 	protected Order() {
 		super();
@@ -72,19 +69,11 @@ public class Order {
 		this.date = date;
 	}
 
-	public boolean isPaid() {
-		return paid;
-	}
-
-	public void setPaid(boolean paid) {
-		this.paid = paid;
-	}
-
-	public NewUser getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(NewUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -103,7 +92,6 @@ public class Order {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lineItems == null) ? 0 : lineItems.hashCode());
-		result = prime * result + (paid ? 1231 : 1237);
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -131,8 +119,6 @@ public class Order {
 			if (other.lineItems != null)
 				return false;
 		} else if (!lineItems.equals(other.lineItems))
-			return false;
-		if (paid != other.paid)
 			return false;
 		if (user == null) {
 			if (other.user != null)
