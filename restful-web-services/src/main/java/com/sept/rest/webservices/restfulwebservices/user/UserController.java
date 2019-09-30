@@ -52,5 +52,11 @@ public class UserController {
 	public List<Order> getPastOrders(@PathVariable Long id) {
 		return userService.findById(id).getOrders();
 	}
+	
+	@GetMapping("user/id/{username}") 
+	public Long getUserIdByUsername(@PathVariable String username) {
+		return userService.findByUsername(username).getId();
+	}
+	
 
 }
