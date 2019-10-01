@@ -45,7 +45,7 @@ public class UserService {
 
 	public User findById(Long id) {
 		Optional<User> optional = this.userRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (optional.empty() != null) {
 			throw new DataNotFoundException("User with id " + id + " can't be found.");
 		}
 		return optional.get();
