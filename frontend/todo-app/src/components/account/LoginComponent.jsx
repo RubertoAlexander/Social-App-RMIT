@@ -61,7 +61,7 @@ class LoginComponent extends Component {
               Invalid Credentials or something is wrong
             </div>
           )}
-          {this.state.showSuccessMessage && <div>Login Sucessful</div>}
+          {this.state.showSuccessMessage && <div>Login Successful</div>}
           {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
           User Name:{" "}
           <input
