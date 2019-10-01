@@ -74,8 +74,6 @@ class ProductComponent extends React.Component {
     };
 
     this.handleAddToCart = this.handleAddToCart.bind(this);
-    console.log(this.state.cards);
-    console.log(this.props.cards);
   }
 
   handleAddToCart = card => {
@@ -175,9 +173,9 @@ class ProductComponent extends React.Component {
               <Grid container spacing={4}>
                 {this.state.cards.map(card => (
                   <Grid
+                    key={card.id}
                     className="product"
                     item
-                    key={card.id}
                     xs={12}
                     sm={6}
                     md={4}
@@ -190,7 +188,7 @@ class ProductComponent extends React.Component {
                       />
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
-                          {card.name}
+                          {card.productName}
                         </Typography>
                         <Typography>{card.description}</Typography>
                       </CardContent>
