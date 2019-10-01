@@ -56,18 +56,12 @@ class TodoApp extends Component {
     if (AuthenticationService.isUserLoggedIn()) {
       ProductsService.retrieveProducts()
         .then(response => {
-          console.log(response.data);
           this.setState({ cards: response.data });
-          console.log(this.state.cards);
         })
         .catch(error => {
           if (error.response) {
-            console.log(error.response.data);
             this.setState({ cards: error.response.data });
-            console.log(error.response.status);
-            console.log(error.response.headers);
           } else if (error.request) {
-            console.log(error.request);
           } else {
             console.log(error.message);
           }
