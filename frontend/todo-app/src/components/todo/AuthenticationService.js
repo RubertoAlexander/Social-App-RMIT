@@ -43,7 +43,6 @@ class AuthenticationService {
 
   createJWTToken(token) {
     sessionStorage.setItem(SESSION_ATTRIBUTE_TOKEN, "Bearer " + token);
-    console.log(token);
     return "Bearer " + token;
   }
 
