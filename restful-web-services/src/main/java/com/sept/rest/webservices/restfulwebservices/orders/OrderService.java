@@ -21,7 +21,7 @@ public class OrderService {
 	
 	public Order findById(Long id) {
 		Optional<Order> optional = orderRepository.findById(id);
-		if (optional.isEmpty()) {
+		if (!optional.isPresent()) {
 			throw new DataNotFoundException("Order with id " + id + " is not found.");
 		}
 		return optional.get();

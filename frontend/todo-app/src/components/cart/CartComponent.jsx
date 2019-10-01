@@ -80,7 +80,7 @@ class CartComponent extends React.Component {
                   <ListItemText
                     className="cartItem"
                     key={product.id}
-                    primary={product.name}
+                    primary={product.productName}
                     secondary={product.description}
                   ></ListItemText>
                 </ListItem>

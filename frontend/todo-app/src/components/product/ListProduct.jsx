@@ -45,6 +45,7 @@ export class ListProduct extends React.Component {
             validate={values => {}}
             onSubmit={async (values, { setSubmitting }) => {
               await this.listNewProduct(values);
+              setSubmitting(false);
             }}
           >
             {({

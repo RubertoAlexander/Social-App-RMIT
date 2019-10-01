@@ -17,17 +17,17 @@ class WelcomeComponent extends Component {
   render() {
     return (
       <React.Fragment>
-        <Grid container>
-          <Grid item xs={12}>
+        <Grid container justify="center" alignItems="center">
+          <Grid item xs={12} style={{ textAlign: "center" }}>
             <h1>Welcome!</h1>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ textAlign: "center" }}>
             <div>
               Welcome {this.props.match.params.name}. You can manage your todos{" "}
               <Link to="/todos">here</Link>.
             </div>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ textAlign: "center" }}>
             Click here to get a customized welcome message.
             <button
               onClick={this.retrieveWelcomeMessage}
@@ -36,7 +36,7 @@ class WelcomeComponent extends Component {
               Get Welcome Message
             </button>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ textAlign: "center" }}>
             {this.state.welcomeMessage}
           </Grid>
         </Grid>
