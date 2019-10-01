@@ -28,6 +28,7 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
+import no_image from "../../img/no-photo-available.png";
 
 import * as lodash from "lodash";
 import { ProductDetailComponent } from "./ProductDetailComponent";
@@ -127,7 +128,7 @@ class ProductComponent extends React.Component {
       product13
     ];
 
-    return images[index];
+    return no_image;
   };
 
   setDisplayProductDetail = value => {
