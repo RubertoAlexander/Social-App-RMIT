@@ -7,7 +7,7 @@ export const SESSION_ATTRIBUTE_TOKEN = "userToken";
 class AuthenticationService {
   executeBasicAuthenticationService(username, password) {
     return axios.get(`${API_URL}/basicauth`, {
-      header: { authorization: this.createBasicAuthToken(username, password) }
+      headers: { authorization: this.createBasicAuthToken(username, password) }
     });
   }
 
