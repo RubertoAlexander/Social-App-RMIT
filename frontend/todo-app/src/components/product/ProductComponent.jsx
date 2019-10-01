@@ -28,6 +28,7 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
+import no_image from "../../img/no-photo-available.png";
 
 import * as lodash from "lodash";
 import { ProductDetailComponent } from "./ProductDetailComponent";
@@ -72,6 +73,8 @@ class ProductComponent extends React.Component {
       viewProductDetail: {},
       displayProductDetail: false
     };
+
+    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
   handleAddToCart = card => {
@@ -125,7 +128,7 @@ class ProductComponent extends React.Component {
       product13
     ];
 
-    return images[index];
+    return no_image;
   };
 
   setDisplayProductDetail = value => {
@@ -171,9 +174,9 @@ class ProductComponent extends React.Component {
               <Grid container spacing={4}>
                 {this.state.cards.map(card => (
                   <Grid
+                    key={card.id}
                     className="product"
                     item
-                    key={card.id}
                     xs={12}
                     sm={6}
                     md={4}
@@ -186,7 +189,7 @@ class ProductComponent extends React.Component {
                       />
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
-                          {card.name}
+                          {card.productName}
                         </Typography>
                       </CardContent>
                       <CardActions>
