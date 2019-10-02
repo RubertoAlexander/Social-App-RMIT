@@ -10,7 +10,8 @@ import {
   Paper,
   Typography,
   Button,
-  withStyles
+  withStyles,
+  Grid
 } from "@material-ui/core";
 
 import CartService from "../cart/CartService";
@@ -19,7 +20,6 @@ const styles = theme => ({
   cartPaper: {
     display: "block",
     margin: "5% 20% 5% 20%"
-    //paddingBottom: "20%"
   },
   cartItems: {
     marginBottom: "5%"
@@ -30,10 +30,14 @@ const styles = theme => ({
   emptyMsg: {
     paddingTop: "10%",
     paddingBottom: "10%",
-    //marginLeft: "25%",
     justifySelf: "center"
   },
+  BuyBut: {
+    marginBottom: "5%",
+    marginTop: "5%"
+  },
   clearCartBut: {
+    marginTop: "5%",
     marginBottom: "5%"
   }
 });
@@ -41,20 +45,39 @@ const styles = theme => ({
 class CartComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      failed: false
+    };
 
     this.handlePurchase = this.handlePurchase.bind(this);
   }
 
   handlePurchase() {
-    CartService.executeCartService(this.props.cart).then(response => {});
+    CartService.executeCartService(this.props.cart)
+      .then(response => {})
+      .catch(error => {
+        if (error.message) {
+          this.setState({ failed: true });
+        }
+      });
   }
+
+  alreadyPurchased = () => {
+    if (this.state.failed) {
+      return (
+        <Typography className="failedMsg" align="center">
+          Sorry these items are currently unavailable
+        </Typography>
+      );
+    }
+  };
 
   items = () => {
     const { classes } = this.props;
     if (this.props.empty) {
       return (
         <Container className={classes.emptyMsg}>
-          <Typography className="emptyMsg" variant="h3" align="center">
+          <Typography className="emptyMsg" variant="h4" align="center">
             You're cart is empty
           </Typography>
         </Container>
@@ -88,22 +111,29 @@ class CartComponent extends React.Component {
               </React.Fragment>
             ))}
           </List>
-          <Button
-            className={classes.clearCartBut}
-            type="reset"
-            variant="contained"
-            onClick={this.props.handleClearCart}
-          >
-            Clear Cart
-          </Button>
-          <Button
-            className={classes.clearCartBut}
-            type="submit"
-            variant="contained"
-            onClick={this.handlePurchase}
-          >
-            Purchase
-          </Button>
+          {this.alreadyPurchased()}
+          <Grid container justify="space-between">
+            <Grid item>
+              <Button
+                className={classes.clearCartBut}
+                type="reset"
+                variant="contained"
+                onClick={this.props.handleClearCart}
+              >
+                Clear Cart
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.BuyBut}
+                type="submit"
+                variant="contained"
+                onClick={this.handlePurchase}
+              >
+                Purchase
+              </Button>
+            </Grid>
+          </Grid>
         </Container>
       );
   };
