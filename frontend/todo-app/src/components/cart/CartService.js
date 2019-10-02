@@ -11,8 +11,6 @@ class CartService {
       itemIds.push(cart[i].id);
     }
 
-    //console.log(config.headers.Authorization);
-
     return axios.post(`${API_URL}/api/orders/${userID}`, itemIds);
   }
 }
