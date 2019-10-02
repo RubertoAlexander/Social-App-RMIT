@@ -47,7 +47,8 @@ class CartComponent extends React.Component {
     super(props);
     this.state = {
       failed: false,
-      purchased: false
+      purchased: false,
+      hasFunds: true
     };
 
     this.handlePurchase = this.handlePurchase.bind(this);
@@ -62,17 +63,25 @@ class CartComponent extends React.Component {
         //TODO: decrement user's balance by price of products
       })
       .catch(error => {
-        if (error.message) {
+        if (error.response.data.message === "Insufficient funds.") {
+          this.setState({ hasFunds: false });
+        } else {
           this.setState({ failed: true });
         }
       });
   }
 
-  alreadyPurchased = () => {
+  purchaseAttempt = () => {
     if (this.state.failed) {
       return (
         <Typography className="failedMsg" align="center">
           Sorry these items are currently unavailable
+        </Typography>
+      );
+    } else if (!this.state.hasFunds) {
+      return (
+        <Typography className="failedMsg" align="center">
+          Sorry you have insufficient funds
         </Typography>
       );
     }
@@ -127,7 +136,7 @@ class CartComponent extends React.Component {
               </React.Fragment>
             ))}
           </List>
-          {this.alreadyPurchased()}
+          {this.purchaseAttempt()}
           <Grid container justify="space-between">
             <Grid item>
               <Button
