@@ -33,7 +33,7 @@ public class ProductService {
 
 	public Product findById(Long id) {
 		Optional<Product> optional = this.productRepository.findById(id);
-		if (optional.empty() != null) {
+		if (!optional.isPresent()) {
 			throw new DataNotFoundException("Product with id " + id + " can't be found.");
 		}
 		return optional.get();
