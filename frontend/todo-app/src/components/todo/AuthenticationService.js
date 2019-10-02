@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_URL } from "../../Constants";
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = "authenticatedUser";
+export const SESSION_ATTRIBUTE_TOKEN = "userToken";
 
 class AuthenticationService {
   executeBasicAuthenticationService(username, password) {
@@ -41,6 +42,7 @@ class AuthenticationService {
   }
 
   createJWTToken(token) {
+    sessionStorage.setItem(SESSION_ATTRIBUTE_TOKEN, "Bearer " + token);
     return "Bearer " + token;
   }
 

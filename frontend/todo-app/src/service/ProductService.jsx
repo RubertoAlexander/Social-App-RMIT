@@ -17,7 +17,9 @@ class ProductService {
     data.append("document", blob);
     data.append("file", image);
 
-    return axios.post(`${API_URL}/jpa/products/sell`, data);
+    let user = sessionStorage.getItem("user_id");
+
+    return axios.post(`${API_URL}/jpa/products/sell/${user}`, data);
   }
 }
 
