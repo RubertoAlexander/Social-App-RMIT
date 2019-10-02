@@ -4,7 +4,7 @@ import { API_URL } from "../../Constants";
 
 class CartService {
   executeCartService(cart) {
-    let username = AuthenticationService.getLoggedInUserName();
+    let userID = sessionStorage.getItem("user_id");
     let itemIds = [];
 
     for (let i = 0; i < cart.length; i++) {
@@ -13,7 +13,7 @@ class CartService {
 
     //console.log(config.headers.Authorization);
 
-    return axios.post(`${API_URL}/api/orders/${username}`, itemIds);
+    return axios.post(`${API_URL}/api/orders/${userID}`, itemIds);
   }
 }
 
