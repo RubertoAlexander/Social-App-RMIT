@@ -22,7 +22,7 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -37,6 +37,11 @@ public class ProductController {
 		}
 		return new ResponseEntity<>(products, httpStatus);
 	}
+	
+	@GetMapping("/jpa/products/id/{product_id}")
+	public ResponseEntity<Object> getProductByID(@PathVariable Long product_id) {
+		return new ResponseEntity<>(productService.findById(product_id), HttpStatus.OK);
+	}
 
 	@GetMapping("/jpa/products/name/{productName}")
 	public ResponseEntity<Object> getProductByName(@PathVariable String productName) {
@@ -49,7 +54,7 @@ public class ProductController {
 		}
 		return new ResponseEntity<>(products, httpStatus);
 	}
-	
+
 	@GetMapping("/jpa/products/search/{keyword}")
 	public ResponseEntity<Object> getProductByKeyword(@PathVariable String keyword) {
 		HttpStatus httpStatus = HttpStatus.NO_CONTENT;
@@ -71,10 +76,4 @@ public class ProductController {
 		productService.saveProduct(product);
 		return new ResponseEntity<>(product, HttpStatus.CREATED);
 	}
-
-	@GetMapping("/products/id/{id}")
-	public Product getProductByID(@PathVariable Long id) {
-		return productService.findById(id);
-	}
-
 }

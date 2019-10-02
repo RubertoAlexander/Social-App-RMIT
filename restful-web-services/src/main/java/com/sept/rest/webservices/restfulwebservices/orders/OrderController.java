@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sept.rest.webservices.restfulwebservices.exceptions.InvalidDataException;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
 import com.sept.rest.webservices.restfulwebservices.products.Product;
 import com.sept.rest.webservices.restfulwebservices.products.ProductService;
@@ -40,6 +41,10 @@ public class OrderController {
 		User user = userService.findById(user_id);
 		user.getOrders().add(order);
 		order.setUser(user);
+		
+		if (products_id.size() == 0) {
+			throw new InvalidDataException("Please insert at least one valid product id.");
+		}
 		
 		for (Long product_id : products_id) {
 			Product product;

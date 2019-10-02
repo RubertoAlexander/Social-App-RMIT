@@ -1,5 +1,6 @@
 package com.sept.rest.webservices.restfulwebservices.products;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,11 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
 import com.sept.rest.webservices.restfulwebservices.user.User;
 
 @Entity
@@ -37,14 +40,17 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="OWNER_ID", nullable=false)
 	private User user;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy="product", cascade = CascadeType.ALL)
+	private LineItem lineItem;
 
 	public Product() {
 		
 	}
 
-	public Product(Long id, String productName, Double price, String description, User user) {
+	public Product(String productName, Double price, String description, User user) {
 		super();
-		this.id = id;
 		this.productName = productName;
 		this.price = price;
 		this.description = description;
@@ -99,12 +105,21 @@ public class Product {
 		this.user = user;
 	}
 
+	public LineItem getLineItem() {
+		return lineItem;
+	}
+
+	public void setLineItem(LineItem lineItem) {
+		this.lineItem = lineItem;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lineItem == null) ? 0 : lineItem.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
@@ -131,6 +146,11 @@ public class Product {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (lineItem == null) {
+			if (other.lineItem != null)
+				return false;
+		} else if (!lineItem.equals(other.lineItem))
+			return false;
 		if (price == null) {
 			if (other.price != null)
 				return false;
@@ -150,7 +170,5 @@ public class Product {
 			return false;
 		return true;
 	}
-
-	
 
 }
