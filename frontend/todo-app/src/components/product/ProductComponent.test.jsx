@@ -6,47 +6,47 @@ describe("ProductComponent", () => {
   const mockCards = [
     {
       id: 1,
-      name: "Programmer Guide",
+      productName: "Programmer Guide",
       description: "blablablablabla"
     },
     {
       id: 2,
-      name: "Elephant Book",
+      productName: "Elephant Book",
       description: "blablablablabla"
     },
     {
       id: 3,
-      name: "Self taught programmer",
+      productName: "Self taught programmer",
       description: "blablablablabla"
     },
     {
       id: 4,
-      name: "Computer Science Book",
+      productName: "Computer Science Book",
       description: "blablablablabla"
     },
     {
       id: 5,
-      name: "Beginning Programming Reference for dummies",
+      productName: "Beginning Programming Reference for dummies",
       description: "blablablablabla"
     },
     {
       id: 6,
-      name: "Computer Science Distilled",
+      productName: "Computer Science Distilled",
       description: "blablablablabla"
     },
     {
       id: 7,
-      name: "Computer science principles",
+      productName: "Computer science principles",
       description: "blablablablabla"
     },
     {
       id: 8,
-      name: "Structure and Interpretation of Computer Programs",
+      productName: "Structure and Interpretation of Computer Programs",
       description: "blablablablabla"
     },
     {
       id: 9,
-      name: "AP Computer Science A",
+      productName: "AP Computer Science A",
       description: "blablablablabla"
     }
   ];
@@ -67,34 +67,50 @@ describe("ProductComponent", () => {
       .instance()
       .sortProduct(mockCards);
     expect(newCards[0].id).toEqual(9);
-    expect(newCards[0].name).toEqual("AP Computer Science A");
+    expect(newCards[0].productName).toEqual("AP Computer Science A");
   });
 
   it("sorts products descending if products are sorted ascending", () => {
     const productsSortedDesc = [
-      { id: 9, name: "AP Computer Science A", description: "blablablablabla" },
       {
-        id: 5,
-        name: "Beginning Programming Reference for dummies",
+        id: 9,
+        productName: "AP Computer Science A",
         description: "blablablablabla"
       },
-      { id: 4, name: "Computer Science Book", description: "blablablablabla" },
+      {
+        id: 5,
+        productName: "Beginning Programming Reference for dummies",
+        description: "blablablablabla"
+      },
+      {
+        id: 4,
+        productName: "Computer Science Book",
+        description: "blablablablabla"
+      },
       {
         id: 6,
-        name: "Computer Science Distilled",
+        productName: "Computer Science Distilled",
         description: "blablablablabla"
       },
       {
         id: 7,
-        name: "Computer science principles",
+        productName: "Computer science principles",
         description: "blablablablabla"
       },
-      { id: 2, name: "Elephant Book", description: "blablablablabla" },
-      { id: 1, name: "Programmer Guide", description: "blablablablabla" },
-      { id: 3, name: "Self taught programmer", description: "blablablablabla" },
+      { id: 2, productName: "Elephant Book", description: "blablablablabla" },
+      {
+        id: 1,
+        productName: "Programmer Guide",
+        description: "blablablablabla"
+      },
+      {
+        id: 3,
+        productName: "Self taught programmer",
+        description: "blablablablabla"
+      },
       {
         id: 8,
-        name: "Structure and Interpretation of Computer Programs",
+        productName: "Structure and Interpretation of Computer Programs",
         description: "blablablablabla"
       }
     ];
@@ -107,29 +123,45 @@ describe("ProductComponent", () => {
     const expectedResult = [
       {
         id: 8,
-        name: "Structure and Interpretation of Computer Programs",
+        productName: "Structure and Interpretation of Computer Programs",
         description: "blablablablabla"
       },
-      { id: 3, name: "Self taught programmer", description: "blablablablabla" },
-      { id: 1, name: "Programmer Guide", description: "blablablablabla" },
-      { id: 2, name: "Elephant Book", description: "blablablablabla" },
+      {
+        id: 3,
+        productName: "Self taught programmer",
+        description: "blablablablabla"
+      },
+      {
+        id: 1,
+        productName: "Programmer Guide",
+        description: "blablablablabla"
+      },
+      { id: 2, productName: "Elephant Book", description: "blablablablabla" },
       {
         id: 7,
-        name: "Computer science principles",
+        productName: "Computer science principles",
         description: "blablablablabla"
       },
       {
         id: 6,
-        name: "Computer Science Distilled",
+        productName: "Computer Science Distilled",
         description: "blablablablabla"
       },
-      { id: 4, name: "Computer Science Book", description: "blablablablabla" },
+      {
+        id: 4,
+        productName: "Computer Science Book",
+        description: "blablablablabla"
+      },
       {
         id: 5,
-        name: "Beginning Programming Reference for dummies",
+        productName: "Beginning Programming Reference for dummies",
         description: "blablablablabla"
       },
-      { id: 9, name: "AP Computer Science A", description: "blablablablabla" }
+      {
+        id: 9,
+        productName: "AP Computer Science A",
+        description: "blablablablabla"
+      }
     ];
     expect(newCardsDesc).toEqual(expectedResult);
   });
@@ -138,29 +170,45 @@ describe("ProductComponent", () => {
     const productsSortedAsc = [
       {
         id: 8,
-        name: "Structure and Interpretation of Computer Programs",
+        productName: "Structure and Interpretation of Computer Programs",
         description: "blablablablabla"
       },
-      { id: 3, name: "Self taught programmer", description: "blablablablabla" },
-      { id: 1, name: "Programmer Guide", description: "blablablablabla" },
-      { id: 2, name: "Elephant Book", description: "blablablablabla" },
+      {
+        id: 3,
+        productName: "Self taught programmer",
+        description: "blablablablabla"
+      },
+      {
+        id: 1,
+        productName: "Programmer Guide",
+        description: "blablablablabla"
+      },
+      { id: 2, productName: "Elephant Book", description: "blablablablabla" },
       {
         id: 7,
-        name: "Computer science principles",
+        productName: "Computer science principles",
         description: "blablablablabla"
       },
       {
         id: 6,
-        name: "Computer Science Distilled",
+        productName: "Computer Science Distilled",
         description: "blablablablabla"
       },
-      { id: 4, name: "Computer Science Book", description: "blablablablabla" },
+      {
+        id: 4,
+        productName: "Computer Science Book",
+        description: "blablablablabla"
+      },
       {
         id: 5,
-        name: "Beginning Programming Reference for dummies",
+        productName: "Beginning Programming Reference for dummies",
         description: "blablablablabla"
       },
-      { id: 9, name: "AP Computer Science A", description: "blablablablabla" }
+      {
+        id: 9,
+        productName: "AP Computer Science A",
+        description: "blablablablabla"
+      }
     ];
 
     const newCards = wrapper
@@ -169,29 +217,45 @@ describe("ProductComponent", () => {
       .sortProduct(productsSortedAsc);
 
     const expectedResult = [
-      { id: 9, name: "AP Computer Science A", description: "blablablablabla" },
       {
-        id: 5,
-        name: "Beginning Programming Reference for dummies",
+        id: 9,
+        productName: "AP Computer Science A",
         description: "blablablablabla"
       },
-      { id: 4, name: "Computer Science Book", description: "blablablablabla" },
+      {
+        id: 5,
+        productName: "Beginning Programming Reference for dummies",
+        description: "blablablablabla"
+      },
+      {
+        id: 4,
+        productName: "Computer Science Book",
+        description: "blablablablabla"
+      },
       {
         id: 6,
-        name: "Computer Science Distilled",
+        productName: "Computer Science Distilled",
         description: "blablablablabla"
       },
       {
         id: 7,
-        name: "Computer science principles",
+        productName: "Computer science principles",
         description: "blablablablabla"
       },
-      { id: 2, name: "Elephant Book", description: "blablablablabla" },
-      { id: 1, name: "Programmer Guide", description: "blablablablabla" },
-      { id: 3, name: "Self taught programmer", description: "blablablablabla" },
+      { id: 2, productName: "Elephant Book", description: "blablablablabla" },
+      {
+        id: 1,
+        productName: "Programmer Guide",
+        description: "blablablablabla"
+      },
+      {
+        id: 3,
+        productName: "Self taught programmer",
+        description: "blablablablabla"
+      },
       {
         id: 8,
-        name: "Structure and Interpretation of Computer Programs",
+        productName: "Structure and Interpretation of Computer Programs",
         description: "blablablablabla"
       }
     ];
