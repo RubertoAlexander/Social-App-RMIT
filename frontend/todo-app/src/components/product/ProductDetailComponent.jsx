@@ -44,7 +44,7 @@ export class ProductDetailComponent extends React.Component {
             />
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
-                {this.props.card.name}
+                {this.props.card.productName}
               </Typography>
               <Typography>{this.props.card.description}</Typography>
             </CardContent>
