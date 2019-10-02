@@ -135,6 +135,21 @@ function PrimarySearchAppBar(props) {
       <MenuItem>
         <Button color="inherit">
           {props.isUserLoggedIn && (
+            <Link className="nav-link" to="/cart">
+              <CartIconComponent cartTotal={props.cart.length} />
+            </Link>
+          )}
+
+          {props.isUserLoggedIn ? (
+            <li>
+              <Link className="nav-link" to="/list-product">
+                List Product
+              </Link>
+            </li>
+          ) : (
+            ""
+          )}
+          {props.isUserLoggedIn && (
             <li>
               <Link className="nav-link" to="/map">
                 Map
@@ -214,11 +229,23 @@ function PrimarySearchAppBar(props) {
             </Button>
 
             <Button color="inherit">
+              {props.isUserLoggedIn ? (
+                <Link className="nav-link" to="/list-product">
+                  List Product
+                </Link>
+              ) : (
+                ""
+              )}
+            </Button>
+
+            <Button color="inherit">
               {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/map">
                   Map
                 </Link>
               )}
+            </Button>
+            <Button color="inherit">
               {!props.isUserLoggedIn ? (
                 <React.Fragment>
                   <Link className="nav-link" to="/login">

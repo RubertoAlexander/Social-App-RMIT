@@ -70,6 +70,7 @@ export function SignUpComponent(props) {
           validate={values => {}}
           onSubmit={async (values, { setSubmitting }) => {
             await createAccount(values);
+            setSubmitting(false);
           }}
         >
           {({
