@@ -46,7 +46,8 @@ class CartComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      failed: false
+      failed: false,
+      purchased: false
     };
 
     this.handlePurchase = this.handlePurchase.bind(this);
@@ -54,7 +55,12 @@ class CartComponent extends React.Component {
 
   handlePurchase() {
     CartService.executeCartService(this.props.cart)
-      .then(response => {})
+      .then(response => {
+        this.setState({ purchased: true });
+        this.props.handleClearCart();
+
+        //TODO: decrement user's balance by price of products
+      })
       .catch(error => {
         if (error.message) {
           this.setState({ failed: true });
@@ -75,13 +81,23 @@ class CartComponent extends React.Component {
   items = () => {
     const { classes } = this.props;
     if (this.props.empty) {
-      return (
-        <Container className={classes.emptyMsg}>
-          <Typography className="emptyMsg" variant="h4" align="center">
-            You're cart is empty
-          </Typography>
-        </Container>
-      );
+      if (this.state.purchased) {
+        return (
+          <Container className={classes.emptyMsg}>
+            <Typography className="emptyMsg" variant="h4" align="center">
+              Thankyou for your purchase
+            </Typography>
+          </Container>
+        );
+      } else {
+        return (
+          <Container className={classes.emptyMsg}>
+            <Typography className="emptyMsg" variant="h4" align="center">
+              You're cart is empty
+            </Typography>
+          </Container>
+        );
+      }
     } else
       return (
         <Container>
