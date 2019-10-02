@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
@@ -37,24 +38,35 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="OWNER_ID", nullable=false)
 	private User user;
-
+	
+	@Lob
+	private byte[] image;
+	
 	public Product() {
 		
 	}
 
-	public Product(Long id, String productName, Double price, String description, User user) {
+	public Product(Long id, String productName, Double price, String description, User user, byte[] image) {
 		super();
 		this.id = id;
 		this.productName = productName;
 		this.price = price;
 		this.description = description;
 		this.user = user;
+		this.image = image;
 	}
 
 	public Long getId() {
 		return id;
 	}
-
+	
+	public byte[] getImage() {
+		return image;
+	}
+	
+	public void setImage(byte[] bs) {
+		image = bs;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
