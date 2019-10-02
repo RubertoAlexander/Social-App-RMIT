@@ -37,8 +37,15 @@ class AuthenticationService {
   }
 
   registerSuccessfulLoginForJwt(username, token) {
-    sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
     this.setupAxiosInterceptors(this.createJWTToken(token));
+    sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
+    this.retrieveUserId(username);
+  }
+
+  retrieveUserId(username) {
+    return axios.get(`${API_URL}/user/id/${username}`).then(response => {
+      sessionStorage.setItem("user_id", response.data);
+    });
   }
 
   createJWTToken(token) {
