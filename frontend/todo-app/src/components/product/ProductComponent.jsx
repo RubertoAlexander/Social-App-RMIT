@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Sort from "@material-ui/icons/Sort";
 import IconButton from "@material-ui/core/IconButton";
@@ -31,7 +31,7 @@ import product13 from "../../img/product (13).jpg";
 import no_image from "../../img/no-photo-available.png";
 
 import * as lodash from "lodash";
-import { ProductDetailComponent } from "./ProductDetailComponent";
+import {ProductDetailComponent} from "./ProductDetailComponent";
 
 const styles = theme => ({
   icon: {
@@ -190,6 +190,12 @@ class ProductComponent extends React.Component {
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
                           {card.productName}
+                        </Typography>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          Price: {card.price}
+                        </Typography>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {card.status ? "Quantity: 1" : "Quantity: 0"}
                         </Typography>
                       </CardContent>
                       <CardActions>

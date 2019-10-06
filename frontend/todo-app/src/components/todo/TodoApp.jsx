@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import React, {Component} from "react";
+import {Route, Switch, withRouter} from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute.jsx";
 import LoginComponent from "../account/LoginComponent.jsx";
 import ListTodosComponent from "./ListTodosComponent.jsx";
@@ -10,24 +10,14 @@ import LogoutComponent from "./LogoutComponent.jsx";
 import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
-import { ProductDetailComponent } from "../product/ProductDetailComponent";
+import {ProductDetailComponent} from "../product/ProductDetailComponent";
 
 import CartComponent from "../cart/CartComponent.jsx";
-
-import product1 from "../../img/product (1).jpg";
-import product2 from "../../img/product (2).jpg";
-import product3 from "../../img/product (3).jpg";
-import product4 from "../../img/product (4).jpg";
-import product5 from "../../img/product (5).jpg";
-import product6 from "../../img/product (6).jpg";
-import product7 from "../../img/product (7).jpg";
-import product8 from "../../img/product (8).jpg";
-import product9 from "../../img/product (9).jpg";
-import { SignUpComponent } from "../account/SignUpComponent";
+import {SignUpComponent} from "../account/SignUpComponent";
 import MapComponent from "../map/MapComponent";
 import AuthenticationService from "./AuthenticationService";
 import Grid from "@material-ui/core/Grid";
-import { ListProduct } from "../product/ListProduct";
+import {ListProduct} from "../product/ListProduct";
 
 import ProductsService from "../product/ProductsService.js";
 
@@ -45,7 +35,7 @@ class TodoApp extends Component {
     this.getProducts = this.getProducts.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.checkIfUserLoggedIn();
       this.getProducts();

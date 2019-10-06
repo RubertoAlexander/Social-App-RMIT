@@ -1,37 +1,33 @@
 package com.sept.rest.webservices.restfulwebservices.products;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.sept.rest.webservices.restfulwebservices.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.sept.rest.webservices.restfulwebservices.user.UserService;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class ProductController {
 
+	private final ProductService productService;
+	private final UserService userService;
+
 	@Autowired
-	private ProductService productService;
-	
-	@Autowired
-	private UserService userService;
+	public ProductController(ProductService productService, UserService userService) {
+		this.productService = productService;
+		this.userService = userService;
+	}
 
 	@GetMapping("/jpa/products/all")
 	public ResponseEntity<Object> getAllProducts() {
 		HttpStatus httpStatus;
 		List<Product> products = productService.findAll();
 		if (products.size() > 0) {
-			httpStatus = HttpStatus.FOUND;
+			httpStatus = HttpStatus.OK;
 		} else {
 			httpStatus = HttpStatus.NO_CONTENT;
 		}
@@ -43,7 +39,7 @@ public class ProductController {
 		HttpStatus httpStatus;
 		List<Product> products = productService.findByProductName(productName);
 		if (products.size() > 0) {
-			httpStatus = HttpStatus.FOUND;
+			httpStatus = HttpStatus.OK;
 		} else {
 			httpStatus = HttpStatus.NO_CONTENT;
 		}
@@ -57,7 +53,7 @@ public class ProductController {
 		for (Product product : productService.findAll()) {
 			if (product.getProductName().toLowerCase().contains(keyword.toLowerCase())) {
 				productsFound.add(product);
-				httpStatus = HttpStatus.FOUND;
+				httpStatus = HttpStatus.OK;
 			}
 		}
 		return new ResponseEntity<>(productsFound, httpStatus);

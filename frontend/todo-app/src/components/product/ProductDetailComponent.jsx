@@ -46,6 +46,12 @@ export class ProductDetailComponent extends React.Component {
               <Typography gutterBottom variant="h5" component="h2">
                 {this.props.card.productName}
               </Typography>
+              <Typography gutterBottom variant="h5" component="h2">
+                Price: {this.props.card.price}
+              </Typography>
+              <Typography gutterBottom variant="h5" component="h2">
+                {this.props.card.status ? "Quantity: 1" : "Quantity: 0"}
+              </Typography>
               <Typography>{this.props.card.description}</Typography>
             </CardContent>
             <CardActions>
