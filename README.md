@@ -6,25 +6,7 @@
 
 [Backend](https://sept-assignment-backend.appspot.com)
 
-# Your First Full Stack Application with React and Spring Boot
-
-
-## Take your first steps towards becoming a Full Stack Developer with React and Spring Boot
-
-React is a one of the most popular front end view frameworks
-- Components
-- JSX
-- State
-- Props
-
-In combination with other libraries, React helps in doing a wide variety of front end features
-- Forms Handling
-- Routing System
-- HTTP Requests
-
-Spring Boot is an awesome framework to build RESTful API and Microservices.
-
-In this course, lets combine these awesome frameworks to create your first full stack web application.
+## This Project uses React on the frontend and Spring Boot on the backend
 
 ## References
 - https://github.com/facebook/create-react-app
