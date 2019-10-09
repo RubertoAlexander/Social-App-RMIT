@@ -86,12 +86,12 @@ class ProductComponent extends React.Component {
       return undefined;
     }
     for (const card of cards) {
-      if (!card.name) {
+      if (!card.productName) {
         return undefined;
       }
     }
     const nameOfProducts = cards.map(card => {
-      return card.name;
+      return card.productName;
     });
     let arraySortedDesc = false;
     for (let i = 0; i < nameOfProducts.length; i++) {
@@ -105,8 +105,8 @@ class ProductComponent extends React.Component {
     }
 
     const newCards = arraySortedDesc
-      ? lodash.orderBy(cards, ["name"], ["asc"])
-      : lodash.orderBy(cards, ["name"], ["desc"]);
+      ? lodash.orderBy(cards, ["productName"], ["asc"])
+      : lodash.orderBy(cards, ["productName"], ["desc"]);
     this.setState({ cards: newCards });
     return newCards;
   }

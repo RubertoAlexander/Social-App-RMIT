@@ -1,6 +1,7 @@
 package com.sept.rest.webservices.restfulwebservices.jwt;
 
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
 
     private UserJpaRepository userJpaRepository;
 
+    @Autowired
     public JwtInMemoryUserDetailsService(UserJpaRepository userJpaRepository) {
   	  this.userJpaRepository = userJpaRepository;
     }
