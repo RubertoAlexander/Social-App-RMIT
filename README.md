@@ -51,14 +51,10 @@
   - PDF : https://github.com/sept/Springsept/blob/master/InstallationGuide-JavaEclipseAndMaven_v2.pdf
   - GIT Repository For Installation : https://github.com/sept/getting-started-in-5-steps
 
-
-
-
 ### Introduction
 Developing your first full stack application with React and Spring Boot is fun.
 
 You will be using React (Frontend View Framework), React Create App(To create React project), Various JavaScript Libraries (Axios, Formik, React Router), Spring Boot (REST API Framework), Spring (Dependency Management),  Spring Security (Authentication and Authorization - Basic and JWT), BootStrap (Styling Pages), Maven (dependencies management), Node (npm), Visual Studio Code (JavaScript IDE), Eclipse (Java IDE) and Tomcat Embedded Web Server. We will help you set up each one of these.
-
 
 ```
 
