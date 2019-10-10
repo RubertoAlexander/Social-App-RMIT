@@ -3,9 +3,11 @@ package com.sept.rest.webservices.restfulwebservices.user;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.sept.rest.webservices.restfulwebservices.exceptions.InsufficientFundsException;
+import com.sept.rest.webservices.restfulwebservices.exceptions.InvalidDataException;
 import com.sept.rest.webservices.restfulwebservices.exceptions.DataDuplicationException;
 import com.sept.rest.webservices.restfulwebservices.exceptions.DataNotFoundException;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
@@ -21,7 +23,18 @@ public class UserService {
 		if (userRepository.existsByUsername(user.getUsername())) {
 			throw new DataDuplicationException("User " + user.getUsername() + " already exist.");
 		}
-		userRepository.save(user);
+		try {
+			userRepository.save(user);
+		} catch (Exception e) {
+			if (user.getUsername() == null || user.getUsername().isEmpty()) {
+				throw new InvalidDataException("Please insert a valid username.");
+			}
+			if (user.getPassword() == null || user.getPassword().isEmpty()) {
+				throw new InvalidDataException("Please insert a valid password.");
+			}
+			throw new InvalidDataException("Data insertion was invalid");
+		}
+		
 	}
 	
 	public void update(User user) {
@@ -33,10 +46,10 @@ public class UserService {
 	
 	public User findByUsername(String username) {
 		User user = userRepository.findByUsername(username);
-		if (user == null) {
-			throw new DataNotFoundException("User " + username + " can't be found.");
-		}
-		return userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+		return user;
 	}
 	
 	public boolean existsById(Long id) {
@@ -63,6 +76,4 @@ public class UserService {
 			}
 		}
 	}
-
-
 }

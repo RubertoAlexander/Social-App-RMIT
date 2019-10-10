@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,7 +21,7 @@ public class LineItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="PRODUCT_ID")
 	private Product product;
 	
@@ -30,9 +31,15 @@ public class LineItem {
 	private Order order;
 	
 	public LineItem() {
-		super();
+		
 	}
-
+	
+	public LineItem(Product product, Order order) {
+		super();
+		this.product = product;
+		this.order = order;
+	}
+	
 	public Long getId() {
 		return id;
 	}
