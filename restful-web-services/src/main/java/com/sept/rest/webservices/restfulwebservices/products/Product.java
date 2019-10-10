@@ -14,6 +14,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sept.rest.webservices.restfulwebservices.dbfile.DBFile;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
 import com.sept.rest.webservices.restfulwebservices.user.User;
 
@@ -33,6 +34,9 @@ public class Product {
 	private Double price;
 
 	private String description;
+	
+	@OneToOne(mappedBy="product", cascade = CascadeType.ALL)
+	private DBFile picture;
 
 	private boolean status = true;
 	
@@ -88,6 +92,15 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+
+	public DBFile getPicture() {
+		return picture;
+	}
+
+	public void setPicture(DBFile picture) {
+		this.picture = picture;
+	}
 
 	public boolean isStatus() {
 		return status;
@@ -120,6 +133,7 @@ public class Product {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lineItem == null) ? 0 : lineItem.hashCode());
+		result = prime * result + ((picture == null) ? 0 : picture.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
@@ -150,6 +164,11 @@ public class Product {
 			if (other.lineItem != null)
 				return false;
 		} else if (!lineItem.equals(other.lineItem))
+			return false;
+		if (picture == null) {
+			if (other.picture != null)
+				return false;
+		} else if (!picture.equals(other.picture))
 			return false;
 		if (price == null) {
 			if (other.price != null)
