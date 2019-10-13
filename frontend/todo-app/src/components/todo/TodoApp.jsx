@@ -7,22 +7,11 @@ import ErrorComponent from "./ErrorComponent.jsx";
 import HeaderComponent from "./HeaderComponent.jsx";
 import FooterComponent from "./FooterComponent.jsx";
 import LogoutComponent from "./LogoutComponent.jsx";
-import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
 
 import CartComponent from "../cart/CartComponent.jsx";
-
-import product1 from "../../img/product (1).jpg";
-import product2 from "../../img/product (2).jpg";
-import product3 from "../../img/product (3).jpg";
-import product4 from "../../img/product (4).jpg";
-import product5 from "../../img/product (5).jpg";
-import product6 from "../../img/product (6).jpg";
-import product7 from "../../img/product (7).jpg";
-import product8 from "../../img/product (8).jpg";
-import product9 from "../../img/product (9).jpg";
 import { SignUpComponent } from "../account/SignUpComponent";
 import MapComponent from "../map/MapComponent";
 import AuthenticationService from "./AuthenticationService";
@@ -30,6 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import { ListProduct } from "../product/ListProduct";
 
 import ProductsService from "../product/ProductsService.js";
+import { PastOrdersComponent } from "../account/PastOrdersComponent";
 
 class TodoApp extends Component {
   constructor(props) {
@@ -122,8 +112,8 @@ class TodoApp extends Component {
               />
 
               <AuthenticatedRoute
-                path="/welcome/:name"
-                component={WelcomeComponent}
+                path="/past-orders"
+                component={PastOrdersComponent}
               />
               <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
               <AuthenticatedRoute
