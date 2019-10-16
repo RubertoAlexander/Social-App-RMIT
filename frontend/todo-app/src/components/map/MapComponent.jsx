@@ -123,6 +123,10 @@ export class MapComponent extends React.Component {
   getBuildingLat(building) {
     if (building == "14") {
       return -37.8075936;
+    } else if (building == "12") {
+      return -37.8078165;
+    } else if (building == "16") {
+      return -37.8086285;
     } else if (building == "80") {
       return -37.808272;
     } else if (building == "56") {
@@ -133,6 +137,10 @@ export class MapComponent extends React.Component {
   getBuildingLong(building) {
     if (building == "14") {
       return 144.9632783;
+    } else if (building == "12") {
+      return 144.9612309;
+    } else if (building == "16") {
+      return 144.9625144;
     } else if (building == "80") {
       return 144.9604523;
     } else if (building == "56") {
