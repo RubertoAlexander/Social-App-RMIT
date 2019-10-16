@@ -26,6 +26,7 @@ public class User {
 	
 	private String username;
 	
+	@JsonIgnore
 	private String password;
 	
 	@DecimalMin("0.00")

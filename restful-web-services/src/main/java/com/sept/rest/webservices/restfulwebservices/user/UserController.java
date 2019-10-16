@@ -34,6 +34,11 @@ public class UserController {
 		userService.create(user);
 		return new ResponseEntity<>("User Created", HttpStatus.CREATED);
 	}
+	
+	@GetMapping("user/{id}")
+	public User getUserById(@PathVariable Long id) {
+		return userService.findById(id);
+	}
 
 	@PostMapping("user/{id}/cashBalance/add/{amount}")
 	public User addCashBalance(@PathVariable double amount, @PathVariable Long id) {
