@@ -51,6 +51,10 @@ public class Class_ {
 		
 	}
 	
+	public Long getClassID() {
+		return classId;
+	}
+	
 	public Class_(long user, String class_name, String description, String location) {
 		this.user = user;
 		this.class_name = class_name;

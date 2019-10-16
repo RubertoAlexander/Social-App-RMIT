@@ -1,5 +1,6 @@
 package com.sept.rest.webservices.restfulwebservices;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 import com.sept.rest.webservices.restfulwebservices.classes.ClassJpaRepository;
@@ -60,6 +61,13 @@ public class ClassesRepositoryTest {
 		assertThat(violations.size()).isGreaterThan(0);
 	}
 	
+	@Test
+	public void addClassValid() {
+		classesRepository.save(validClass);
+		List<Class_> testClass = classesRepository.findClassesByUser(validClass.getUser());
+		assertTrue(testClass.get(0).getUser() == (validClass.getUser()));
+
+	}
 	
 	
 	
