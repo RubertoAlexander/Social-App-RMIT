@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.sept.rest.webservices.restfulwebservices.dbfile.DBFile;
+import com.sept.rest.webservices.restfulwebservices.dbfile.DBFileService;
 import com.sept.rest.webservices.restfulwebservices.user.UserService;
 
 @CrossOrigin(origins = "*")
@@ -22,9 +25,12 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DBFileService DBFileService;
 
 	@GetMapping("/jpa/products/all")
 	public ResponseEntity<Object> getAllProducts() {
@@ -36,6 +42,11 @@ public class ProductController {
 			httpStatus = HttpStatus.NO_CONTENT;
 		}
 		return new ResponseEntity<>(products, httpStatus);
+	}
+	
+	@GetMapping("/jpa/products/id/{product_id}")
+	public ResponseEntity<Object> getProductByID(@PathVariable Long product_id) {
+		return new ResponseEntity<>(productService.findById(product_id), HttpStatus.OK);
 	}
 
 	@GetMapping("/jpa/products/name/{productName}")
@@ -49,7 +60,7 @@ public class ProductController {
 		}
 		return new ResponseEntity<>(products, httpStatus);
 	}
-	
+
 	@GetMapping("/jpa/products/search/{keyword}")
 	public ResponseEntity<Object> getProductByKeyword(@PathVariable String keyword) {
 		HttpStatus httpStatus = HttpStatus.NO_CONTENT;
@@ -65,16 +76,18 @@ public class ProductController {
 
 	@PostMapping("/jpa/products/sell/{user_id}")
 	@ResponseBody
-	public ResponseEntity<Object> sellProduct(@PathVariable Long user_id, @RequestBody Product product) {
+	public ResponseEntity<Object> sellProduct(@PathVariable Long user_id, 
+										@RequestParam("productName") String productName,
+										@RequestParam("price") double price,
+										@RequestParam("description") String description,
+										@RequestParam("file") MultipartFile file) {
+		Product product = new Product(productName, price, description, userService.findById(user_id));
 		userService.findById(user_id).getProducts().add(product);
-		product.setUser(userService.findById(user_id));
 		productService.saveProduct(product);
+		DBFile dbFile = DBFileService.storeFile(file, product);
+		product.setPicture(dbFile);
+		
+		
 		return new ResponseEntity<>(product, HttpStatus.CREATED);
 	}
-
-	@GetMapping("/products/id/{id}")
-	public Product getProductByID(@PathVariable Long id) {
-		return productService.findById(id);
-	}
-
 }
