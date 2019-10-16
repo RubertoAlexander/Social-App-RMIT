@@ -76,25 +76,33 @@ export class MapComponent extends React.Component {
     this.setState({ showClasses: !this.state.showClasses });
   }
 
-  retrieveClasses() {
-    MapService.retrieveClasses();
+  async retrieveClasses() {
+    await MapService.retrieveClasses();
+    if (
+      sessionStorage.getItem("classes") == "" ||
+      isNull(sessionStorage.getItem("classes"))
+    ) {
+      this.state.hasClasses = false;
+    }
   }
 
   renderClasses = () => {
     if (this.state.showClasses) {
-      const buildings = this.getClasses();
-      let clusters = this.groupBy(buildings, "group");
+      if (this.state.hasClasses) {
+        const buildings = this.getClasses();
+        let clusters = this.groupBy(buildings, "group");
 
-      return clusters.map((building, i) => (
-        <Marker
-          key={i}
-          position={{
-            lat: building[0].lat,
-            lng: building[0].long
-          }}
-          title={this.getClusteredString(building)}
-        />
-      ));
+        return clusters.map((building, i) => (
+          <Marker
+            key={i}
+            position={{
+              lat: building[0].lat,
+              lng: building[0].long
+            }}
+            title={this.getClusteredString(building)}
+          />
+        ));
+      }
     }
   };
 
@@ -134,9 +142,9 @@ export class MapComponent extends React.Component {
 
   getClasses() {
     let buildings = [];
-    const classes = JSON.parse(sessionStorage.getItem("classes"));
-    console.log(classes);
+
     if (this.state.hasClasses) {
+      const classes = JSON.parse(sessionStorage.getItem("classes"));
       for (let i = 0; i < classes.length; i++) {
         buildings.push({
           id: i,

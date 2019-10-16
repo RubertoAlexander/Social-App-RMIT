@@ -12,7 +12,7 @@ class MapService {
       })
       .catch(error => {
         console.log("ERROR: no classes");
-        sessionStorage.setItem("classes", []);
+        sessionStorage.setItem("classes", "");
       });
   }
 }
