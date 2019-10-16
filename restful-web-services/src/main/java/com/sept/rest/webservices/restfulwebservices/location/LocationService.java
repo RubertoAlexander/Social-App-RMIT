@@ -1,5 +1,7 @@
 package com.sept.rest.webservices.restfulwebservices.location;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,4 +34,11 @@ public class LocationService {
 	public Location getLocationOfUser(Long user_id) {
 		return locationRepository.findLocationByUserId(user_id);
 	}
+	
+
+	public List<Location> getAllLocations() {
+		
+		return locationRepository.findAll();
+	}
+	
 }
