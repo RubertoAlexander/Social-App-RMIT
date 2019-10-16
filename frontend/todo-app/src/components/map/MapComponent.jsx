@@ -78,29 +78,39 @@ export class MapComponent extends React.Component {
 
   retrieveClasses() {
     MapService.retrieveClasses();
-    /*.then(response => {
-      console.log(response.data);
-      return response.data;
-    }).catch(error => {
-      console.log("ERROR: no classes")
-      this.setState({hasClasses: false})
-    });*/
   }
 
   renderClasses = () => {
     if (this.state.showClasses) {
       const buildings = this.getClasses();
-      return buildings.map(building => (
+      let clusters = this.groupBy(buildings, "group");
+
+      return clusters.map((building, i) => (
         <Marker
-          key={building.id}
+          key={i}
           position={{
-            lat: this.getBuildingLat(building.building),
-            lng: this.getBuildingLong(building.building)
+            lat: building[0].lat,
+            lng: building[0].long
           }}
+          title={this.getClusteredString(building)}
         />
       ));
     }
   };
+
+  groupBy(arr, prop) {
+    const map = new Map(Array.from(arr, obj => [obj[prop], []]));
+    arr.forEach(obj => map.get(obj[prop]).push(obj));
+    return Array.from(map.values());
+  }
+
+  getClusteredString(cluster) {
+    let classesHere = "";
+    for (let i = 0; i < cluster.length; i++) {
+      classesHere += "\n" + cluster[i].classString;
+    }
+    return classesHere;
+  }
 
   getBuildingLat(building) {
     if (building == "14") {
@@ -130,7 +140,14 @@ export class MapComponent extends React.Component {
       for (let i = 0; i < classes.length; i++) {
         buildings.push({
           id: i,
-          building: this.getBuildingNumber(classes[i].location)
+          classString: classes[i].className + ": " + classes[i].location,
+          lat: this.getBuildingLat(this.getBuildingNumber(classes[i].location)),
+          long: this.getBuildingLong(
+            this.getBuildingNumber(classes[i].location)
+          ),
+          group:
+            this.getBuildingLat(this.getBuildingNumber(classes[i].location)) +
+            this.getBuildingLong(this.getBuildingNumber(classes[i].location))
         });
       }
       return buildings;
