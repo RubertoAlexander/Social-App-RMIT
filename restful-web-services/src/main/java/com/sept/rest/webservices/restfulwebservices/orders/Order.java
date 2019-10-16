@@ -39,9 +39,15 @@ public class Order {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<LineItem> lineItems;
 
-	protected Order() {
-		super();
+	public Order() {
 		lineItems = new ArrayList<>();
+	}
+	
+	public Order(LocalDate date, User user, List<LineItem> lineItems) {
+		super();
+		this.date = date;
+		this.user = user;
+		this.lineItems = lineItems;
 	}
 
 	@Transient
