@@ -33,7 +33,7 @@ public class ClassController {
 	
 	@PostMapping(value = "/add/class")
 	@ResponseBody
-	public String createClass(@RequestBody Class class_) {
+	public String createClass(@RequestBody Class_ class_) {
 		try {
 			classService.create(class_);
 			return "created";
@@ -45,9 +45,9 @@ public class ClassController {
 	
 	@GetMapping(value = "find/classes/{id}")
 	@ResponseBody
-	public List<Class> getClasses(@PathVariable long id) {
+	public List<Class_> getClasses(@PathVariable long id) {
 		
-		List<Class> class_ = classService.findById(id);
+		List<Class_> class_ = classService.findById(id);
 		class_.get(0).getClassName();
 		if(class_ != null) {
 			return class_;
