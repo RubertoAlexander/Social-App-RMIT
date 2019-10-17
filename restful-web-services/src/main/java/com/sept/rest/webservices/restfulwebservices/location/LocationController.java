@@ -46,6 +46,15 @@ public class LocationController {
 		return location;
 	}	
 	
+	// get all users locations
+	
+	@GetMapping("/get/location/all")
+	@ResponseBody
+	public List<Location> getAllLocations() {
+		List<Location> location  = locationService.getAllLocations();
+		return location;
+	}
+	
 	
 	
 	
