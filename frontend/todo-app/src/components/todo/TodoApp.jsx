@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Route, Switch, withRouter} from "react-router-dom";
+import React, { Component } from "react";
+import { Route, Switch, withRouter } from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute.jsx";
 import LoginComponent from "../account/LoginComponent.jsx";
 import ListTodosComponent from "./ListTodosComponent.jsx";
@@ -10,16 +10,17 @@ import LogoutComponent from "./LogoutComponent.jsx";
 import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
-import {ProductDetailComponent} from "../product/ProductDetailComponent";
+import { ProductDetailComponent } from "../product/ProductDetailComponent";
 
 import CartComponent from "../cart/CartComponent.jsx";
-import {SignUpComponent} from "../account/SignUpComponent";
+import { SignUpComponent } from "../account/SignUpComponent";
 import MapComponent from "../map/MapComponent";
 import AuthenticationService from "./AuthenticationService";
 import Grid from "@material-ui/core/Grid";
-import {ListProduct} from "../product/ListProduct";
+import { ListProduct } from "../product/ListProduct";
 
 import ProductsService from "../product/ProductsService.js";
+import * as lodash from "lodash";
 
 class TodoApp extends Component {
   constructor(props) {
@@ -43,22 +44,27 @@ class TodoApp extends Component {
   }
 
   getProducts() {
-    if (AuthenticationService.isUserLoggedIn()) {
-      ProductsService.retrieveProducts()
-        .then(response => {
-          this.setState({ cards: response.data });
-        })
-        .catch(error => {
-          if (error.response) {
-            this.setState({ cards: error.response.data });
-          } else if (error.request) {
-          } else {
-            console.log(error.message);
-          }
+    //retrieve the products from the backend and store in state
+    ProductsService.retrieveProducts()
+      .then(response => {
+        const formattedCards = response.data.map((card, index) => {
+          // we return a new card with an index starting from 0 so that we can load the images
+          return {
+            ...card,
+            id: index
+          };
         });
-    } else {
-      this.setState({ cards: [] });
-    }
+
+        this.setState({ cards: formattedCards });
+      })
+      .catch(error => {
+        if (error.response) {
+          this.setState({ cards: error.response.data });
+        } else if (error.request) {
+        } else {
+          console.log(error.message);
+        }
+      });
   }
 
   checkIfUserLoggedIn = () => {
@@ -72,6 +78,39 @@ class TodoApp extends Component {
 
   handleClearCart = () => {
     this.setState({ cart: [], cartEmpty: true });
+  };
+
+  sortProduct = cards => {
+    if (!cards) {
+      return undefined;
+    }
+    //if any product does not have a name, we do not run this function further
+    for (const card of cards) {
+      if (!card.productName) {
+        return undefined;
+      }
+    }
+    //get all names of the different products
+    const nameOfProducts = cards.map(card => {
+      return card.productName;
+    });
+    let arraySortedDesc = false;
+    //this loop checks whether the array is sorted in descending order
+    for (let i = 0; i < nameOfProducts.length; i++) {
+      if (i + 1 === nameOfProducts.length) {
+        break;
+      }
+      if (nameOfProducts[i] < nameOfProducts[i + 1]) {
+        continue;
+      }
+      arraySortedDesc = true;
+    }
+
+    const newCards = arraySortedDesc
+      ? lodash.orderBy(cards, ["productName"], ["asc"])
+      : lodash.orderBy(cards, ["productName"], ["desc"]);
+    this.setState({ cards: newCards });
+    return newCards;
   };
 
   render() {
@@ -92,6 +131,7 @@ class TodoApp extends Component {
                 render={props => (
                   <ProductComponent
                     cards={this.state.cards}
+                    sortProduct={this.sortProduct}
                     handleAddToCart={this.handleAddToCart}
                   />
                 )}

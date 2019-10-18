@@ -40,7 +40,7 @@ class LoginComponent extends Component {
           this.state.username,
           response.data.token
         );
-        this.props.history.push(`/welcome/${this.state.username}`);
+        this.props.history.push(`/`);
       })
       .catch(() => {
         this.setState({ showSuccessMessage: false });

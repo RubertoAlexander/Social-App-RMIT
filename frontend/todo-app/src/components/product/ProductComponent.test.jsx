@@ -284,15 +284,6 @@ describe("ProductComponent", () => {
     expect(invalidProducts).toEqual(undefined);
   });
 
-  it("clicking the sort button calls the sortProduct method", () => {
-    const childComponent = wrapper.dive();
-    childComponent.instance().sortProduct = jest.fn();
-    const sortButton = childComponent.find(".sort-button");
-    childComponent.update();
-    sortButton.simulate("click");
-    expect(childComponent.instance().sortProduct.mock.calls.length).toEqual(1);
-  });
-
   it("view button should exist for every product", () => {
     const childComponent = wrapper.dive();
     const viewButton = childComponent.find(".view-button");
@@ -307,7 +298,15 @@ describe("ProductComponent", () => {
 
   it("contains 9 products", () => {
     const NUMBER_OF_PRODUCTS = 9;
-
     expect(wrapper.dive().find(".product").length).toEqual(NUMBER_OF_PRODUCTS);
   });
+
+  //new test for display price of product
+  it("price of product should display", () => {
+    const childComponent = wrapper.dive();
+    const priceOfProducts = childComponent.find(".product-price");
+    expect(priceOfProducts.length).toEqual(9);
+  });
+
+  it("price of each product should display correctly", () => {});
 });
