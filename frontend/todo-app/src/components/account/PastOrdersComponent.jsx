@@ -1,5 +1,7 @@
 import * as React from "react";
 import ProductsService from "../product/ProductsService";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
 
 export class PastOrdersComponent extends React.Component {
   constructor(props) {
@@ -10,7 +12,7 @@ export class PastOrdersComponent extends React.Component {
         {
           id: 0,
           date: "",
-          lineItems: [{}],
+
           totalPrice: 0
         }
       ]
@@ -29,15 +31,25 @@ export class PastOrdersComponent extends React.Component {
 
   render() {
     const productDisplay = this.state.products.map((product, key) => {
-      return (
+      return product.lineItems ? (
         <React.Fragment key={key}>
-          <div>Name: {product.lineItems[0].product.productName}</div>
-          <div>price: {product.lineItems[0].product.price}</div>
-          <div>date purchased: {product.date}</div>
+          <Grid item xs={12} sm={6}>
+            <Card>
+              <div>Name: {product.lineItems[0].product.productName}</div>
+              <div>Price: {product.lineItems[0].product.price}</div>
+              <div>Date purchased: {product.date}</div>
+            </Card>
+          </Grid>
         </React.Fragment>
+      ) : (
+        <React.Fragment></React.Fragment>
       );
     });
 
-    return <div>{productDisplay}</div>;
+    return (
+      <Grid container justify="center" alignItems="center">
+        {productDisplay}
+      </Grid>
+    );
   }
 }
