@@ -29,7 +29,8 @@ class TodoApp extends Component {
       isUserLoggedIn: AuthenticationService.isUserLoggedIn(),
       cards: [],
       cart: [],
-      cartEmpty: true
+      cartEmpty: true,
+      loading: true
     };
 
     this.handleClearCart = this.handleClearCart.bind(this);
@@ -55,7 +56,7 @@ class TodoApp extends Component {
           };
         });
 
-        this.setState({ cards: formattedCards });
+        this.setState({ cards: formattedCards, loading: false });
       })
       .catch(error => {
         if (error.response) {
@@ -133,6 +134,8 @@ class TodoApp extends Component {
                     cards={this.state.cards}
                     sortProduct={this.sortProduct}
                     handleAddToCart={this.handleAddToCart}
+                    loading={this.state.loading}
+                    isUserLoggedIn={this.state.isUserLoggedIn}
                   />
                 )}
               />

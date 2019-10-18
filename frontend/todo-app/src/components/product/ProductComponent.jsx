@@ -31,6 +31,7 @@ import product13 from "../../img/product (13).jpg";
 
 import * as lodash from "lodash";
 import { ProductDetailComponent } from "./ProductDetailComponent";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
   icon: {
@@ -156,6 +157,22 @@ class ProductComponent extends React.Component {
             </Container>
           ) : (
             <Container className={classes.cardGrid} maxWidth="md">
+              <Grid container justify="center" alignItems="center">
+                <Grid item xs={12}>
+                  {this.props.isUserLoggedIn ? (
+                    ""
+                  ) : (
+                    <h2>Please Log in first!</h2>
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  {this.props.loading ? (
+                    <CircularProgress className={classes.progress} />
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+              </Grid>
               <Grid container justify="flex-end">
                 <Tooltip title="Sort by name">
                   <IconButton
@@ -169,7 +186,7 @@ class ProductComponent extends React.Component {
                   </IconButton>
                 </Tooltip>
               </Grid>
-              <Grid container spacing={4}>
+              <Grid container spacing={4} justify="center" alignItems="center">
                 {/*this uses the map function to generate a card for every product we have*/}
                 {this.props.cards.map(card => (
                   <Grid
