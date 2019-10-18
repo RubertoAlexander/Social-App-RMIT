@@ -7,47 +7,65 @@ describe("ProductComponent", () => {
     {
       id: 1,
       productName: "Programmer Guide",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 12,
+      status: 1
     },
     {
       id: 2,
       productName: "Elephant Book",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 23,
+      status: 0
     },
     {
       id: 3,
       productName: "Self taught programmer",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 34,
+      status: 1
     },
     {
       id: 4,
       productName: "Computer Science Book",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 45,
+      status: 0
     },
     {
       id: 5,
       productName: "Beginning Programming Reference for dummies",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 56,
+      status: 1
     },
     {
       id: 6,
       productName: "Computer Science Distilled",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 67,
+      status: 0
     },
     {
       id: 7,
       productName: "Computer science principles",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 78,
+      status: 1
     },
     {
       id: 8,
       productName: "Structure and Interpretation of Computer Programs",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 89,
+      status: 0
     },
     {
       id: 9,
       productName: "AP Computer Science A",
-      description: "blablablablabla"
+      description: "blablablablabla",
+      price: 99,
+      status: 1
     }
   ];
 
@@ -305,8 +323,62 @@ describe("ProductComponent", () => {
   it("price of product should display", () => {
     const childComponent = wrapper.dive();
     const priceOfProducts = childComponent.find(".product-price");
+    //we expect that there should be a price for every product
     expect(priceOfProducts.length).toEqual(9);
   });
 
-  it("price of each product should display correctly", () => {});
+  it("price of each product should display correctly", () => {
+    const childComponent = wrapper.dive();
+    const priceOfProducts = childComponent.find(".product-price");
+    //we expect that the price will display as per our mock object above
+    expect(priceOfProducts.get(0).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(0).props.children[1]).toEqual(12);
+
+    expect(priceOfProducts.get(1).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(1).props.children[1]).toEqual(23);
+
+    expect(priceOfProducts.get(2).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(2).props.children[1]).toEqual(34);
+
+    expect(priceOfProducts.get(3).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(3).props.children[1]).toEqual(45);
+
+    expect(priceOfProducts.get(4).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(4).props.children[1]).toEqual(56);
+
+    expect(priceOfProducts.get(5).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(5).props.children[1]).toEqual(67);
+
+    expect(priceOfProducts.get(6).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(6).props.children[1]).toEqual(78);
+
+    expect(priceOfProducts.get(7).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(7).props.children[1]).toEqual(89);
+
+    expect(priceOfProducts.get(8).props.children[0]).toEqual("Price: ");
+    expect(priceOfProducts.get(8).props.children[1]).toEqual(99);
+  });
+
+  it("quantity of product should display", () => {
+    const childComponent = wrapper.dive();
+    const priceOfProducts = childComponent.find(".product-quantity");
+    //we expect that there should be a quantity for every product
+    expect(priceOfProducts.length).toEqual(9);
+  });
+
+  it("quantity of each product should display correctly", () => {
+    const childComponent = wrapper.dive();
+    const priceOfProducts = childComponent.find(".product-quantity");
+    //we expect that the price will display as per our mock object above
+
+    expect(priceOfProducts.get(0).props.children).toEqual("Quantity: 1");
+    expect(priceOfProducts.get(1).props.children).toEqual("Quantity: 0");
+    expect(priceOfProducts.get(2).props.children).toEqual("Quantity: 1");
+    expect(priceOfProducts.get(3).props.children).toEqual("Quantity: 0");
+    expect(priceOfProducts.get(4).props.children).toEqual("Quantity: 1");
+    expect(priceOfProducts.get(5).props.children).toEqual("Quantity: 0");
+    expect(priceOfProducts.get(6).props.children).toEqual("Quantity: 1");
+    expect(priceOfProducts.get(7).props.children).toEqual("Quantity: 0");
+    expect(priceOfProducts.get(8).props.children).toEqual("Quantity: 1");
+  });
 });

@@ -198,7 +198,12 @@ class ProductComponent extends React.Component {
                         >
                           Price: {card.price}
                         </Typography>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <Typography
+                          className="product-quantity"
+                          gutterBottom
+                          variant="h5"
+                          component="h2"
+                        >
                           {card.status ? "Quantity: 1" : "Quantity: 0"}
                         </Typography>
                       </CardContent>
