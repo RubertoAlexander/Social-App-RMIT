@@ -16,12 +16,12 @@ public class ClassService {
 	private ClassJpaRepository classRepository;
 
 	
-	public void create(Class class_) {
+	public void create(ClassUser class_) {
 		classRepository.save(class_);
 	}
 	
-	public List<Class> findById(Long id) {
-		List<Class> class_ = this.classRepository.findClassesByUser(id);
+	public List<ClassUser> findById(Long id) {
+		List<ClassUser> class_ = this.classRepository.findClassesByUser(id);
 		if (class_ == null) {
 			throw new DataNotFoundException("Class with id " + id + " can't be found.");
 		}
