@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Sort from "@material-ui/icons/Sort";
 import IconButton from "@material-ui/core/IconButton";
@@ -28,10 +28,9 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
-import no_image from "../../img/no-photo-available.png";
 
 import * as lodash from "lodash";
-import {ProductDetailComponent} from "./ProductDetailComponent";
+import { ProductDetailComponent } from "./ProductDetailComponent";
 
 const styles = theme => ({
   icon: {
@@ -69,7 +68,6 @@ class ProductComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: this.props.cards,
       viewProductDetail: {},
       displayProductDetail: false
     };
@@ -128,7 +126,7 @@ class ProductComponent extends React.Component {
       product13
     ];
 
-    return no_image;
+    return images[index];
   };
 
   setDisplayProductDetail = value => {
@@ -164,7 +162,7 @@ class ProductComponent extends React.Component {
                     className="sort-button"
                     aria-label="sort"
                     onClick={() => {
-                      this.sortProduct(this.state.cards);
+                      this.props.sortProduct(this.props.cards);
                     }}
                   >
                     <Sort />
@@ -172,7 +170,8 @@ class ProductComponent extends React.Component {
                 </Tooltip>
               </Grid>
               <Grid container spacing={4}>
-                {this.state.cards.map(card => (
+                {/*this uses the map function to generate a card for every product we have*/}
+                {this.props.cards.map(card => (
                   <Grid
                     key={card.id}
                     className="product"
@@ -190,6 +189,22 @@ class ProductComponent extends React.Component {
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
                           {card.productName}
+                        </Typography>
+                        <Typography
+                          className="product-price"
+                          gutterBottom
+                          variant="h5"
+                          component="h2"
+                        >
+                          Price: {card.price}
+                        </Typography>
+                        <Typography
+                          className="product-quantity"
+                          gutterBottom
+                          variant="h5"
+                          component="h2"
+                        >
+                          {card.status ? "Quantity: 1" : "Quantity: 0"}
                         </Typography>
                       </CardContent>
                       <CardActions>

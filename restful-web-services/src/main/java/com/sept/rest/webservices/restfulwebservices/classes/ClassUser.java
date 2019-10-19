@@ -22,7 +22,7 @@ import com.sept.rest.webservices.restfulwebservices.user.User;
 
 @Entity
 @Table(name = "CLASSES")
-public class Class {
+public class ClassUser {
 	
 
 	@Id
