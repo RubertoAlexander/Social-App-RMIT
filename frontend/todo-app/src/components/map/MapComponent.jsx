@@ -93,13 +93,11 @@ export class MapComponent extends React.Component {
 
   //this function create a marker on the map with the specified longitude and latitude
   createMarkerOnMap = favourite => {
-    const extractedLat = favourite.location.split(",")[0];
-    const extractedLong = favourite.location.split(",")[1].slice(1);
-    console.log(extractedLat);
-    console.log(extractedLong);
+    const extractedLat = parseFloat(favourite.location.split(",")[0]);
+    const extractedLong = parseFloat(favourite.location.split(",")[1].slice(1));
 
     this.setState({
-      markerDesc: favourite.description,
+      markerDesc: favourite.favourite,
       markerPosition: {
         lat: extractedLat,
         long: extractedLong
@@ -121,10 +119,30 @@ export class MapComponent extends React.Component {
     }
   }
 
+  renderFavourites = () => {
+    if (this.state.favourites.length !== 0) {
+      return this.state.favourites.map((favourite, index) => {
+        return (
+          <Marker
+            key={index + 10}
+            position={{
+              lat: parseFloat(favourite.location.split(",")[0]),
+              lng: parseFloat(favourite.location.split(",")[1].slice(1))
+            }}
+            title={favourite.favourite}
+          />
+        );
+      });
+    }
+  };
+
   renderClasses = () => {
     if (this.state.showClasses) {
       if (this.state.hasClasses) {
         const buildings = this.getClasses();
+        if (!buildings) {
+          return "";
+        }
         let clusters = this.groupBy(buildings, "group");
 
         return clusters.map((building, i) => (
@@ -142,6 +160,9 @@ export class MapComponent extends React.Component {
   };
 
   groupBy(arr, prop) {
+    if (!arr || !prop) {
+      return undefined;
+    }
     const map = new Map(Array.from(arr, obj => [obj[prop], []]));
     arr.forEach(obj => map.get(obj[prop]).push(obj));
     return Array.from(map.values());
@@ -186,8 +207,9 @@ export class MapComponent extends React.Component {
   getClasses() {
     let buildings = [];
 
-    if (this.state.hasClasses) {
-      const classes = JSON.parse(sessionStorage.getItem("classes"));
+    const classesSessionStorage = sessionStorage.getItem("classes");
+    if (this.state.hasClasses && classesSessionStorage !== "") {
+      const classes = JSON.parse(classesSessionStorage);
       for (let i = 0; i < classes.length; i++) {
         buildings.push({
           id: i,
@@ -252,13 +274,14 @@ export class MapComponent extends React.Component {
                     {this.state.favourites.map((favourite, key) => {
                       return (
                         <React.Fragment key={key}>
-                          <Grid item xs={12} sm={6}>
+                          <Grid item xs={12}>
                             <Card
                               onClick={() => {
                                 this.createMarkerOnMap(favourite);
                               }}
                             >
-                              <div>Desc: {favourite.description}</div>
+                              <div>Title: {favourite.favourite}</div>
+                              <div>Description: {favourite.description}</div>
                             </Card>
                           </Grid>
                         </React.Fragment>
@@ -282,6 +305,7 @@ export class MapComponent extends React.Component {
                       }}
                     >
                       {this.renderClasses()}
+                      {this.renderFavourites()}
                     </GoogleMap>
                   </LoadScript>
                 </Grid>

@@ -5,7 +5,7 @@ class MapService {
   retrieveClasses() {
     const userId = sessionStorage.getItem("user_id");
     return axios
-      .get(`${API_URL}/find/classes/${userID}`)
+      .get(`${API_URL}/find/classes/${userId}`)
       .then(response => {
         sessionStorage.setItem("classes", JSON.stringify(response.data));
       })
