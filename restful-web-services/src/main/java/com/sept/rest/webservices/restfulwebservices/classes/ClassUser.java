@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sept.rest.webservices.restfulwebservices.lineitem.LineItem;
@@ -23,7 +22,7 @@ import com.sept.rest.webservices.restfulwebservices.user.User;
 
 @Entity
 @Table(name = "CLASSES")
-public class Class {
+public class ClassUser {
 	
 
 	@Id
@@ -33,11 +32,10 @@ public class Class {
 	@Column(name="USER_ID", nullable=false)
 	private long user;
 
-	@NotBlank
 	@Column(name="class_name",unique=false,nullable = false)
 	private String class_name;
 	
-	@NotBlank
+	
 	@Column(name="Description",unique=false,nullable = false)
 	private String Description;
 	

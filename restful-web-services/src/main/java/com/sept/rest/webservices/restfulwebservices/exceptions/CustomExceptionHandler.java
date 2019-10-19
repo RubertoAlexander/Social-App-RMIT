@@ -40,6 +40,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(error, httpStatus);
 	}
 	
+	@ExceptionHandler(InvalidDataException.class)
+	public final ResponseEntity<Object> handleInvalidDataException(Exception ex, HttpServletRequest req,
+			WebRequest request) {
+		HttpStatus httpStatus = HttpStatus.NOT_ACCEPTABLE;
+		ErrorResponse error = new ErrorResponse(406, httpStatus, ex.getMessage(), req.getRequestURI());
+		return new ResponseEntity<>(error, httpStatus);
+	}
+	
 	@ExceptionHandler({SQLGrammarException.class, ConstraintViolationException.class, DataException.class})
 	public final ResponseEntity<Object> handleSQLGrammerException(JDBCException ex, HttpServletRequest req,
 			WebRequest request) {
@@ -47,5 +55,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		ErrorResponse error = new ErrorResponse(500, httpStatus, ex.getSQLState(), req.getRequestURI());
 		return new ResponseEntity<>(error, httpStatus);
 	}
+	
+	
 
 }
