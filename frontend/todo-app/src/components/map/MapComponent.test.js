@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 
 import { MapComponent } from "./MapComponent.jsx";
 
@@ -7,20 +7,23 @@ describe("Map", () => {
   let wrapper;
 
   it("renders", () => {
-    wrapper = mount(<MapComponent />);
+    let styles = [{}];
+    wrapper = mount(<MapComponent classes={styles} />);
 
     console.log(wrapper.debug());
   });
 
-  it("contains the div with id map", () => {
-    wrapper = shallow(<MapComponent />);
+  it("contains the wrapper with id map", () => {
+    let styles = [{}];
+    wrapper = shallow(<MapComponent classes={styles} />);
 
-    expect(wrapper.find("#map").length).toEqual(1);
+    expect(wrapper.find("#google-map").length).toEqual(1);
   });
 
   it("contains the map component", () => {
-    wrapper = shallow(<MapComponent />);
+    let styles = [{}];
+    wrapper = shallow(<MapComponent classes={styles} />);
 
-    expect(wrapper.find("Map").length).toEqual(1);
+    expect(wrapper.find("GoogleMap").length).toEqual(1);
   });
 });
