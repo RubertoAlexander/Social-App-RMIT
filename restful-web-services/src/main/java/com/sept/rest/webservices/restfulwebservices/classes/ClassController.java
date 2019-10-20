@@ -10,36 +10,39 @@ import java.util.List;
 @RestController
 public class ClassController {
 
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private ClassService classService;
-	
-	@PostMapping(value = "/add/class")
-	@ResponseBody
-	public String createClass(@RequestBody ClassUser class_User_) {
-		try {
-			classService.create(class_User_);
-			return "created";
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@GetMapping(value = "find/classes/{id}")
-	@ResponseBody
-	public List<ClassUser> getClasses(@PathVariable long id) {
-		
-		List<ClassUser> class_User_ = classService.findById(id);
-		class_User_.get(0).getClassName();
-		if(class_User_ != null) {
-			return class_User_;
-		}
-		
-		return null;
-		
-	}
+    private final UserService userService;
+    private final ClassService classService;
+
+    @Autowired
+    public ClassController(UserService userService, ClassService classService) {
+        this.userService = userService;
+        this.classService = classService;
+    }
+
+    @PostMapping(value = "/add/class")
+    @ResponseBody
+    public String createClass(@RequestBody ClassUser classUser) {
+        try {
+            classService.create(classUser);
+            return "created";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(value = "find/classes/{id}")
+    @ResponseBody
+    public List<ClassUser> getClasses(@PathVariable long id) {
+
+        List<ClassUser> classesById = classService.findById(id);
+
+        if (classesById != null) {
+            return classesById;
+        }
+
+        return null;
+
+    }
 
 }

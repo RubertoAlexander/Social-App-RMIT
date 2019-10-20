@@ -8,21 +8,25 @@ import java.util.List;
 
 @Service
 public class ClassService {
-	
-	@Autowired
-	private ClassJpaRepository classRepository;
 
-	
-	public void create(ClassUser class_User_) {
-		classRepository.save(class_User_);
+	private final ClassJpaRepository classRepository;
+
+	@Autowired
+	public ClassService(ClassJpaRepository classRepository) {
+		this.classRepository = classRepository;
+	}
+
+
+	void create(ClassUser classUser) {
+		classRepository.save(classUser);
 	}
 	
 	public List<ClassUser> findById(Long id) {
-		List<ClassUser> class_User_ = this.classRepository.findClassesByUser(id);
-		if (class_User_ == null) {
+		List<ClassUser> classesByUser = this.classRepository.findClassesByUser(id);
+		if (classesByUser == null) {
 			throw new DataNotFoundException("Class with id " + id + " can't be found.");
 		}
-		return class_User_;
+		return classesByUser;
 	}
 
 }
