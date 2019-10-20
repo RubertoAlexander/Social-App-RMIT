@@ -1,20 +1,14 @@
 package com.sept.rest.webservices.restfulwebservices.user;
 
-import java.util.List;
-
+import com.sept.rest.webservices.restfulwebservices.orders.Order;
+import com.sept.rest.webservices.restfulwebservices.products.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.sept.rest.webservices.restfulwebservices.orders.Order;
-import com.sept.rest.webservices.restfulwebservices.products.Product;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,6 +28,11 @@ public class UserController {
 		userService.create(user);
 		return new ResponseEntity<>("User Created", HttpStatus.CREATED);
 	}
+
+    @GetMapping("user/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.findById(id);
+    }
 
 	@PostMapping("/user/{id}/cashBalance/add/{amount}")
 	public User addCashBalance(@PathVariable double amount, @PathVariable Long id) {
