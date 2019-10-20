@@ -42,7 +42,7 @@ const styles = theme => ({
   }
 });
 
-class CartComponent extends React.Component {
+export class CartComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,6 +52,11 @@ class CartComponent extends React.Component {
     };
 
     this.handlePurchase = this.handlePurchase.bind(this);
+    this.setFailedState = this.setFailedState.bind(this);
+  }
+
+  setFailedState() {
+    this.setState({ failed: true });
   }
 
   handlePurchase() {
@@ -74,13 +79,13 @@ class CartComponent extends React.Component {
   purchaseAttempt = () => {
     if (this.state.failed) {
       return (
-        <Typography className="failedMsg" align="center">
+        <Typography className="failed" className="failedMsg" align="center">
           Sorry these items are currently unavailable
         </Typography>
       );
     } else if (!this.state.hasFunds) {
       return (
-        <Typography className="failedMsg" align="center">
+        <Typography className="noFunds" className="failedMsg" align="center">
           Sorry you have insufficient funds
         </Typography>
       );
@@ -140,6 +145,7 @@ class CartComponent extends React.Component {
           <Grid container justify="space-between">
             <Grid item>
               <Button
+                id="clearBut"
                 className={classes.clearCartBut}
                 type="reset"
                 variant="contained"
@@ -150,6 +156,7 @@ class CartComponent extends React.Component {
             </Grid>
             <Grid item>
               <Button
+                id="buyBut"
                 className={classes.BuyBut}
                 type="submit"
                 variant="contained"

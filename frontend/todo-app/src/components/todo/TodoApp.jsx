@@ -22,7 +22,7 @@ import { ListProduct } from "../product/ListProduct";
 import ProductsService from "../product/ProductsService.js";
 import * as lodash from "lodash";
 
-class TodoApp extends Component {
+export class TodoApp extends Component {
   constructor(props) {
     super(props);
     this.state = {

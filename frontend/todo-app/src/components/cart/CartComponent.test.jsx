@@ -34,9 +34,52 @@ describe("CartComponent", () => {
     expect(errorMessage.length).toEqual(1);
   });
 
+  it("Has a clear cart button", () => {
+    const cart = [
+      {
+        id: 1,
+        name: "Programmer Guide",
+        description: "blablablablabla"
+      }
+    ];
+
+    wrapper = shallow(<CartComponent cart={cart} />);
+    const clearBut = wrapper.dive().find("#clearBut");
+
+    expect(clearBut.length).toEqual(1);
+  });
+
+  it("Has a buy button", () => {
+    const cart = [
+      {
+        id: 1,
+        name: "Programmer Guide",
+        description: "blablablablabla"
+      }
+    ];
+
+    wrapper = shallow(<CartComponent cart={cart} />);
+    const buyBut = wrapper.dive().find("#buyBut");
+
+    expect(buyBut.length).toEqual(1);
+  });
+
+  /*it("Failed purchase displays", () => {
+    const cart = [
+      {
+        id: 1,
+        name: "Programmer Guide",
+        description: "blablablablabla"
+      }
+    ];
+    wrapper = shallow(<CartComponent cart={cart}/>);
+    wrapper.dive().instance().setFailedState();
+    expect(wrapper.find(".failed").length).toEqual(1);
+  });*/
+
   //Not working, but runs
   /*it("Clears the cart from all items", () => {
-    const cart = [
+    const testCart = [
       {
         id: 1,
         name: "Programmer Guide",
@@ -49,15 +92,10 @@ describe("CartComponent", () => {
       }
     ];
 
-    wrapper = shallow(<CartComponent cart={cart} handleClearCart={handleClearCart} empty={false}/>);
-    const clearCartButton = wrapper.find(".clear-cart-but");
-    const cartProp = wrapper.instance().props.cart;
-
-    wrapper.update();
-    clearCartButton.simulate("click");
+    wrapper = shallow(<TodoApp />);
+    wrapper.instance.state = {cart: testCart, cartEmpty: false};
+    wrapper.instance.handleClearCart();
     
-    //expect(wrapper.state("empty")).toEqual(true);
-    expect(wrapper.find(".cart-item").length).toEqual(0);
-    expect(cartProp.length).toEqual(0);
+    expect(wrapper.state("cartEmpty")).toEqual(false);
   });*/
 });
