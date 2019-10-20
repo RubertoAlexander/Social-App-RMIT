@@ -17,9 +17,11 @@ class MapService {
   }
 
   setLocation(loc) {
+    let dateNow = new Date().getTime();
     let data = {
       location: loc,
-      userId: this.userID
+      userId: this.userID,
+      date: dateNow
     };
     return axios.post(`${API_URL}/location/set/`, data);
   }
