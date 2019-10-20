@@ -156,6 +156,15 @@ function PrimarySearchAppBar(props) {
               </Link>
             </li>
           )}
+          {props.isUserLoggedIn ? (
+            <li>
+              <Link className="nav-link" to="/past-orders">
+                Past Orders
+              </Link>
+            </li>
+          ) : (
+            ""
+          )}
           {!props.isUserLoggedIn ? (
             <li>
               <React.Fragment>
@@ -242,6 +251,13 @@ function PrimarySearchAppBar(props) {
               {props.isUserLoggedIn && (
                 <Link className="nav-link" to="/map">
                   Map
+                </Link>
+              )}
+            </Button>
+            <Button color="inherit">
+              {props.isUserLoggedIn && (
+                <Link className="nav-link" to="/past-orders">
+                  Past Orders
                 </Link>
               )}
             </Button>

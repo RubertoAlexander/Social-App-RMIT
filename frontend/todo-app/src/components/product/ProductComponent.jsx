@@ -28,10 +28,10 @@ import product10 from "../../img/product (10).jpg";
 import product11 from "../../img/product (11).jpg";
 import product12 from "../../img/product (12).jpg";
 import product13 from "../../img/product (13).jpg";
-import no_image from "../../img/no-photo-available.png";
 
 import * as lodash from "lodash";
 import { ProductDetailComponent } from "./ProductDetailComponent";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
   icon: {
@@ -54,7 +54,7 @@ const styles = theme => ({
     flexDirection: "column"
   },
   cardMedia: {
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%" // 16:9 resolution
   },
   cardContent: {
     flexGrow: 1
@@ -69,7 +69,6 @@ class ProductComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: this.props.cards,
       viewProductDetail: {},
       displayProductDetail: false
     };
@@ -128,7 +127,7 @@ class ProductComponent extends React.Component {
       product13
     ];
 
-    return no_image;
+    return images[index];
   };
 
   setDisplayProductDetail = value => {
@@ -158,21 +157,38 @@ class ProductComponent extends React.Component {
             </Container>
           ) : (
             <Container className={classes.cardGrid} maxWidth="md">
+              <Grid container justify="center" alignItems="center">
+                <Grid item xs={12}>
+                  {this.props.isUserLoggedIn ? (
+                    ""
+                  ) : (
+                    <h2>Please Log in first!</h2>
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  {this.props.loading ? (
+                    <CircularProgress className={classes.progress} />
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+              </Grid>
               <Grid container justify="flex-end">
                 <Tooltip title="Sort by name">
                   <IconButton
                     className="sort-button"
                     aria-label="sort"
                     onClick={() => {
-                      this.sortProduct(this.state.cards);
+                      this.props.sortProduct(this.props.cards);
                     }}
                   >
                     <Sort />
                   </IconButton>
                 </Tooltip>
               </Grid>
-              <Grid container spacing={4}>
-                {this.state.cards.map(card => (
+              <Grid container spacing={4} justify="center" alignItems="center">
+                {/*this uses the map function to generate a card for every product we have*/}
+                {this.props.cards.map(card => (
                   <Grid
                     key={card.id}
                     className="product"
@@ -190,6 +206,22 @@ class ProductComponent extends React.Component {
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
                           {card.productName}
+                        </Typography>
+                        <Typography
+                          className="product-price"
+                          gutterBottom
+                          variant="h5"
+                          component="h2"
+                        >
+                          Price: {card.price}
+                        </Typography>
+                        <Typography
+                          className="product-quantity"
+                          gutterBottom
+                          variant="h5"
+                          component="h2"
+                        >
+                          {card.status ? "Quantity: 1" : "Quantity: 0"}
                         </Typography>
                       </CardContent>
                       <CardActions>

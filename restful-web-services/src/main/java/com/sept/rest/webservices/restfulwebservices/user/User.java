@@ -1,20 +1,14 @@
 package com.sept.rest.webservices.restfulwebservices.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.DecimalMin;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sept.rest.webservices.restfulwebservices.orders.Order;
 import com.sept.rest.webservices.restfulwebservices.products.Product;
+
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="USERS")
@@ -24,9 +18,12 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+	@NotBlank
 	private String username;
-	
-	private String password;
+
+    @JsonIgnore
+    @NotBlank
+    private String password;
 	
 	@DecimalMin("0.00")
 	private double cashBalance;

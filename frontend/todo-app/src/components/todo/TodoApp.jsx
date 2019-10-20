@@ -7,22 +7,11 @@ import ErrorComponent from "./ErrorComponent.jsx";
 import HeaderComponent from "./HeaderComponent.jsx";
 import FooterComponent from "./FooterComponent.jsx";
 import LogoutComponent from "./LogoutComponent.jsx";
-import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
 
 import CartComponent from "../cart/CartComponent.jsx";
-
-import product1 from "../../img/product (1).jpg";
-import product2 from "../../img/product (2).jpg";
-import product3 from "../../img/product (3).jpg";
-import product4 from "../../img/product (4).jpg";
-import product5 from "../../img/product (5).jpg";
-import product6 from "../../img/product (6).jpg";
-import product7 from "../../img/product (7).jpg";
-import product8 from "../../img/product (8).jpg";
-import product9 from "../../img/product (9).jpg";
 import { SignUpComponent } from "../account/SignUpComponent";
 import MapComponent from "../map/MapComponent";
 import AuthenticationService from "./AuthenticationService";
@@ -30,45 +19,55 @@ import Grid from "@material-ui/core/Grid";
 import { ListProduct } from "../product/ListProduct";
 
 import ProductsService from "../product/ProductsService.js";
+import { PastOrdersComponent } from "../account/PastOrdersComponent";
+import * as lodash from "lodash";
 
-class TodoApp extends Component {
+export class TodoApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isUserLoggedIn: AuthenticationService.isUserLoggedIn(),
       cards: [],
       cart: [],
-      cartEmpty: true
+      cartEmpty: true,
+      loading: true
     };
 
     this.handleClearCart = this.handleClearCart.bind(this);
     this.getProducts = this.getProducts.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.checkIfUserLoggedIn();
       this.getProducts();
     }
   }
 
+  /**
+   * Retrieve all products from backend and store in state
+   */
   getProducts() {
-    if (AuthenticationService.isUserLoggedIn()) {
-      ProductsService.retrieveProducts()
-        .then(response => {
-          this.setState({ cards: response.data });
-        })
-        .catch(error => {
-          if (error.response) {
-            this.setState({ cards: error.response.data });
-          } else if (error.request) {
-          } else {
-            console.log(error.message);
-          }
+    ProductsService.retrieveProducts()
+      .then(response => {
+        const formattedCards = response.data.map((card, index) => {
+          // we return a new card with an index starting from 0 so that we can load the images
+          return {
+            ...card,
+            id: index
+          };
         });
-    } else {
-      this.setState({ cards: [] });
-    }
+
+        this.setState({ cards: formattedCards, loading: false });
+      })
+      .catch(error => {
+        if (error.response) {
+          this.setState({ cards: error.response.data });
+        } else if (error.request) {
+        } else {
+          console.log(error.message);
+        }
+      });
   }
 
   checkIfUserLoggedIn = () => {
@@ -82,6 +81,42 @@ class TodoApp extends Component {
 
   handleClearCart = () => {
     this.setState({ cart: [], cartEmpty: true });
+  };
+
+  /**
+   * Sort all products by name
+   */
+  sortProduct = cards => {
+    if (!cards) {
+      return undefined;
+    }
+    //if any product does not have a name, we do not run this function further
+    for (const card of cards) {
+      if (!card.productName) {
+        return undefined;
+      }
+    }
+    //get all names of the different products
+    const nameOfProducts = cards.map(card => {
+      return card.productName;
+    });
+    let arraySortedDesc = false;
+    //this loop checks whether the array is sorted in descending order
+    for (let i = 0; i < nameOfProducts.length; i++) {
+      if (i + 1 === nameOfProducts.length) {
+        break;
+      }
+      if (nameOfProducts[i] < nameOfProducts[i + 1]) {
+        continue;
+      }
+      arraySortedDesc = true;
+    }
+
+    const newCards = arraySortedDesc
+      ? lodash.orderBy(cards, ["productName"], ["asc"])
+      : lodash.orderBy(cards, ["productName"], ["desc"]);
+    this.setState({ cards: newCards });
+    return newCards;
   };
 
   render() {
@@ -102,7 +137,10 @@ class TodoApp extends Component {
                 render={props => (
                   <ProductComponent
                     cards={this.state.cards}
+                    sortProduct={this.sortProduct}
                     handleAddToCart={this.handleAddToCart}
+                    loading={this.state.loading}
+                    isUserLoggedIn={this.state.isUserLoggedIn}
                   />
                 )}
               />
@@ -122,8 +160,8 @@ class TodoApp extends Component {
               />
 
               <AuthenticatedRoute
-                path="/welcome/:name"
-                component={WelcomeComponent}
+                path="/past-orders"
+                component={PastOrdersComponent}
               />
               <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
               <AuthenticatedRoute

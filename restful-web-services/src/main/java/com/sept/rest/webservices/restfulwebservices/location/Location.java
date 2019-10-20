@@ -1,13 +1,8 @@
 package com.sept.rest.webservices.restfulwebservices.location;
 
-import java.sql.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="LOCATION")
@@ -16,13 +11,16 @@ public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long location_id;
-	
-	private String location;
-	
-	private Long userId;
+
+    @NotBlank
+    private String location;
+
+    @NotNull
+    private Long userId;
 	
 	// unix time
-	private Long date;
+    @NotNull
+    private Long date;
 	
 	public Long getUserId() {
 		return userId;
@@ -43,6 +41,12 @@ public class Location {
 		this.userId = user_id;
 		this.date = date;
 	}
+
+    @Override
+    public String toString() {
+        return "Location [location_id=" + location_id + ", location=" + location + ", userId=" + userId + ", date="
+                + date + "]";
+    }
 
 	public Long getLocation_id() {
 		return location_id;
