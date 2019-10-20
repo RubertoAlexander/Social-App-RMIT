@@ -402,6 +402,7 @@ export class MapComponent extends React.Component {
                     RMIT Map
                   </Typography>
                   <ToggleButton
+                    id="showClass"
                     className={classes.showClasses}
                     value="classes"
                     size="small"
@@ -435,6 +436,7 @@ export class MapComponent extends React.Component {
                     })}
                   </Grid>
                   <ToggleButton
+                    id="showUsers"
                     className={classes.showUsers}
                     value="users"
                     size="small"
