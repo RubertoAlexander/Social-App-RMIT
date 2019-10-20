@@ -44,7 +44,7 @@ public class LocationController {
 	public Location getLocation(@PathVariable String user_id ) {
 		Location location  = locationService.getLocationOfUser(Long.parseLong(user_id));
 		return location;
-	}	
+	}
 	
 	// get all users locations
 	
