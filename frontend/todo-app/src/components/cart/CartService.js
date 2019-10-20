@@ -2,6 +2,10 @@ import axios from "axios";
 import { API_URL } from "../../Constants";
 
 class CartService {
+  /**
+   * Sends items in cart to backend
+   * @param {Array} cart all items currently in cart
+   */
   executeCartService(cart) {
     const userID = sessionStorage.getItem("user_id");
     let itemIds = [];
