@@ -7,7 +7,6 @@ import ErrorComponent from "./ErrorComponent.jsx";
 import HeaderComponent from "./HeaderComponent.jsx";
 import FooterComponent from "./FooterComponent.jsx";
 import LogoutComponent from "./LogoutComponent.jsx";
-import WelcomeComponent from "./WelcomeComponent.jsx";
 import TodoComponent from "./TodoComponent.jsx";
 import ProductComponent from "../product/ProductComponent";
 import { ProductDetailComponent } from "../product/ProductDetailComponent";
@@ -20,6 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import { ListProduct } from "../product/ListProduct";
 
 import ProductsService from "../product/ProductsService.js";
+import { PastOrdersComponent } from "../account/PastOrdersComponent";
 import * as lodash from "lodash";
 
 class TodoApp extends Component {
@@ -152,8 +152,8 @@ class TodoApp extends Component {
               />
 
               <AuthenticatedRoute
-                path="/welcome/:name"
-                component={WelcomeComponent}
+                path="/past-orders"
+                component={PastOrdersComponent}
               />
               <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
               <AuthenticatedRoute
