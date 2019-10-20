@@ -54,4 +54,10 @@ public class LocationController {
 		List<Location> location  = locationService.getAllLocations();
 		return location;
 	}
+	
+	
+	
+	
+	
+
 }

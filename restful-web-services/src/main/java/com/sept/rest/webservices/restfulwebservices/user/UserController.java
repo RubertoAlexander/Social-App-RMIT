@@ -34,8 +34,13 @@ public class UserController {
 		userService.create(user);
 		return new ResponseEntity<>("User Created", HttpStatus.CREATED);
 	}
+	
+	@GetMapping("user/{id}")
+	public User getUserById(@PathVariable Long id) {
+		return userService.findById(id);
+	}
 
-	@PostMapping("user/{id}/cashBalance/add/{amount}")
+	@PostMapping("/user/{id}/cashBalance/add/{amount}")
 	public User addCashBalance(@PathVariable double amount, @PathVariable Long id) {
 		User user = userService.findById(id);
 		user.setCashBalance(user.getCashBalance() + amount);
@@ -43,17 +48,17 @@ public class UserController {
 		return user;
 	}
 	
-	@GetMapping("user/{id}/products")
+	@GetMapping("/user/{id}/products")
 	public List<Product> getSellingProducts(@PathVariable Long id) {
 		return userService.findById(id).getProducts();
 	}
 	
-	@GetMapping("user/{id}/orders")
+	@GetMapping("/user/{id}/orders")
 	public List<Order> getPastOrders(@PathVariable Long id) {
 		return userService.findById(id).getOrders();
 	}
 	
-	@GetMapping("user/id/{username}") 
+	@GetMapping("/user/id/{username}") 
 	public Long getUserIdByUsername(@PathVariable String username) {
 		return userService.findByUsername(username).getId();
 	}

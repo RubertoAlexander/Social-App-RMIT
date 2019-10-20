@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sept.rest.webservices.restfulwebservices.orders.Order;
@@ -24,8 +25,11 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+	@NotBlank
 	private String username;
 	
+	@JsonIgnore
+	@NotBlank
 	private String password;
 	
 	@DecimalMin("0.00")

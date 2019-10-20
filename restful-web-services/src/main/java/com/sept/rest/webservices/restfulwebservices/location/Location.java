@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="LOCATION")
@@ -17,11 +19,14 @@ public class Location {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long location_id;
 	
+	@NotBlank
 	private String location;
 	
+	@NotNull
 	private Long userId;
 	
 	// unix time
+	@NotNull
 	private Long date;
 	
 	public Long getUserId() {
@@ -42,6 +47,12 @@ public class Location {
 		this.location = location;
 		this.userId = user_id;
 		this.date = date;
+	}
+
+	@Override
+	public String toString() {
+		return "Location [location_id=" + location_id + ", location=" + location + ", userId=" + userId + ", date="
+				+ date + "]";
 	}
 
 	public Long getLocation_id() {

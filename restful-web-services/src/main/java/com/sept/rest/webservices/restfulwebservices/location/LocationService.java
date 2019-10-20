@@ -35,6 +35,7 @@ public class LocationService {
 		return locationRepository.findLocationByUserId(user_id);
 	}
 	
+
 	public List<Location> getAllLocations() {
 		
 		return locationRepository.findAll();
