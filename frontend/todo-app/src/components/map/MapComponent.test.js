@@ -35,7 +35,7 @@ describe("Map", () => {
     expect(showClass.length).toEqual(1);
   });
 
-  it("Has a show classes button", () => {
+  it("Has a show users button", () => {
     let styles = [{}];
     wrapper = shallow(<MapComponent classes={styles} />);
     const showUsers = wrapper.find("#showUsers");
