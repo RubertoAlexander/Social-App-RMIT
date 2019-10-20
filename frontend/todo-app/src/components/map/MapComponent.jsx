@@ -15,6 +15,9 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import MapService from "../map/MapService";
 import { isNull } from "util";
 
+import locationImage from "../../img/locationImg.png";
+import yourLocationImage from "../../img/yourLocationImg.png";
+
 const styles = theme => ({
   mapCont: {
     padding: "1%",
@@ -33,6 +36,10 @@ const styles = theme => ({
     padding: "1%"
   },
   showClasses: {
+    marginTop: "20%",
+    marginLeft: "10%"
+  },
+  showUsers: {
     marginTop: "20%",
     marginLeft: "10%"
   }
@@ -65,15 +72,28 @@ export class MapComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      hasLocation: false,
       hasClasses: true,
-      showClasses: false
+      showClasses: false,
+      showAllUsers: false
     };
     this.retrieveClasses();
+
+    let curLat, curLong;
+    this.setLocation();
+
+    let allLocations = "";
+    this.getAllLocations();
     this.handleShowClasses = this.handleShowClasses.bind(this);
+    this.handleShowAllUsers = this.handleShowAllUsers.bind(this);
   }
 
   handleShowClasses() {
     this.setState({ showClasses: !this.state.showClasses });
+  }
+
+  handleShowAllUsers() {
+    this.setState({ showAllUsers: !this.state.showAllUsers });
   }
 
   async retrieveClasses() {
@@ -84,6 +104,33 @@ export class MapComponent extends React.Component {
     ) {
       this.state.hasClasses = false;
     }
+  }
+
+  async setLocation() {
+    await navigator.geolocation.getCurrentPosition(position => {
+      MapService.setLocation(
+        position.coords.latitude + "," + position.coords.longitude
+      )
+        .then(() => {
+          this.state.hasLocation = true;
+          this.curLat = position.coords.latitude;
+          this.curLong = position.coords.longitude;
+        })
+        .catch(() => {});
+    });
+  }
+
+  async getLocation(userID) {
+    let location;
+    MapService.getUserLocation(userID).then(response => {
+      location = response.data;
+    });
+  }
+
+  async getAllLocations() {
+    await MapService.getAllLocations().then(response => {
+      sessionStorage.setItem("userLocs", JSON.stringify(response.data));
+    });
   }
 
   renderClasses = () => {
@@ -105,6 +152,60 @@ export class MapComponent extends React.Component {
       }
     }
   };
+
+  renderYourLocation = () => {
+    if (this.state.hasLocation) {
+      return (
+        <Marker
+          position={{
+            lat: this.curLat,
+            lng: this.curLong
+          }}
+          title="Your Location"
+          icon={yourLocationImage}
+        />
+      );
+    }
+  };
+
+  renderAllLocations = () => {
+    if (this.state.showAllUsers) {
+      let allLocations = JSON.parse(sessionStorage.getItem("userLocs"));
+      allLocations = this.cleanLocations(allLocations);
+      return allLocations.map((user, i) => (
+        <Marker
+          key={i}
+          position={{
+            lat: this.getLatFromString(user.location),
+            lng: this.getLongFromString(user.location)
+          }}
+          title={"" + user.userId}
+          icon={locationImage}
+        />
+      ));
+    }
+  };
+
+  cleanLocations(locations) {
+    for (let i = 0; i < locations.length; i++) {
+      if (isNull(locations[i].location)) {
+        locations.splice(i, 1);
+      }
+    }
+    return locations;
+  }
+
+  getLatFromString(locationString) {
+    let locationArr = locationString.split(",");
+    let latString = locationArr[0];
+    return parseFloat(latString);
+  }
+
+  getLongFromString(locationString) {
+    let locationArr = locationString.split(",");
+    let longString = locationArr[1];
+    return parseFloat(longString);
+  }
 
   groupBy(arr, prop) {
     const map = new Map(Array.from(arr, obj => [obj[prop], []]));
@@ -201,6 +302,15 @@ export class MapComponent extends React.Component {
                   >
                     Show Classes
                   </ToggleButton>
+                  <ToggleButton
+                    className={classes.showUsers}
+                    value="users"
+                    size="small"
+                    selected={this.state.showAllUsers}
+                    onChange={this.handleShowAllUsers}
+                  >
+                    Show Users
+                  </ToggleButton>
                 </Grid>
 
                 <Grid item xs={8} className={classes.map}>
@@ -221,6 +331,8 @@ export class MapComponent extends React.Component {
                       }}
                     >
                       {this.renderClasses()}
+                      {this.renderYourLocation()}
+                      {this.renderAllLocations()}
                     </GoogleMap>
                   </LoadScript>
                 </Grid>
