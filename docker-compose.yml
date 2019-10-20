@@ -60,7 +60,7 @@ services:
       - db-data:/var/lib/mysql
     networks:
       - backend
-  
+
 # Volumes
 volumes:
   db-data:

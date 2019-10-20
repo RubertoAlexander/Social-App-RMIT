@@ -4,16 +4,18 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import "./Map.css";
 import Grid from "@material-ui/core/Grid";
 import {
-  Typography,
-  withStyles,
   Container,
+  CssBaseline,
   Paper,
-  CssBaseline
+  Typography,
+  withStyles
 } from "@material-ui/core";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 
 import MapService from "../map/MapService";
 import { isNull } from "util";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Card from "@material-ui/core/Card";
 
 import locationImage from "../../img/locationImg.png";
 import yourLocationImage from "../../img/yourLocationImg.png";
@@ -33,7 +35,8 @@ const styles = theme => ({
     marginLeft: "10%"
   },
   toolbar: {
-    padding: "1%"
+    padding: "1%",
+    textAlign: "center"
   },
   showClasses: {
     marginTop: "20%",
@@ -52,6 +55,14 @@ export class MapComponent extends React.Component {
       hasLocation: false,
       hasClasses: true,
       showClasses: false,
+      favourites: [], //stores all user favourites in this array
+      markerDesc: "Melbourne", //stores the description of the marker on the map
+      markerPosition: {
+        lat: -37.808,
+        lng: 144.9645
+      }, //stores the marker's longitude and latitude
+      loading: true,
+
       showAllUsers: false
     };
     this.retrieveClasses();
@@ -63,6 +74,29 @@ export class MapComponent extends React.Component {
     this.handleShowClasses = this.handleShowClasses.bind(this);
     this.handleShowAllUsers = this.handleShowAllUsers.bind(this);
   }
+
+  componentDidMount() {
+    //get all favourites from the backend for this user
+    MapService.getMapFavourites().then(response => {
+      const favourites = response.data;
+
+      this.setState({ loading: false, favourites: favourites });
+    });
+  }
+
+  //this function create a marker on the map with the specified longitude and latitude
+  createMarkerOnMap = favourite => {
+    const extractedLat = parseFloat(favourite.location.split(",")[0]);
+    const extractedLong = parseFloat(favourite.location.split(",")[1].slice(1));
+
+    this.setState({
+      markerDesc: favourite.favourite,
+      markerPosition: {
+        lat: extractedLat,
+        long: extractedLong
+      }
+    });
+  };
 
   /**
    * Toggles the state of showClasses when button pressed
@@ -92,6 +126,23 @@ export class MapComponent extends React.Component {
       this.state.hasClasses = false;
     }
   }
+
+  renderFavourites = () => {
+    if (this.state.favourites.length !== 0) {
+      return this.state.favourites.map((favourite, index) => {
+        return (
+          <Marker
+            key={index + 10}
+            position={{
+              lat: parseFloat(favourite.location.split(",")[0]),
+              lng: parseFloat(favourite.location.split(",")[1].slice(1))
+            }}
+            title={favourite.favourite}
+          />
+        );
+      });
+    }
+  };
 
   /**
    * Set the location of the current user using browser geolocation
@@ -137,6 +188,9 @@ export class MapComponent extends React.Component {
     if (this.state.showClasses) {
       if (this.state.hasClasses) {
         const buildings = this.getClasses();
+        if (!buildings) {
+          return "";
+        }
         let clusters = this.groupBy(buildings, "group");
 
         //If the classes are in the same building place together
@@ -233,6 +287,9 @@ export class MapComponent extends React.Component {
    * @param {String} prop property to group values by, coordinates
    */
   groupBy(arr, prop) {
+    if (!arr || !prop) {
+      return undefined;
+    }
     const map = new Map(Array.from(arr, obj => [obj[prop], []]));
     arr.forEach(obj => map.get(obj[prop]).push(obj));
     return Array.from(map.values());
@@ -292,9 +349,9 @@ export class MapComponent extends React.Component {
   getClasses() {
     let buildings = [];
 
-    if (this.state.hasClasses) {
-      const classes = JSON.parse(sessionStorage.getItem("classes"));
-
+    const classesSessionStorage = sessionStorage.getItem("classes");
+    if (this.state.hasClasses && classesSessionStorage !== "") {
+      const classes = JSON.parse(classesSessionStorage);
       for (let i = 0; i < classes.length; i++) {
         buildings.push({
           id: i,
@@ -323,6 +380,12 @@ export class MapComponent extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const mapStyles = {
+      width: "100%",
+      height: "100%",
+      position: "relative"
+    };
+
     return (
       <React.Fragment>
         <CssBaseline />
@@ -347,6 +410,30 @@ export class MapComponent extends React.Component {
                   >
                     Show Classes
                   </ToggleButton>
+
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Favourites
+                  </Typography>
+                  <div>{this.state.loading ? <CircularProgress /> : ""}</div>
+                  <Grid container>
+                    {/*create a new card for every favourite we have for that user*/}
+                    {this.state.favourites.map((favourite, key) => {
+                      return (
+                        <React.Fragment key={key}>
+                          <Grid item xs={12}>
+                            <Card
+                              onClick={() => {
+                                this.createMarkerOnMap(favourite);
+                              }}
+                            >
+                              <div>Title: {favourite.favourite}</div>
+                              <div>Description: {favourite.description}</div>
+                            </Card>
+                          </Grid>
+                        </React.Fragment>
+                      );
+                    })}
+                  </Grid>
                   <ToggleButton
                     className={classes.showUsers}
                     value="users"
@@ -365,10 +452,7 @@ export class MapComponent extends React.Component {
                   >
                     <GoogleMap
                       id="google-map"
-                      mapContainerStyle={{
-                        height: "100%",
-                        width: "100%"
-                      }}
+                      mapContainerStyle={mapStyles}
                       zoom={17}
                       center={{
                         lat: -37.808,
@@ -376,6 +460,7 @@ export class MapComponent extends React.Component {
                       }}
                     >
                       {this.renderClasses()}
+                      {this.renderFavourites()}
                       {this.renderYourLocation()}
                       {this.renderAllLocations()}
                     </GoogleMap>

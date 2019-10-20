@@ -1,10 +1,9 @@
 import axios from "axios";
-import AuthenticationService from "../todo/AuthenticationService.js";
 import { API_URL } from "../../Constants";
 
 class CartService {
   executeCartService(cart) {
-    let userID = sessionStorage.getItem("user_id");
+    const userID = sessionStorage.getItem("user_id");
     let itemIds = [];
 
     for (let i = 0; i < cart.length; i++) {

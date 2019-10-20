@@ -2,7 +2,6 @@ package com.sept.rest.webservices.restfulwebservices.classes;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "CLASSES")
@@ -13,7 +12,7 @@ public class ClassUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long classId;
 
-    @NotNull
+
     @Column(name = "USER_ID", nullable = false)
     private long user;
 

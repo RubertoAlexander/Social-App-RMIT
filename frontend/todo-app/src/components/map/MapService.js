@@ -2,14 +2,13 @@ import axios from "axios";
 import { API_URL } from "../../Constants";
 
 class MapService {
-  userID = sessionStorage.getItem("user_id");
-
   /**
    * Gets all classes that the current user has and sets it in session storage
    */
   retrieveClasses() {
+    const userId = sessionStorage.getItem("user_id");
     return axios
-      .get(`${API_URL}/find/classes/${this.userID}`)
+      .get(`${API_URL}/find/classes/${userId}`)
       .then(response => {
         sessionStorage.setItem("classes", JSON.stringify(response.data));
       })
@@ -24,10 +23,11 @@ class MapService {
    * @param {String} loc coordinates of the user separated by a comma
    */
   setLocation(loc) {
+    const userId = sessionStorage.getItem("user_id");
     let dateNow = new Date().getTime();
     let data = {
       location: loc,
-      userId: this.userID,
+      userId: userId,
       date: dateNow
     };
     return axios.post(`${API_URL}/location/set/`, data);
@@ -46,6 +46,11 @@ class MapService {
    */
   getAllLocations() {
     return axios.get(`${API_URL}/get/location/all`);
+  }
+
+  getMapFavourites() {
+    const userId = sessionStorage.getItem("user_id");
+    return axios.get(`${API_URL}/favourite/${userId}`);
   }
 }
 
