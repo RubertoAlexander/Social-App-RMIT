@@ -43,8 +43,10 @@ export class TodoApp extends Component {
     }
   }
 
+  /**
+   * Retrieve all products from backend and store in state
+   */
   getProducts() {
-    //retrieve the products from the backend and store in state
     ProductsService.retrieveProducts()
       .then(response => {
         const formattedCards = response.data.map((card, index) => {
@@ -80,6 +82,9 @@ export class TodoApp extends Component {
     this.setState({ cart: [], cartEmpty: true });
   };
 
+  /**
+   * Sort all products by name
+   */
   sortProduct = cards => {
     if (!cards) {
       return undefined;

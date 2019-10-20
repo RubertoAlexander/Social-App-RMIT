@@ -59,13 +59,14 @@ export class CartComponent extends React.Component {
     this.setState({ failed: true });
   }
 
+  /**
+   * Sends cart to backend and sets the state to purchased
+   */
   handlePurchase() {
     CartService.executeCartService(this.props.cart)
       .then(response => {
         this.setState({ purchased: true });
         this.props.handleClearCart();
-
-        //TODO: decrement user's balance by price of products
       })
       .catch(error => {
         if (error.response.data.message === "Insufficient funds.") {
@@ -76,6 +77,9 @@ export class CartComponent extends React.Component {
       });
   }
 
+  /**
+   * Shows message to user if purchase fails or doesn't have enough money
+   */
   purchaseAttempt = () => {
     if (this.state.failed) {
       return (
