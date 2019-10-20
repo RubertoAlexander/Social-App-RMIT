@@ -1,13 +1,10 @@
 package com.sept.rest.webservices.restfulwebservices.classes;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.sept.rest.webservices.restfulwebservices.exceptions.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sept.rest.webservices.restfulwebservices.exceptions.DataNotFoundException;
-import com.sept.rest.webservices.restfulwebservices.products.Product;
+import java.util.List;
 
 @Service
 public class ClassService {
@@ -16,16 +13,16 @@ public class ClassService {
 	private ClassJpaRepository classRepository;
 
 	
-	public void create(Class_ class_) {
-		classRepository.save(class_);
+	public void create(ClassUser class_User_) {
+		classRepository.save(class_User_);
 	}
 	
-	public List<Class_> findById(Long id) {
-		List<Class_> class_ = this.classRepository.findClassesByUser(id);
-		if (class_ == null) {
+	public List<ClassUser> findById(Long id) {
+		List<ClassUser> class_User_ = this.classRepository.findClassesByUser(id);
+		if (class_User_ == null) {
 			throw new DataNotFoundException("Class with id " + id + " can't be found.");
 		}
-		return class_;
+		return class_User_;
 	}
 
 }
