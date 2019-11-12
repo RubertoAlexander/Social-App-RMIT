@@ -1,34 +1,31 @@
-import axios from 'axios'
+import axios from "axios";
 
 class HelloWorldService {
+  executeHelloWorldService() {
+    return axios.get("http://localhost:8080/hello-world");
+  }
 
-    executeHelloWorldService() {
-        //console.log('executed service')
-        return axios.get('http://localhost:8080/hello-world');
-    }
+  executeHelloWorldBeanService() {
+    return axios.get("http://localhost:8080/hello-world-bean");
+  }
 
-    executeHelloWorldBeanService() {
-        //console.log('executed service')
-        return axios.get('http://localhost:8080/hello-world-bean');
-    }
+  executeHelloWorldPathVariableService(name) {
+    //console.log('executed service')
+    // let username = 'sept'
+    // let password = 'dummy'
 
-    executeHelloWorldPathVariableService(name) {
-        //console.log('executed service')
-        // let username = 'sept'
-        // let password = 'dummy'
+    // let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
 
-        // let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
-
-        return axios.get(`http://localhost:8080/hello-world/path-variable/${name}`
-            // , 
-            //     {
-            //         headers : {
-            //             authorization: basicAuthHeader
-            //         }
-            //     }
-        );
-    }
-
+    return axios.get(
+      `http://localhost:8080/hello-world/path-variable/${name}`
+      // ,
+      //     {
+      //         headers : {
+      //             authorization: basicAuthHeader
+      //         }
+      //     }
+    );
+  }
 }
 
-export default new HelloWorldService()
+export default new HelloWorldService();

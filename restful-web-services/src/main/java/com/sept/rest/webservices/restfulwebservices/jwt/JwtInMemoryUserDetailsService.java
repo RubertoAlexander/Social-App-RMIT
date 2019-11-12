@@ -1,18 +1,28 @@
 package com.sept.rest.webservices.restfulwebservices.jwt;
 
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.sept.rest.webservices.restfulwebservices.user.User;
+import com.sept.rest.webservices.restfulwebservices.user.UserJpaRepository;
+
 @Service
 public class JwtInMemoryUserDetailsService implements UserDetailsService {
 
   static List<JwtUserDetails> inMemoryUserList = new ArrayList<>();
+
+    private UserJpaRepository userJpaRepository;
+
+    @Autowired
+    public JwtInMemoryUserDetailsService(UserJpaRepository userJpaRepository) {
+  	  this.userJpaRepository = userJpaRepository;
+    }
 
   static {
     inMemoryUserList.add(new JwtUserDetails(1L, "sept",
@@ -21,16 +31,25 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<JwtUserDetails> findFirst = inMemoryUserList.stream()
-        .filter(user -> user.getUsername().equals(username)).findFirst();
-
-    if (!findFirst.isPresent()) {
-      throw new UsernameNotFoundException(String.format("USER_NOT_FOUND '%s'.", username));
-    }
-
-    return findFirst.get();
+        User newUser = userJpaRepository.findByUsername(username);
+        if (newUser == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return new JwtUserDetails(newUser.getId(), newUser.getUsername(), newUser.getPassword(), "USER_ROLE_2");
+    //Optional<JwtUserDetails> findFirst = inMemoryUserList.stream()
+//        .filter(user -> user.getUsername().equals(username)).findFirst();
+//
+//    if (!findFirst.isPresent()) {
+//      throw new UsernameNotFoundException(String.format("USER_NOT_FOUND '%s'.", username));
+//    }
+//
+//    return findFirst.get();
   }
 
+//  public void addUser(long id, String username, String password, String role) {
+//	   inMemoryUserList.add(new JwtUserDetails(id, username,
+//			   password, role));
+// }
 }
 
 
