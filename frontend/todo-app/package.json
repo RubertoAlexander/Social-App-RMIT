@@ -10,7 +10,7 @@
     "@material-ui/lab": "^4.0.0-alpha.29",
     "@material-ui/styles": "^4.3.0",
     "@react-google-maps/api": "^1.7.7",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "formik": "^1.5.1",
     "google-maps-react": "^2.0.2",
     "lodash": "^4.17.15",
